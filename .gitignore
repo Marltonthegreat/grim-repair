@@ -24,6 +24,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vs_code/
 
 # Gradle cache directory
 .gradle/
@@ -60,3 +61,5 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+.DS_Store
