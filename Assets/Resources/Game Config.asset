@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dd74a90c1421443b5d49a0b3c8ce3e, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
-  walkSpeed: 3
-  climbSpeed: 2
+  walkSpeed: 12
+  climbSpeed: 10
   directionInputMinThreshold: 0.1
   gravity: -5
