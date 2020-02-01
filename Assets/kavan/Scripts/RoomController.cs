@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
-public class FloodController : MonoBehaviour
+public class RoomController : MonoBehaviour
 {
-    public Slider m_WaterSlider;
-    public Image m_RoomOverlay;
-    private Color defaultColor;
-
-    [Range(0,1)]
-    public float m_PercentFlooded;
-
+    [Header("Room Settings")]
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
 
+
+    [Header("Flood Settings")]
     public float m_TimeToFlood = 10f;
     private float m_timer;
+    public Slider m_WaterSlider;
+    [Range(0, 1)]
+    public float m_PercentFlooded;
+
+    [Header("Oxygen Overlay")]
+    public Image m_RoomOverlay;
+    private Color defaultColor;
+
+
+
+
+
 
     private void Awake()
     {
