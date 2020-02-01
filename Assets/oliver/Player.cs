@@ -41,11 +41,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         // GetInput();
-        timer += Time.deltaTime;
-        if (timer >= 5) {
-            timer = 0;
-            Debug.Log($"Player {name} == {GetComponent<PlayerInput>().devices.Count}");
-        }
+        // timer += Time.deltaTime;
+        // if (timer >= 5) {
+        //     timer = 0;
+        //     Debug.Log($"Player {name} == {GetComponent<PlayerInput>().devices.Count}");
+        // }
     }
 
     void HandleMovement() {
