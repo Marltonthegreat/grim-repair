@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -11,12 +12,23 @@ public class Player : MonoBehaviour
     void Start()
     {
         character = GetComponent<Character>();
+        name = $"Character {Random.Range(0, 20)}";
+    }
+
+    void OnMove(InputValue value) {
+        dirInput = (Vector2) value.Get();
+        if (dirInput.x > 0 && dirInput.x < GameConfig.instance.directionInputMinThreshold)
+            dirInput.x = 0;
+        if (dirInput.x < 0 && dirInput.x > -GameConfig.instance.directionInputMinThreshold)
+            dirInput.x = 0;
+        if (dirInput.y > 0 && dirInput.y < GameConfig.instance.directionInputMinThreshold)
+            dirInput.y = 0;
+        if (dirInput.y < 0 && dirInput.y > -GameConfig.instance.directionInputMinThreshold)
+            dirInput.y = 0;
     }
 
     // todo - multiplayer/rewired?
     void GetInput() {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Debug.Log(character.ladder);
         dirInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         // if the player's directional input doesn't exceed a certain threshold, stop moving 
         // (could also do this in the input settings maybe)
@@ -24,10 +36,16 @@ public class Player : MonoBehaviour
             dirInput = Vector2.zero;
     }
 
+    float timer = 0;
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        // GetInput();
+        timer += Time.deltaTime;
+        if (timer >= 5) {
+            timer = 0;
+            Debug.Log($"Player {name} == {GetComponent<PlayerInput>().devices.Count}");
+        }
     }
 
     void HandleMovement() {
