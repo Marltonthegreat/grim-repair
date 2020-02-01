@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 13658313}
   - component: {fileID: 13658312}
   - component: {fileID: 13658311}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: room (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,6 +274,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1122719879}
+  - {fileID: 1889168321}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -338,6 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af0f48b9e97c7c42aac5b89a7256802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feet: {fileID: 1889168321}
 --- !u!1 &523779295
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +473,7 @@ GameObject:
   - component: {fileID: 572987965}
   - component: {fileID: 572987964}
   - component: {fileID: 572987963}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: room (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +574,7 @@ GameObject:
   - component: {fileID: 723811113}
   - component: {fileID: 723811112}
   - component: {fileID: 723811114}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1045,7 +1047,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f7137e9c88fd8a1438d35fdfa0fb7e57, type: 3}
+  m_Sprite: {fileID: -179324544309891781, guid: 046d03702834aa14d8ff93641981efae,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1081,7 +1084,7 @@ GameObject:
   - component: {fileID: 1266155451}
   - component: {fileID: 1266155450}
   - component: {fileID: 1266155449}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: room (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1181,7 +1184,7 @@ GameObject:
   - component: {fileID: 1444345258}
   - component: {fileID: 1444345257}
   - component: {fileID: 1444345256}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: room (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1392,6 +1395,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionFloor: {fileID: 1444345256}
+--- !u!1 &1889168320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889168321}
+  m_Layer: 0
+  m_Name: feet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1889168321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889168320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.479, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 258267539}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2113949412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,7 +1436,7 @@ GameObject:
   - component: {fileID: 2113949415}
   - component: {fileID: 2113949414}
   - component: {fileID: 2113949413}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: room (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
