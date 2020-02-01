@@ -35,7 +35,7 @@ public class ShipController : MonoBehaviour
         }
     }
 
-    void Leak()
+    public void Leak()
     {
         var num = Random.Range(0, Rooms.Length);
         var isCurRoomFlooding = Rooms[num].GetComponent<RoomController>().m_RoomFlooding;
