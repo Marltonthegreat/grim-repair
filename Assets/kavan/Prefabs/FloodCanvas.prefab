@@ -223,8 +223,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WaterSlider: {fileID: 2787287480103887841}
   m_RoomOverlay: {fileID: 7286789357124312771}
-  currentAlpha: 0
-  m_PercentFlooded: 0.53
+  m_PercentFlooded: 0
+  m_RoomFlooding: 0
+  m_RoomFlooded: 0
+  m_TimeToFlood: 10
 --- !u!1 &6327548526854716775
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +494,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.68
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
