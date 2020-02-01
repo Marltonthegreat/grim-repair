@@ -121,7 +121,6 @@ GameObject:
   - component: {fileID: 3811628854921726615}
   - component: {fileID: 3140078516154228504}
   - component: {fileID: 1389609223014329205}
-  - component: {fileID: 5068434487233657429}
   m_Layer: 5
   m_Name: FloodCanvas
   m_TagString: Untagged
@@ -147,7 +146,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 56, y: 35.7}
+  m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3811628854921726615
 Canvas:
@@ -209,24 +208,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5068434487233657429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4034858516271272269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828ef7a0133aa41d88c88a0883722dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WaterSlider: {fileID: 2787287480103887841}
-  m_RoomOverlay: {fileID: 7286789357124312771}
-  m_PercentFlooded: 0
-  m_RoomFlooding: 0
-  m_RoomFlooded: 0
-  m_TimeToFlood: 10
 --- !u!1 &6327548526854716775
 GameObject:
   m_ObjectHideFlags: 0
