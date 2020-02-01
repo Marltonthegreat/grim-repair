@@ -9,6 +9,7 @@ public class ShipController : MonoBehaviour
     public float m_GameTime = 90f;
     public FloatVariable m_TimeRemaining;
     public FloatVariable m_AirRemaining;
+    public bool m_CreateLeak = false;
 
     private void Awake()
     {
@@ -28,8 +29,16 @@ public class ShipController : MonoBehaviour
             Debug.Log("GAME OVER, time ran out");
         }
 
-
-
+        if (m_CreateLeak)
+        {
+            Leak();
+        }
     }
 
+    void Leak()
+    {
+        var num = Random.Range(0, Rooms.Length);
+        Rooms[num].GetComponent<RoomController>().m_RoomFlooding = true;
+        m_CreateLeak = false;
+    }
 }
