@@ -15,4 +15,4 @@ MonoBehaviour:
   walkSpeed: 12
   climbSpeed: 10
   directionInputMinThreshold: 0.1
-  gravity: -5
+  gravity: -20
