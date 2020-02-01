@@ -41,9 +41,9 @@ public class RoomController : MonoBehaviour
             //Water Level
             m_WaterSlider.value = m_PercentFlooded;
             //Color Overlay for lack of Oxygen
-            m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
+           // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
 
-            if (m_PercentFlooded > .99)
+            if (m_PercentFlooded > 1)
             {
                 m_RoomFlooded = true;
             }

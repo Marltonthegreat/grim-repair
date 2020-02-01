@@ -22,7 +22,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Ground
   - 
   - 
   - 
@@ -38,6 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1637486979
+    locked: 0
+  - name: StuffInWater
+    uniqueID: 1224411339
+    locked: 0
+  - name: Ship
+    uniqueID: 3145411557
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Flooding
+    uniqueID: 745478807
+    locked: 0
+  - name: ShipCovers
+    uniqueID: 3743327255
     locked: 0
