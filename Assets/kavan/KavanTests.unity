@@ -402,23 +402,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5068434487233657429, guid: b0a010e2e56e744ea8bbf8a64e6ad4cc,
+        type: 3}
+      propertyPath: m_PercentFlooded
+      value: 0.58
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0a010e2e56e744ea8bbf8a64e6ad4cc, type: 3}
---- !u!1 &7912032878135916375 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4034858516271272269, guid: b0a010e2e56e744ea8bbf8a64e6ad4cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 7912032878135916374}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7912032878135916376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912032878135916375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828ef7a0133aa41d88c88a0883722dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
