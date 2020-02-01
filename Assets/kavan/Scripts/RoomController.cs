@@ -8,6 +8,8 @@ public class RoomController : MonoBehaviour
     [Header("Room Settings")]
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
+    public bool m_RoomLocked = false;
+    public RoomController[] m_ConnectedRooms;
 
     [Header("Flood Settings")]
     public float m_TimeToFlood = 10f;
@@ -47,6 +49,20 @@ public class RoomController : MonoBehaviour
             {
                 m_RoomFlooded = true;
             }
+        }
+
+        if (m_RoomFlooded && !m_RoomLocked)
+        {
+            Overflow();
+            m_RoomLocked = true;
+        }
+    }
+
+    void Overflow()
+    {
+        for (int i = 0; i < m_ConnectedRooms.Length; i++)
+        {
+            m_ConnectedRooms[i].m_RoomFlooding = true;
         }
     }
 }
