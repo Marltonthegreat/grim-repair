@@ -10,7 +10,7 @@ public class Character : MonoBehaviour
     Animator animator;
     CapsuleCollider2D capsule;
     Rigidbody2D rb;
-    SpriteRenderer spriteRenderer;
+    SpriteRenderer[] spriteRenderers;
     // if we're overlapping a ladder, it will be here (regardless of whether or not we're climbing it)
     public Ladder ladder { get; private set; }
     // if we're overlapping a breach, it will be here (regardless of whether or not we're repairing it)
@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         capsule = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         ScanShip();
     }
@@ -80,10 +80,6 @@ public class Character : MonoBehaviour
         if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
             if (coll.name.ToLower().StartsWith("door")) {
                 door = coll;
-                if (coll.GetComponent<Animator>() != null)
-                    coll.GetComponent<Animator>().SetBool("closed", false);
-                else
-                    Debug.LogWarning("Found door with no animator", coll.gameObject);
             } else {
                 // must be a breach
                 Debug.Log($"Found breach: {coll.name}");
@@ -101,13 +97,11 @@ public class Character : MonoBehaviour
         if (isDead)
             return;
         if (coll == door) {
-            if (coll.GetComponent<Animator>() != null)
-                coll.GetComponent<Animator>().SetBool("closed", true);
             door = null;
         } else if (coll == breach) {
             Debug.Log($"Left breach: {breach.name}");
             breach = null;
-        } else if (coll.gameObject == ladder.gameObject) {
+        } else if (ladder != null && coll.gameObject == ladder.gameObject) {
             if (isClimbingLadder)
                 StopClimbing();
             ladder = null;
@@ -119,7 +113,8 @@ public class Character : MonoBehaviour
     public void WalkTo(Vector2 pos) {
         if (isClimbingLadder)
             Debug.LogError("Player can't walk when climbing");
-        spriteRenderer.flipX = pos.x < transform.position.x;
+        foreach (var sr in spriteRenderers)
+            sr.flipX = pos.x < transform.position.x;
         rb.MovePosition(pos);
         animator.SetBool("isClimbing", false);
         animator.SetFloat("speed", 1);
@@ -169,7 +164,8 @@ public class Character : MonoBehaviour
     public void ClimbTo(Vector2 pos) {
         if (!isClimbingLadder)
             throw new System.Exception("Player can't walk when climbing");
-        spriteRenderer.flipX = pos.x < transform.position.x;
+        foreach (var sr in spriteRenderers)
+            sr.flipX = pos.x < transform.position.x;
         rb.MovePosition(pos);
         animator.SetFloat("speed", 1);
     }
@@ -179,6 +175,26 @@ public class Character : MonoBehaviour
     public void IdleTo(Vector2 pos) {
         rb.MovePosition(pos);
         animator.SetFloat("speed", 0);
+    }
+
+    public void ToggleDoor() {
+        if (door == null)
+            throw new System.Exception("No door for ToggleDoor()");
+        var animator = door.GetComponent<Animator>();
+        if (animator != null)
+            animator.SetBool("closed", !animator.GetBool("closed"));
+        else
+            Debug.LogWarning("Found door with no animator", door.gameObject);
+    }
+
+    public void RepairBreach() {
+        if (breach == null)
+            throw new System.Exception("No breach for Togglebreach()");
+        var room = breach.GetComponentInParent<RoomController>();
+        if (room != null)
+            room.Repair();
+        else
+            Debug.LogWarning("Found breach with no room", breach.gameObject);
     }
 
     // Update is called once per frame
