@@ -26,6 +26,9 @@ public class RoomController : MonoBehaviour
     public Sprite[] RepairSprites;
     private SpriteRenderer BreachSR;
 
+    [Header("Events")]
+    public NeoDragonCP.GameEvent StartGameEvent;
+
 
     public void RandomBreachSprite()
     {
@@ -37,10 +40,12 @@ public class RoomController : MonoBehaviour
         int randomNum = Random.Range(0, RepairSprites.Length);
         BreachSR.sprite = RepairSprites[randomNum];
     }
+
     public void Repair()
     {
         if (m_introBreach)
         {
+            StartGameEvent.Raise();
             m_introBreach = false;
             m_timer = 0.8f;
         }
@@ -137,10 +142,10 @@ public class RoomController : MonoBehaviour
         //Status set by Repair() & below if locked up
         if (m_RoomDraining)
         {
-            if (m_PercentFlooded <= 0)
+            if (m_timer <= 0)
             {
                 m_RoomDraining = false;
-                m_timer = 0f;
+                m_PercentFlooded = 0;
             }
             else
             {

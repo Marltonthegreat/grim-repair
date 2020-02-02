@@ -5,11 +5,31 @@ public class GameSounds : MonoBehaviour {
 
     public static GameSounds instance;
 
-    [System.Serializable]
-    public class SoundFiles {
-        public AudioClip beep1, beep2;
-    }
-    public SoundFiles sounds; 
+    [SerializeField]
+    private List<AudioClip> footstepsDry;
+    [SerializeField]
+    private List<AudioClip> footstepsWet;
+    [SerializeField]
+    private AudioClip uiConfirm;
+    [SerializeField]
+    private AudioClip uiSelect;
+    [SerializeField]
+    private List<AudioClip> pipeBurst;
+    [SerializeField]
+    private List<AudioClip> deathDrown;
+    [SerializeField]
+    private List<AudioClip> ladderClimb;
+    [SerializeField]
+    private AudioClip gameWin;
+    [SerializeField]
+    private AudioClip startCrash;
+    [SerializeField]
+    private List<AudioClip> doorBurst;
+    [SerializeField]
+    private List<AudioClip> doorClose;
+    [SerializeField]
+    private List<AudioClip> leverLatch;
+
     private List<AudioSource> sources;
     public AudioSource sourcePrefab;
     
@@ -37,14 +57,71 @@ public class GameSounds : MonoBehaviour {
         source.Play();
     }
 
-    public void PlayBeep1()
+
+    public void PlayRandomClip(List<AudioClip> clipPool, float volume = 1)
     {
-        PlayClip(sounds.beep1);
+        var index = Random.Range(0, clipPool.Count);
+        var clip = clipPool[index];
+        PlayClip(clip, volume);
     }
 
-    public void PlayBeep2()
+    public void PlayerFootstepsDry()
     {
-        PlayClip(sounds.beep2);
+        PlayRandomClip(footstepsWet);
     }
 
+    public void PlayerFootstepsWet()
+    {
+        PlayRandomClip(footstepsDry);
+    }
+
+    public void UIConfirm()
+    {
+        PlayClip(uiConfirm);
+    }
+
+    public void UISelect()
+    {
+        PlayClip(uiSelect);
+    }
+
+    public void PipeBurst()
+    {
+        PlayRandomClip(pipeBurst);
+    }
+
+    public void DeathDrown()
+    {
+        PlayRandomClip(deathDrown);
+    }
+
+    public void LadderClimb()
+    {
+        PlayRandomClip(ladderClimb);
+    }
+
+    public void GameWin()
+    {
+        PlayClip(gameWin);
+    }
+
+    public void StartCrash()
+    {
+        PlayClip(startCrash);
+    }
+
+    public void DoorBurst()
+    {
+        PlayRandomClip(doorBurst);
+    }
+
+    public void DoorClose()
+    {
+        PlayRandomClip(doorClose);
+    }
+
+    public void LeverLatch()
+    {
+        PlayRandomClip(leverLatch);
+    }
 }
