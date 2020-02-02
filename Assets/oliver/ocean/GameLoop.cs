@@ -11,6 +11,7 @@ public class GameLoop : MonoBehaviour
     public enum GameState {
         AtTitle,
         PanningToShip,
+        WaitingForFirstRepair,
         InGame
     }
     public GameState state { get; private set; }
@@ -85,6 +86,7 @@ public class GameLoop : MonoBehaviour
         var b = Camera.main.transform.position;
         b.y = dest;
         Camera.main.transform.position = b;
+        state = GameState.WaitingForFirstRepair;
     }    
 
     // Update is called once per frame

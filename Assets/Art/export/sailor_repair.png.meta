@@ -1,5 +1,4 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: d38328488b8af4e17a7c98bcffbf5de5
 TextureImporter:
   internalIDToNameTable:
@@ -9,11 +8,6 @@ TextureImporter:
   - first:
       213: 5139125643999110658
     second: sailor_repair_1
-=======
-guid: 3f2ea7c90221d463aaf1d806d742bad3
-TextureImporter:
-  internalIDToNameTable: []
->>>>>>> 8ea9980a84b56676d9369fc73ff0ea06ff1d4431
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -48,7 +42,7 @@ TextureImporter:
     mipBias: -100
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -96,7 +90,6 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-<<<<<<< HEAD
     sprites:
     - serializedVersion: 2
       name: sailor_repair_0
@@ -140,13 +133,10 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-=======
-    sprites: []
->>>>>>> 8ea9980a84b56676d9369fc73ff0ea06ff1d4431
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 6c9e21d32b15b43f1843ec226bd6d1aa
     internalID: 0
     vertices: []
     indices: 
