@@ -70,6 +70,10 @@ public class Character : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+            coll.GetComponent<Animator>().SetBool("closed", false);
+            return;
+        }
         var l = coll.GetComponent<Ladder>();
         if (l == null)
             return;
@@ -77,6 +81,10 @@ public class Character : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D coll) {
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+            coll.GetComponent<Animator>().SetBool("closed", true);
+            return;
+        }
         if (coll.gameObject == ladder.gameObject) {
             if (isClimbingLadder)
                 StopClimbing();
