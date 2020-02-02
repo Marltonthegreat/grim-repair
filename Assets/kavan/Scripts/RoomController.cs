@@ -137,10 +137,10 @@ public class RoomController : MonoBehaviour
         //Status set by Repair() & below if locked up
         if (m_RoomDraining)
         {
-            if (m_PercentFlooded <= 0)
+            if (m_timer <= 0)
             {
                 m_RoomDraining = false;
-                m_timer = 0f;
+                m_PercentFlooded = 0;
             }
             else
             {
