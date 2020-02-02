@@ -17,6 +17,7 @@ public class RoomController : MonoBehaviour
     public float m_TimeToFlood = 10f;
     private float m_timer;
     public Slider m_WaterSlider;
+    public GameObject m_WaterHandle;
     [Range(0, 1)]
     public float m_PercentFlooded;
     public GameObject m_BreachGO;
@@ -71,10 +72,12 @@ public class RoomController : MonoBehaviour
         if (m_PercentFlooded > 1)
         {
             m_RoomFlooded = true;
+            m_WaterHandle.SetActive(false);
         }
         else
         {
             m_RoomFlooded = false;
+            m_WaterHandle.SetActive(true);
         }
     }
     private void Overflow()
@@ -150,8 +153,8 @@ public class RoomController : MonoBehaviour
         //process draining
         if (m_RoomDraining)
         {
-            Debug.Log("Room is draining");
-            m_timer -= Time.deltaTime;
+            //Debug.Log("Room is draining");
+            m_timer -= Time.deltaTime * 2;
             m_PercentFlooded = m_timer / m_TimeToFlood;
             m_WaterSlider.value = m_PercentFlooded;
 
