@@ -10,7 +10,8 @@ public class GameConfig : ScriptableObject
     public float climbSpeed = 1;
     public float directionInputMinThreshold = 0.1f;
     // doing our own gravity so we can use Rigidbody2D.MovePosition()
-    public float gravity = 5;
+    public float gravity = -20;
+    public float descendTimeInSeconds = 90;
 
     static GameConfig _instance;
     public static GameConfig instance { get {
