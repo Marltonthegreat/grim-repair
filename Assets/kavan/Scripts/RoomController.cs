@@ -11,6 +11,7 @@ public class RoomController : MonoBehaviour
     public bool m_RoomFlooded = false;
     public bool m_RoomLocked = false;
     public RoomController[] m_ConnectedRooms;
+    public Animator[] m_ConnectedDoors;
 
     [Header("Flood Settings")]
     public float m_TimeToFlood = 10f;
@@ -58,10 +59,35 @@ public class RoomController : MonoBehaviour
             }
         }
 
+        // check if the connected doors are all closed
+        if (m_ConnectedDoors.Length != 0)
+        {
+            int doorCount = m_ConnectedDoors.Length;
+            int numClosed = 0;
+            for (int i = 0; i < m_ConnectedDoors.Length; i++)
+            {
+                var isclosed = m_ConnectedDoors[i].GetBool("closed");
+                if (isclosed)
+                {
+                    numClosed += 1;
+                }
+            }
+            if (numClosed == doorCount)
+            {
+                m_RoomLocked = true;
+            }
+            else
+            {
+                m_RoomLocked = false;
+            }
+        }
+        
+            
+
         if (m_RoomFlooded && !m_RoomLocked)
         {
             Overflow();
-            m_RoomLocked = true;
+            //m_RoomLocked = true;
         }
     }
 
@@ -69,7 +95,11 @@ public class RoomController : MonoBehaviour
     {
         for (int i = 0; i < m_ConnectedRooms.Length; i++)
         {
-            m_ConnectedRooms[i].m_RoomFlooding = true;
+            if(m_ConnectedRooms[i].m_RoomLocked == false)
+            {
+                m_ConnectedRooms[i].m_RoomFlooding = true;
+            }
+            
         }
     }
 }

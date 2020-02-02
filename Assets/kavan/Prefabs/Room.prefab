@@ -166,6 +166,9 @@ MonoBehaviour:
   m_RoomFlooded: 0
   m_RoomLocked: 0
   m_ConnectedRooms: []
+  m_ConnectedDoors:
+  - {fileID: 7373501926843981820}
+  - {fileID: 4638211229890793420}
   m_TimeToFlood: 10
   m_WaterSlider: {fileID: 7588220084337136870}
   m_PercentFlooded: 0
@@ -327,6 +330,12 @@ PrefabInstance:
 --- !u!4 &4638211229890793417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 787338516329762632, guid: 4d210529ea29140f0a9eb6c2975ec0bf,
+    type: 3}
+  m_PrefabInstance: {fileID: 5382659996415672449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4638211229890793420 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 787338516329762637, guid: 4d210529ea29140f0a9eb6c2975ec0bf,
     type: 3}
   m_PrefabInstance: {fileID: 5382659996415672449}
   m_PrefabAsset: {fileID: 0}
@@ -662,6 +671,12 @@ PrefabInstance:
 --- !u!4 &7373501926843981817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 787338516329762632, guid: 4d210529ea29140f0a9eb6c2975ec0bf,
+    type: 3}
+  m_PrefabInstance: {fileID: 7835912444674314417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7373501926843981820 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 787338516329762637, guid: 4d210529ea29140f0a9eb6c2975ec0bf,
     type: 3}
   m_PrefabInstance: {fileID: 7835912444674314417}
   m_PrefabAsset: {fileID: 0}
