@@ -10,7 +10,7 @@ public class Character : MonoBehaviour
     Animator animator;
     CapsuleCollider2D capsule;
     Rigidbody2D rb;
-    SpriteRenderer spriteRenderer;
+    SpriteRenderer[] spriteRenderers;
     // if we're overlapping a ladder, it will be here (regardless of whether or not we're climbing it)
     public Ladder ladder { get; private set; }
     // if we're overlapping a breach, it will be here (regardless of whether or not we're repairing it)
@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         capsule = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         ScanShip();
     }
@@ -113,7 +113,8 @@ public class Character : MonoBehaviour
     public void WalkTo(Vector2 pos) {
         if (isClimbingLadder)
             Debug.LogError("Player can't walk when climbing");
-        spriteRenderer.flipX = pos.x < transform.position.x;
+        foreach (var sr in spriteRenderers)
+            sr.flipX = pos.x < transform.position.x;
         rb.MovePosition(pos);
         animator.SetBool("isClimbing", false);
         animator.SetFloat("speed", 1);
@@ -163,7 +164,8 @@ public class Character : MonoBehaviour
     public void ClimbTo(Vector2 pos) {
         if (!isClimbingLadder)
             throw new System.Exception("Player can't walk when climbing");
-        spriteRenderer.flipX = pos.x < transform.position.x;
+        foreach (var sr in spriteRenderers)
+            sr.flipX = pos.x < transform.position.x;
         rb.MovePosition(pos);
         animator.SetFloat("speed", 1);
     }
