@@ -101,6 +101,7 @@ MonoBehaviour:
   - {fileID: 2993289162048529145}
   - {fileID: 3048609694196795593}
   m_CreateLeak: 0
+  m_LeakPercentage: 0
 --- !u!114 &1982541112069626405
 MonoBehaviour:
   m_ObjectHideFlags: 0
