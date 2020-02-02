@@ -39,8 +39,9 @@ public class ShipController : MonoBehaviour
     {
         var num = Random.Range(0, Rooms.Length);
         var isCurRoomFlooding = Rooms[num].GetComponent<RoomController>().m_RoomFlooding;
+        var isCurRoomIntro = Rooms[num].GetComponent<RoomController>().m_introBreach;
 
-        if (isCurRoomFlooding == true)
+        if (isCurRoomFlooding == true || isCurRoomIntro == true)
         {
             Debug.Log("the current room should be flooding already : " + isCurRoomFlooding);
             return;
