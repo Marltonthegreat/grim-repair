@@ -12,6 +12,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "1bf1f3a5-0ff1-4680-9efe-e558057ce97c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -34,6 +42,50 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7935adb5-6cdc-43fd-9c1b-6f0951af608b",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed8ac945-138d-4012-be73-a868daa3dacc",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53fff5ba-ef1b-491b-95b5-beb20d3ea8dd",
+                    "path": "<HID::USB Gamepad >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b39095ce-23bc-4b12-9461-52ef43f6a709",
+                    "path": "<HID::USB Gamepad >/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

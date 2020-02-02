@@ -21,4 +21,4 @@ MonoBehaviour:
   descendTimeInSeconds: 300
   o2Seconds: 5
   flashIntervalSeconds: 0.1
-  panToShipSeconds: 20
+  panToShipSeconds: 1
