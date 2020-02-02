@@ -16,7 +16,7 @@
          "name":"Ocean",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":69,
          "x":0,
          "y":0
@@ -28,7 +28,7 @@
          "name":"Ship",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":69,
          "x":0,
          "y":0
@@ -88,7 +88,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -159,7 +159,7 @@
          "name":"Door",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":69,
          "x":0,
          "y":0
@@ -183,7 +183,7 @@
          "name":"Switches",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":69,
          "x":0,
          "y":0
@@ -231,7 +231,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
