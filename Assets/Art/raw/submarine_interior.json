@@ -16,7 +16,7 @@
          "name":"Ocean",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":62,
          "x":0,
          "y":0
@@ -28,7 +28,7 @@
          "name":"Ship",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":62,
          "x":0,
          "y":0
