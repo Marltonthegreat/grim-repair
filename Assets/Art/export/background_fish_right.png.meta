@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 0ee8517c93a6c344eb5a3d1896b732e6
+guid: eb91cec62f01a58409b0a0582bee2181
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2367157568323978549
-    second: background_fish_0
+      213: -3235857519111966192
+    second: background_fish_right_0
   - first:
-      213: 6868934251710235900
-    second: background_fish_1
+      213: 7111137079512783157
+    second: background_fish_right_1
   - first:
-      213: -2039406790507719853
-    second: background_fish_2
+      213: 7610395717219914973
+    second: background_fish_right_2
   - first:
-      213: -3618083835588128015
-    second: background_fish_3
+      213: -9135148087407251836
+    second: background_fish_right_3
   - first:
-      213: 516738444238668717
-    second: background_fish_4
+      213: 5958807192975141033
+    second: background_fish_right_4
   - first:
-      213: 5315601118707313250
-    second: background_fish_5
+      213: -6515432822870030206
+    second: background_fish_right_5
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -63,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 8
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -81,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -93,7 +93,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -116,11 +116,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background_fish_0
+      name: background_fish_right_0
       rect:
         serializedVersion: 2
         x: 3
-        y: 2
+        y: 6
         width: 60
         height: 27
       alignment: 0
@@ -130,18 +130,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcafbacbbba262fd0800000000000000
-      internalID: -2367157568323978549
+      spriteID: 012fd8d0bbce713d0800000000000000
+      internalID: -3235857519111966192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background_fish_1
+      name: background_fish_right_1
       rect:
         serializedVersion: 2
-        x: 74
-        y: 16
+        x: 82
+        y: 21
+        width: 10
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 539d7755f75dfa260800000000000000
+      internalID: 7111137079512783157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: background_fish_right_2
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 20
         width: 20
         height: 9
       alignment: 0
@@ -151,41 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf4c3ba0f4b535f50800000000000000
-      internalID: 6868934251710235900
+      spriteID: dd41c0d459e8d9960800000000000000
+      internalID: 7610395717219914973
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background_fish_2
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 17
-        width: 10
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 353944b445292b3e0800000000000000
-      internalID: -2039406790507719853
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: background_fish_3
+      name: background_fish_right_3
       rect:
         serializedVersion: 2
         x: 72
-        y: 5
-        width: 10
-        height: 5
+        y: 8
+        width: 20
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,18 +193,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f2df24cbebf9cdc0800000000000000
-      internalID: -3618083835588128015
+      spriteID: 48e608fe63f693180800000000000000
+      internalID: -9135148087407251836
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background_fish_4
+      name: background_fish_right_4
       rect:
         serializedVersion: 2
-        x: 87
-        y: 7
+        x: 94
+        y: 11
         width: 14
         height: 8
       alignment: 0
@@ -214,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da342a290e2db2700800000000000000
-      internalID: 516738444238668717
+      spriteID: 9a86356229fe1b250800000000000000
+      internalID: 5958807192975141033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: background_fish_5
+      name: background_fish_right_5
       rect:
         serializedVersion: 2
-        x: 103
-        y: 4
-        width: 20
-        height: 9
+        x: 113
+        y: 9
+        width: 10
+        height: 5
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,8 +235,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26ae730ed0fc4c940800000000000000
-      internalID: 5315601118707313250
+      spriteID: 28849ea2e588495a0800000000000000
+      internalID: -6515432822870030206
       vertices: []
       indices: 
       edges: []

@@ -16,3 +16,4 @@ MonoBehaviour:
   climbSpeed: 10
   directionInputMinThreshold: 0.1
   gravity: -20
+  descendTimeInSeconds: 60
