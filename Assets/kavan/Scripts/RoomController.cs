@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class RoomController : MonoBehaviour
 {
     [Header("Room Settings")]
+    public bool m_introBreach = false;
     public bool m_Breached = false;
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
+    public bool m_RoomDraining = false;
     public bool m_RoomLocked = false;
     public RoomController[] m_ConnectedRooms;
     public Animator[] m_ConnectedDoors;
@@ -33,31 +35,50 @@ public class RoomController : MonoBehaviour
     private void Awake()
     {
         defaultColor = m_RoomOverlay.color;
+        m_timer = 0;
     }
 
     private void Update()
     {
+        if (m_introBreach)
+        {
+            m_BreachGO.SetActive(true);
+            return;
+            //don't go any further if this is an intro breach room
+        }
+
+        //process draining
+        if (m_RoomDraining)
+        {
+            m_timer -= Time.deltaTime;
+            m_PercentFlooded = m_timer / m_TimeToFlood;
+            m_WaterSlider.value = m_PercentFlooded;
+        }
+
         if (m_Breached)
         {
             m_BreachGO.SetActive(true);
         }
 
-        if (m_RoomFlooding && !m_RoomFlooded)
+        if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
         {
             m_timer += Time.deltaTime;
-
             m_PercentFlooded = m_timer / m_TimeToFlood;
-
-            //Water Level
             m_WaterSlider.value = m_PercentFlooded;
             //Color Overlay for lack of Oxygen
-           // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
-
-            if (m_PercentFlooded > 1)
-            {
-                m_RoomFlooded = true;
-            }
+            // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
         }
+
+        //Is Room Flooded?
+        if (m_PercentFlooded > 1)
+        {
+            m_RoomFlooded = true;
+        }
+        else
+        {
+            m_RoomFlooded = false;
+        }
+
 
         // check if the connected doors are all closed
         if (m_ConnectedDoors.Length != 0)
@@ -81,8 +102,6 @@ public class RoomController : MonoBehaviour
                 m_RoomLocked = false;
             }
         }
-        
-            
 
         if (m_RoomFlooded && !m_RoomLocked)
         {
@@ -101,5 +120,17 @@ public class RoomController : MonoBehaviour
             }
             
         }
+    }
+
+    public void Repair()
+    {
+        if (m_introBreach)
+        {
+            m_introBreach = false;
+            m_timer = 0.8f;
+        }
+
+        m_BreachGO.SetActive(false);
+        m_RoomDraining = true;
     }
 }
