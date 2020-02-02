@@ -34,10 +34,13 @@ public class RoomController : MonoBehaviour
 
     private void CheckLockedStatus()
     {
+        //Are all connected doors closed?
+        int doorCount = 0;
+        int numClosed = 0;
+
         if (m_ConnectedDoors.Length != 0)
         {
-            int doorCount = m_ConnectedDoors.Length;
-            int numClosed = 0;
+            doorCount = m_ConnectedDoors.Length;
             for (int i = 0; i < m_ConnectedDoors.Length; i++)
             {
                 var isclosed = m_ConnectedDoors[i].GetBool("closed");
@@ -46,6 +49,10 @@ public class RoomController : MonoBehaviour
                     numClosed += 1;
                 }
             }
+        }
+
+        if (doorCount != 0)
+        {
             if (numClosed == doorCount)
             {
                 m_RoomLocked = true;
@@ -55,21 +62,37 @@ public class RoomController : MonoBehaviour
                 m_RoomLocked = false;
             }
         }
+        else
+        {
+            m_RoomLocked = false;
+        }
     }
 
-    void Overflow()
+    private void CheckRoomFloodedStatus()
     {
-        if (m_ConnectedDoors.Length != 0)
+        if (m_PercentFlooded > 1)
         {
-            for (int i = 0; i < m_ConnectedRooms.Length; i++)
-            {
-                if (m_ConnectedRooms[i].m_RoomLocked == false)
-                {
-                    m_ConnectedRooms[i].m_RoomFlooding = true;
-                }
-
-            }
+            m_RoomFlooded = true;
         }
+        else
+        {
+            m_RoomFlooded = false;
+        }
+    }
+
+    private void Overflow()
+    {
+        /// if (m_ConnectedDoors.Length != 0)
+        // {
+        for (int i = 0; i < m_ConnectedRooms.Length; i++)
+        {
+            if (m_ConnectedRooms[i].m_RoomLocked == false)
+            {
+                m_ConnectedRooms[i].m_RoomFlooding = true;
+            }
+
+        }
+        //}
     }
 
     public void Repair()
@@ -79,16 +102,8 @@ public class RoomController : MonoBehaviour
             m_introBreach = false;
             m_timer = 0.8f;
         }
-
-        m_BreachGO.SetActive(false);
-        m_RoomDraining = true;
+        m_Breached = false;
     }
-
-
-
-
-
-
 
     private void Update()
     {
@@ -97,6 +112,17 @@ public class RoomController : MonoBehaviour
             m_BreachGO.SetActive(true);
             return;
             //don't go any further if this is an intro breach room
+        }
+
+        if (m_Breached)
+        {
+            m_BreachGO.SetActive(true);
+            m_RoomFlooding = true;
+        }
+        else if (!m_introBreach)
+        {
+            m_BreachGO.SetActive(false);
+            m_RoomDraining = true;
         }
 
         //process draining
@@ -112,10 +138,8 @@ public class RoomController : MonoBehaviour
             }
         }
 
-        if (m_Breached)
-        {
-            m_BreachGO.SetActive(true);
-        }
+        CheckLockedStatus();
+        CheckRoomFloodedStatus();
 
         //process flooding
         if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
@@ -126,20 +150,6 @@ public class RoomController : MonoBehaviour
             //Color Overlay for lack of Oxygen
             // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
         }
-
-        //Is Room Flooded?
-        if (m_PercentFlooded > 1)
-        {
-            m_RoomFlooded = true;
-        }
-        else
-        {
-            m_RoomFlooded = false;
-        }
-
-
-        //Are all connected doors closed?
-        CheckLockedStatus();
 
         //Overflow if not locked down
         if (m_RoomFlooded && !m_RoomLocked)
