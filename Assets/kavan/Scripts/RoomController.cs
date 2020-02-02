@@ -20,17 +20,16 @@ public class RoomController : MonoBehaviour
     [Range(0, 1)]
     public float m_PercentFlooded;
     public GameObject m_BreachGO;
+    public GameObject m_BreachOnElements;
+    public Sprite[] BreachSprites;
+    public Sprite[] RepairSprites;
+    private SpriteRenderer BreachSR;
 
     [Header("Oxygen Overlay")]
     public Image m_RoomOverlay;
     //private Color defaultColor;
 
 
-    private void Awake()
-    {
-        //defaultColor = m_RoomOverlay.color;
-        m_timer = 0f;
-    }
 
     private void CheckLockedStatus()
     {
@@ -93,6 +92,18 @@ public class RoomController : MonoBehaviour
         //}
     }
 
+    public void RandomBreachSprite()
+    {
+        int randomNum = Random.Range(0, BreachSprites.Length);
+        BreachSR.sprite = BreachSprites[randomNum];
+    }
+
+    public void RandomRepairSprite()
+    {
+        int randomNum = Random.Range(0, RepairSprites.Length);
+        BreachSR.sprite = RepairSprites[randomNum];
+    }
+
     public void Repair()
     {
         if (m_introBreach)
@@ -100,8 +111,19 @@ public class RoomController : MonoBehaviour
             m_introBreach = false;
             m_timer = 0.8f;
         }
+        RandomRepairSprite();
         m_Breached = false;
         m_RoomDraining = true;
+    }
+
+
+    private void Awake()
+    {
+        BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
+        //defaultColor = m_RoomOverlay.color;
+        m_timer = 0f;
+        //RandomSprite
+        RandomBreachSprite();
     }
 
     private void Update()
@@ -116,11 +138,12 @@ public class RoomController : MonoBehaviour
         if (m_Breached)
         {
             m_BreachGO.SetActive(true);
+            m_BreachOnElements.SetActive(true);
             m_RoomFlooding = true;
         }
         else if (!m_introBreach)
         {
-            m_BreachGO.SetActive(false);
+            m_BreachOnElements.SetActive(false);
             m_RoomFlooding = false;
         }
 
