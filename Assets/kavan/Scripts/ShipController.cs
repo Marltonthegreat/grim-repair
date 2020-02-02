@@ -59,7 +59,7 @@ public class ShipController : MonoBehaviour
         Rooms[num].GetComponent<RoomController>().RandomBreachSprite();
 
         //CALL LEAK SOUND
-
+        GameSounds.instance.PipeBurst();
 
         Rooms[num].GetComponent<RoomController>().m_Breached = true;
         
