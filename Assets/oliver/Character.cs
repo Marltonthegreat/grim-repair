@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // this is the visuals/etc of the character sprite/physics.  it is used by Player which is
 // in charge of getting user input and making this character do something.
@@ -12,8 +13,11 @@ public class Character : MonoBehaviour
     SpriteRenderer spriteRenderer;
     // if we're overlapping a ladder, it will be here (regardless of whether or not we're climbing it)
     public Ladder ladder { get; private set; }
-    public Transform feet;
+    public Transform feet, head;
     public bool touchingGround { get { return animator.GetBool("touchingGround"); } }
+    List<Image> waterAreas = new List<Image>();
+    public bool feetUnderWater { get; private set; }
+    public bool headUnderWater { get; private set; }
 
     public bool isClimbingLadder {
         get {
@@ -28,6 +32,41 @@ public class Character : MonoBehaviour
         capsule = GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        ScanShip();
+    }
+
+    void ScanShip() {
+        Debug.Log("Scanning ship...");
+        var ship = GameObject.FindObjectOfType<ShipController>();
+        if (ship == null) 
+            Debug.LogWarning("Could not find ShipController");
+        
+        foreach (var i in FindObjectsOfType<Image>()) {
+            if (i.name != "Fill")
+                continue;
+            waterAreas.Add(i);
+        }
+        Debug.Log($"Found {waterAreas.Count} water fill images");
+    }
+
+    void CheckForWater() {
+        var corners = new Vector3[4];
+        var feetPos = feet.position;
+        var headPos = head.position;
+        feetUnderWater = false;
+        headUnderWater = false;
+        foreach (var w in waterAreas) {
+            w.rectTransform.GetWorldCorners(corners);
+            var bl = corners[0];
+            var tl = corners[1];
+            var tr = corners[2];
+            var br = corners[3];
+            if (feetPos.x > bl.x && feetPos.x < br.x && feetPos.y > bl.y && feetPos.y < tl.y)
+                feetUnderWater = true;
+            if (headPos.x > bl.x && headPos.x < br.x && headPos.y > bl.y && headPos.y < tl.y)
+                headUnderWater = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
@@ -103,6 +142,7 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckForWater();
         var touchingGround = Physics2D.Raycast(feet.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
         animator.SetBool("touchingGround", touchingGround);
     }
