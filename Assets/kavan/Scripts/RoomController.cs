@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RoomController : MonoBehaviour
 {
     [Header("Room Settings")]
+    public bool m_Breached = false;
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
     public bool m_RoomLocked = false;
@@ -17,6 +18,7 @@ public class RoomController : MonoBehaviour
     public Slider m_WaterSlider;
     [Range(0, 1)]
     public float m_PercentFlooded;
+    public GameObject m_BreachGO;
 
     [Header("Oxygen Overlay")]
     public Image m_RoomOverlay;
@@ -34,6 +36,11 @@ public class RoomController : MonoBehaviour
 
     private void Update()
     {
+        if (m_Breached)
+        {
+            m_BreachGO.SetActive(true);
+        }
+
         if (m_RoomFlooding && !m_RoomFlooded)
         {
             m_timer += Time.deltaTime;

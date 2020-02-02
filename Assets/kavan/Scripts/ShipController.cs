@@ -44,11 +44,23 @@ public class ShipController : MonoBehaviour
         {
             Debug.Log("the current room should be flooding already : " + isCurRoomFlooding);
             return;
-            //jump out and auto try again since Create leak is still true
+            //jump out and auto try again since CreateLeak is still true
         }
 
-        Rooms[num].GetComponent<RoomController>().m_RoomFlooding = true;
+        //Breach
+        //RandomRotation
+        Vector3 euler = Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.eulerAngles;
+        euler.z = Random.Range(0f, 360f);
+        Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.transform.eulerAngles = euler;
+        //RandomScale
+        var randomScale = Random.Range(.5f, 1f);
+        Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+        Rooms[num].GetComponent<RoomController>().m_Breached = true;
 
+        //Start Flooding
+        Rooms[num].GetComponent<RoomController>().m_RoomFlooding = true;
+        
+        //Stop Trying to CreateLeaks
         m_CreateLeak = false;
     }
 }
