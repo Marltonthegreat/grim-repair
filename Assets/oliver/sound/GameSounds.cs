@@ -5,18 +5,30 @@ public class GameSounds : MonoBehaviour {
 
     public static GameSounds instance;
 
-    public List<AudioClip> footstepsDry;
-    public List<AudioClip> footstepsWet;
-    public AudioClip uiConfirm;
-    public AudioClip uiSelect;
-    public List<AudioClip> pipeBurst;
-    public List<AudioClip> deathDrown;
-    public List<AudioClip> ladderClimb;
-    public AudioClip gameWin;
-    public AudioClip startCrash;
-    public List<AudioClip> doorBurst;
-    public List<AudioClip> doorClose;
-    public List<AudioClip>  leverLatch;
+    [SerializeField]
+    private List<AudioClip> footstepsDry;
+    [SerializeField]
+    private List<AudioClip> footstepsWet;
+    [SerializeField]
+    private AudioClip uiConfirm;
+    [SerializeField]
+    private AudioClip uiSelect;
+    [SerializeField]
+    private List<AudioClip> pipeBurst;
+    [SerializeField]
+    private List<AudioClip> deathDrown;
+    [SerializeField]
+    private List<AudioClip> ladderClimb;
+    [SerializeField]
+    private AudioClip gameWin;
+    [SerializeField]
+    private AudioClip startCrash;
+    [SerializeField]
+    private List<AudioClip> doorBurst;
+    [SerializeField]
+    private List<AudioClip> doorClose;
+    [SerializeField]
+    private List<AudioClip> leverLatch;
 
     private List<AudioSource> sources;
     public AudioSource sourcePrefab;
