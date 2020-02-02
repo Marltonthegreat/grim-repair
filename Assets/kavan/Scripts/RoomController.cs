@@ -29,15 +29,18 @@ public class RoomController : MonoBehaviour
     private void Awake()
     {
         //defaultColor = m_RoomOverlay.color;
-        m_timer = 0;
+        m_timer = 0f;
     }
 
     private void CheckLockedStatus()
     {
+        //Are all connected doors closed?
+        int doorCount = 0;
+        int numClosed = 0;
+
         if (m_ConnectedDoors.Length != 0)
         {
-            int doorCount = m_ConnectedDoors.Length;
-            int numClosed = 0;
+            doorCount = m_ConnectedDoors.Length;
             for (int i = 0; i < m_ConnectedDoors.Length; i++)
             {
                 var isclosed = m_ConnectedDoors[i].GetBool("closed");
@@ -46,6 +49,10 @@ public class RoomController : MonoBehaviour
                     numClosed += 1;
                 }
             }
+        }
+
+        if (doorCount != 0)
+        {
             if (numClosed == doorCount)
             {
                 m_RoomLocked = true;
@@ -55,21 +62,35 @@ public class RoomController : MonoBehaviour
                 m_RoomLocked = false;
             }
         }
-    }
-
-    void Overflow()
-    {
-        if (m_ConnectedDoors.Length != 0)
+        else
         {
-            for (int i = 0; i < m_ConnectedRooms.Length; i++)
-            {
-                if (m_ConnectedRooms[i].m_RoomLocked == false)
-                {
-                    m_ConnectedRooms[i].m_RoomFlooding = true;
-                }
-
-            }
+            m_RoomLocked = false;
         }
+    }
+    private void CheckRoomFloodedStatus()
+    {
+        if (m_PercentFlooded > 1)
+        {
+            m_RoomFlooded = true;
+        }
+        else
+        {
+            m_RoomFlooded = false;
+        }
+    }
+    private void Overflow()
+    {
+        /// if (m_ConnectedDoors.Length != 0)
+        // {
+        for (int i = 0; i < m_ConnectedRooms.Length; i++)
+        {
+            if (m_ConnectedRooms[i].m_RoomLocked == false)
+            {
+                m_ConnectedRooms[i].m_RoomFlooding = true;
+            }
+
+        }
+        //}
     }
 
     public void Repair()
@@ -79,16 +100,9 @@ public class RoomController : MonoBehaviour
             m_introBreach = false;
             m_timer = 0.8f;
         }
-
-        m_BreachGO.SetActive(false);
+        m_Breached = false;
         m_RoomDraining = true;
     }
-
-
-
-
-
-
 
     private void Update()
     {
@@ -99,9 +113,21 @@ public class RoomController : MonoBehaviour
             //don't go any further if this is an intro breach room
         }
 
+        if (m_Breached)
+        {
+            m_BreachGO.SetActive(true);
+            m_RoomFlooding = true;
+        }
+        else if (!m_introBreach)
+        {
+            m_BreachGO.SetActive(false);
+            m_RoomFlooding = false;
+        }
+
         //process draining
         if (m_RoomDraining)
         {
+            Debug.Log("Room is draining");
             m_timer -= Time.deltaTime;
             m_PercentFlooded = m_timer / m_TimeToFlood;
             m_WaterSlider.value = m_PercentFlooded;
@@ -109,13 +135,12 @@ public class RoomController : MonoBehaviour
             if (m_PercentFlooded <= 0)
             {
                 m_RoomDraining = false;
+                m_timer = 0f;
             }
         }
 
-        if (m_Breached)
-        {
-            m_BreachGO.SetActive(true);
-        }
+        CheckLockedStatus();
+        CheckRoomFloodedStatus();
 
         //process flooding
         if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
@@ -126,20 +151,6 @@ public class RoomController : MonoBehaviour
             //Color Overlay for lack of Oxygen
             // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
         }
-
-        //Is Room Flooded?
-        if (m_PercentFlooded > 1)
-        {
-            m_RoomFlooded = true;
-        }
-        else
-        {
-            m_RoomFlooded = false;
-        }
-
-
-        //Are all connected doors closed?
-        CheckLockedStatus();
 
         //Overflow if not locked down
         if (m_RoomFlooded && !m_RoomLocked)
