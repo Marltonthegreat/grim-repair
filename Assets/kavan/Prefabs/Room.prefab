@@ -224,6 +224,15 @@ MonoBehaviour:
   m_WaterSlider: {fileID: 7588220084337136870}
   m_PercentFlooded: 0
   m_BreachGO: {fileID: 314265440378930610}
+  m_BreachOnElements: {fileID: 4772351148233704888}
+  BreachSprites:
+  - {fileID: 6405791227443895526, guid: d329037e0affa425087868767382aee7, type: 3}
+  - {fileID: 2822076031027666368, guid: d329037e0affa425087868767382aee7, type: 3}
+  - {fileID: 5523076651748691642, guid: d329037e0affa425087868767382aee7, type: 3}
+  RepairSprites:
+  - {fileID: 8469249902407197682, guid: d329037e0affa425087868767382aee7, type: 3}
+  - {fileID: -7229448561747601992, guid: d329037e0affa425087868767382aee7, type: 3}
+  - {fileID: -3141871845415531257, guid: d329037e0affa425087868767382aee7, type: 3}
   m_RoomOverlay: {fileID: 3098277069619456452}
 --- !u!1 &3378301165231778955
 GameObject:
@@ -650,6 +659,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6c329bfbdf9149e684ed44dde2c2f91, type: 3}
+--- !u!1 &4772351148233704888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1693844795821846780, guid: a6c329bfbdf9149e684ed44dde2c2f91,
+    type: 3}
+  m_PrefabInstance: {fileID: 6177657532664722756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &244486480487315929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259974770317315229, guid: a6c329bfbdf9149e684ed44dde2c2f91,

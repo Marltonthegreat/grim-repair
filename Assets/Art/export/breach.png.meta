@@ -38,6 +38,27 @@ TextureImporter:
   - first:
       213: -4946665614803656261
     second: breach_11
+  - first:
+      213: -2102201106631759991
+    second: breach_0
+  - first:
+      213: 6550977306968675855
+    second: breach_1
+  - first:
+      213: 1227120096640251849
+    second: breach_2
+  - first:
+      213: 3368599190124471139
+    second: breach_3
+  - first:
+      213: -7428709139510446571
+    second: breach_4
+  - first:
+      213: -1741306465155810771
+    second: breach_5
+  - first:
+      213: -8081964920114171686
+    second: breach_6
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -130,14 +151,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ec5b199e21f5e850800000000000000
-      internalID: 6405791227443895526
+      spriteID: 987e7c04b3b73d2e0800000000000000
+      internalID: -2102201106631759991
       vertices: []
       indices: 
       edges: []
@@ -151,14 +172,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cd5c8eb2370a2720800000000000000
-      internalID: 2822076031027666368
+      spriteID: f065381f62fb9ea50800000000000000
+      internalID: 6550977306968675855
       vertices: []
       indices: 
       edges: []
@@ -172,14 +193,98 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67673583b4a324420800000000000000
-      internalID: 2612714828570261110
+      spriteID: 9c73cf0f93b970110800000000000000
+      internalID: 1227120096640251849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breach_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 363a906ad1bafbe20800000000000000
+      internalID: 3368599190124471139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breach_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51638c7856ce7e890800000000000000
+      internalID: -7428709139510446571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breach_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2afb4beef2a5d7e0800000000000000
+      internalID: -1741306465155810771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breach_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad03d69a9b717df80800000000000000
+      internalID: -8081964920114171686
       vertices: []
       indices: 
       edges: []
