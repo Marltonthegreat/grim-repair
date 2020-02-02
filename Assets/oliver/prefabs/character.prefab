@@ -79,7 +79,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 48e68d3823abc034da57c98cc98f6379, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 6407055486582216444}
   - component: {fileID: 6407055486582216445}
   - component: {fileID: 6099287999424177275}
+  - component: {fileID: 1360647610521734336}
   m_Layer: 0
   m_Name: character
   m_TagString: Untagged
@@ -264,7 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e438af92c603741bd182be4f304de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  o2Meter: {fileID: 0}
 --- !u!114 &6099287999424177275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +296,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1360647610521734336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407055486582216442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58239dec22ecfd43a7897bb24f98801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flash: 0
+  spriteRenderers:
+  - {fileID: 6407055485282605037}
+  - {fileID: 6414417226987826311}
 --- !u!1 &8529433189486499400
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8529433189486499400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6407055486582216440}
@@ -345,7 +361,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 48e68d3823abc034da57c98cc98f6379, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,7 +381,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -17,3 +17,5 @@ MonoBehaviour:
   directionInputMinThreshold: 0.1
   gravity: -20
   descendTimeInSeconds: 300
+  o2Seconds: 10
+  flashIntervalSeconds: 0.1
