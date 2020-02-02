@@ -173,7 +173,7 @@ public class Character : MonoBehaviour
             if (headUnderWater) {
                 rb.gravityScale = GameConfig.instance.buoyancy;
             } else {
-                rb.gravityScale = GameConfig.instance.gravity;
+                rb.gravityScale = GameConfig.instance.deadGravity;
             }
         } else {
             var touchingGround = Physics2D.Raycast(feet.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
