@@ -10,7 +10,10 @@ public class GameConfig : ScriptableObject
     public float climbSpeed = 1;
     public float directionInputMinThreshold = 0.1f;
     // doing our own gravity so we can use Rigidbody2D.MovePosition()
-    public float gravity = -20;
+    public float gravity = 20;
+    // when a dead player's head hits the surface the normal gravity is too high and pushes
+    // them under a lot, so this is a quick attempt to fix that by using a smaller value
+    public float deadGravity = 10;
     public float buoyancy = -0.1f; // floats characters when dead
     public float descendTimeInSeconds = 90;
     public float o2Seconds = 10;

@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         } else {
             var desiredPosition = transform.position 
                     + new Vector3(dirInput.x, 0, 0) * GameConfig.instance.walkSpeed * Time.fixedDeltaTime;
-            desiredPosition += new Vector3(0, GameConfig.instance.gravity * Time.fixedDeltaTime, 0);
+            desiredPosition += new Vector3(0, -GameConfig.instance.gravity * Time.fixedDeltaTime, 0);
             if (dirInput.x != 0) {
                 character.WalkTo(desiredPosition);
             } else {

@@ -53,6 +53,11 @@ public class RoomController : MonoBehaviour
             m_timer -= Time.deltaTime;
             m_PercentFlooded = m_timer / m_TimeToFlood;
             m_WaterSlider.value = m_PercentFlooded;
+
+            if (m_PercentFlooded <= 0)
+            {
+                m_RoomDraining = false;
+            }
         }
 
         if (m_Breached)
@@ -60,6 +65,7 @@ public class RoomController : MonoBehaviour
             m_BreachGO.SetActive(true);
         }
 
+        //process flooding
         if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
         {
             m_timer += Time.deltaTime;
@@ -80,7 +86,7 @@ public class RoomController : MonoBehaviour
         }
 
 
-        // check if the connected doors are all closed
+        // Is Room Locked? connected doors are all closed
         if (m_ConnectedDoors.Length != 0)
         {
             int doorCount = m_ConnectedDoors.Length;
@@ -103,12 +109,16 @@ public class RoomController : MonoBehaviour
             }
         }
 
+        //Overflow if not locked down
         if (m_RoomFlooded && !m_RoomLocked)
         {
             Overflow();
             //m_RoomLocked = true;
         }
     }
+    //END OF UPDATE
+
+
 
     void Overflow()
     {
