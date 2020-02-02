@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RoomController : MonoBehaviour
@@ -25,18 +23,72 @@ public class RoomController : MonoBehaviour
 
     [Header("Oxygen Overlay")]
     public Image m_RoomOverlay;
-    private Color defaultColor;
-
-
-
-
+    //private Color defaultColor;
 
 
     private void Awake()
     {
-        defaultColor = m_RoomOverlay.color;
+        //defaultColor = m_RoomOverlay.color;
         m_timer = 0;
     }
+
+    private void CheckLockedStatus()
+    {
+        if (m_ConnectedDoors.Length != 0)
+        {
+            int doorCount = m_ConnectedDoors.Length;
+            int numClosed = 0;
+            for (int i = 0; i < m_ConnectedDoors.Length; i++)
+            {
+                var isclosed = m_ConnectedDoors[i].GetBool("closed");
+                if (isclosed)
+                {
+                    numClosed += 1;
+                }
+            }
+            if (numClosed == doorCount)
+            {
+                m_RoomLocked = true;
+            }
+            else
+            {
+                m_RoomLocked = false;
+            }
+        }
+    }
+
+    void Overflow()
+    {
+        if (m_ConnectedDoors.Length != 0)
+        {
+            for (int i = 0; i < m_ConnectedRooms.Length; i++)
+            {
+                if (m_ConnectedRooms[i].m_RoomLocked == false)
+                {
+                    m_ConnectedRooms[i].m_RoomFlooding = true;
+                }
+
+            }
+        }
+    }
+
+    public void Repair()
+    {
+        if (m_introBreach)
+        {
+            m_introBreach = false;
+            m_timer = 0.8f;
+        }
+
+        m_BreachGO.SetActive(false);
+        m_RoomDraining = true;
+    }
+
+
+
+
+
+
 
     private void Update()
     {
@@ -86,28 +138,8 @@ public class RoomController : MonoBehaviour
         }
 
 
-        // Is Room Locked? connected doors are all closed
-        if (m_ConnectedDoors.Length != 0)
-        {
-            int doorCount = m_ConnectedDoors.Length;
-            int numClosed = 0;
-            for (int i = 0; i < m_ConnectedDoors.Length; i++)
-            {
-                var isclosed = m_ConnectedDoors[i].GetBool("closed");
-                if (isclosed)
-                {
-                    numClosed += 1;
-                }
-            }
-            if (numClosed == doorCount)
-            {
-                m_RoomLocked = true;
-            }
-            else
-            {
-                m_RoomLocked = false;
-            }
-        }
+        //Are all connected doors closed?
+        CheckLockedStatus();
 
         //Overflow if not locked down
         if (m_RoomFlooded && !m_RoomLocked)
@@ -115,32 +147,5 @@ public class RoomController : MonoBehaviour
             Overflow();
             //m_RoomLocked = true;
         }
-    }
-    //END OF UPDATE
-
-
-
-    void Overflow()
-    {
-        for (int i = 0; i < m_ConnectedRooms.Length; i++)
-        {
-            if(m_ConnectedRooms[i].m_RoomLocked == false)
-            {
-                m_ConnectedRooms[i].m_RoomFlooding = true;
-            }
-            
-        }
-    }
-
-    public void Repair()
-    {
-        if (m_introBreach)
-        {
-            m_introBreach = false;
-            m_timer = 0.8f;
-        }
-
-        m_BreachGO.SetActive(false);
-        m_RoomDraining = true;
     }
 }
