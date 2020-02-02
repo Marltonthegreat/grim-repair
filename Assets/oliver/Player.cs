@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     Character character;
     Vector2 dirInput;
+    public TMP_Text o2Meter;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +38,23 @@ public class Player : MonoBehaviour
             dirInput = Vector2.zero;
     }
 
-    float timer = 0;
+    float o2 = 100;
     // Update is called once per frame
     void Update()
-    {
+    {  
+        var oldO2 = o2;
+        if (character.headUnderWater) 
+            o2 -= Time.deltaTime * 5;
+        else
+            o2 += Time.deltaTime * 5;
+        o2 = Mathf.Clamp(o2, 0, 100);
+        if (o2Meter != null) {
+            o2Meter.text = $"O2: {Mathf.CeilToInt(o2)}";
+            if (oldO2 > o2)
+                o2Meter.color = Color.red;
+            else
+                o2Meter.color = Color.green;
+        }
         // GetInput();
         // timer += Time.deltaTime;
         // if (timer >= 5) {
