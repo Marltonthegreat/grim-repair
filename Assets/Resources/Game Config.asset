@@ -15,7 +15,7 @@ MonoBehaviour:
   walkSpeed: 12
   climbSpeed: 10
   directionInputMinThreshold: 0.1
-  gravity: -20
+  gravity: -30
   descendTimeInSeconds: 300
   o2Seconds: 10
   flashIntervalSeconds: 0.1
