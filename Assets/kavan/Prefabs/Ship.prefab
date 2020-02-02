@@ -3393,12 +3393,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedRooms.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7092533758555238244}
     - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
       propertyPath: m_ConnectedRooms.Array.data[2]
       value: 
       objectReference: {fileID: 7092533759208137545}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: m_introBreach
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 310d2ad1cbc274489b74aa43e43192b1, type: 3}
 --- !u!68 &7735304231025606384 stripped
