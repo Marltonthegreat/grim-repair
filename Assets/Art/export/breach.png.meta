@@ -1,7 +1,43 @@
 fileFormatVersion: 2
 guid: d329037e0affa425087868767382aee7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 6405791227443895526
+    second: breach_0
+  - first:
+      213: 2822076031027666368
+    second: breach_1
+  - first:
+      213: 2612714828570261110
+    second: breach_2
+  - first:
+      213: 5523076651748691642
+    second: breach_3
+  - first:
+      213: 8469249902407197682
+    second: breach_4
+  - first:
+      213: -7229448561747601992
+    second: breach_5
+  - first:
+      213: -3141871845415531257
+    second: breach_6
+  - first:
+      213: -1263692434538318641
+    second: breach_7
+  - first:
+      213: -6827492115013494034
+    second: breach_8
+  - first:
+      213: -8979993234129550542
+    second: breach_9
+  - first:
+      213: -805759847616164887
+    second: breach_10
+  - first:
+      213: -4946665614803656261
+    second: breach_11
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +76,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -84,7 +120,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: breach_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ec5b199e21f5e850800000000000000
+      internalID: 6405791227443895526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breach_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cd5c8eb2370a2720800000000000000
+      internalID: 2822076031027666368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breach_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67673583b4a324420800000000000000
+      internalID: 2612714828570261110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
