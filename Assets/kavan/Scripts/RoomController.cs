@@ -80,6 +80,7 @@ public class RoomController : MonoBehaviour
             m_WaterHandle.SetActive(true);
         }
     }
+
     private void Overflow()
     {
         /// if (m_ConnectedDoors.Length != 0)
@@ -90,7 +91,6 @@ public class RoomController : MonoBehaviour
             {
                 m_ConnectedRooms[i].m_RoomFlooding = true;
             }
-
         }
         //}
     }
@@ -147,7 +147,7 @@ public class RoomController : MonoBehaviour
         else if (!m_introBreach)
         {
             m_BreachOnElements.SetActive(false);
-            m_RoomFlooding = false;
+            //m_RoomFlooding = false;
         }
 
         //process draining
@@ -168,6 +168,11 @@ public class RoomController : MonoBehaviour
         CheckLockedStatus();
         CheckRoomFloodedStatus();
 
+        if(m_RoomLocked && !m_Breached)
+        {
+            m_RoomFlooding = false;
+        }
+
         //process flooding
         if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
         {
@@ -178,8 +183,9 @@ public class RoomController : MonoBehaviour
             // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
         }
 
+
         //Overflow if not locked down
-        if (m_RoomFlooded && !m_RoomLocked)
+        if (m_RoomFlooding && !m_RoomLocked)
         {
             Overflow();
             //m_RoomLocked = true;
