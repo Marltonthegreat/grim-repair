@@ -13,6 +13,10 @@ public class Character : MonoBehaviour
     SpriteRenderer spriteRenderer;
     // if we're overlapping a ladder, it will be here (regardless of whether or not we're climbing it)
     public Ladder ladder { get; private set; }
+    // if we're overlapping a breach, it will be here (regardless of whether or not we're repairing it)
+    public Collider2D breach { get; private set; }
+    // if we're overlapping a door, it will be here
+    public Collider2D door { get; private set; }
     public Transform feet, head;
     public bool touchingGround { get { return animator.GetBool("touchingGround"); } }
     List<Image> waterAreas = new List<Image>();
@@ -74,25 +78,36 @@ public class Character : MonoBehaviour
         if (isDead)
             return;
         if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
-            if (coll.GetComponent<Animator>() != null)
-                coll.GetComponent<Animator>().SetBool("closed", false);
-            return;
+            if (coll.name.ToLower().StartsWith("door")) {
+                door = coll;
+                if (coll.GetComponent<Animator>() != null)
+                    coll.GetComponent<Animator>().SetBool("closed", false);
+                else
+                    Debug.LogWarning("Found door with no animator", coll.gameObject);
+            } else {
+                // must be a breach
+                Debug.Log($"Found breach: {coll.name}");
+                breach = coll;
+            }
+        } else {
+            var l = coll.GetComponent<Ladder>();
+            if (l == null)
+                return;
+            ladder = l;
         }
-        var l = coll.GetComponent<Ladder>();
-        if (l == null)
-            return;
-        ladder = l;
     }
 
     void OnTriggerExit2D(Collider2D coll) {
         if (isDead)
             return;
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+        if (coll == door) {
             if (coll.GetComponent<Animator>() != null)
                 coll.GetComponent<Animator>().SetBool("closed", true);
-            return;
-        }
-        if (coll.gameObject == ladder.gameObject) {
+            door = null;
+        } else if (coll == breach) {
+            Debug.Log($"Left breach: {breach.name}");
+            breach = null;
+        } else if (coll.gameObject == ladder.gameObject) {
             if (isClimbingLadder)
                 StopClimbing();
             ladder = null;
@@ -124,6 +139,7 @@ public class Character : MonoBehaviour
     public void SetDead() {
         if (isDead)
             return;
+        gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
         rb.constraints = RigidbodyConstraints2D.None;
         rb.AddTorque(1); // make them rotate a bit
         animator.SetFloat("speed", 0);
