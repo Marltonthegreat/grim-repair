@@ -43,6 +43,8 @@ public class RoomController : MonoBehaviour
 
     public void Repair()
     {
+        GameSounds.instance.LeverLatch();
+
         if (m_introBreach)
         {
             StartGameEvent.Raise();
