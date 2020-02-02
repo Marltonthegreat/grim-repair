@@ -57,6 +57,10 @@ public class ShipController : MonoBehaviour
         Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
         
         Rooms[num].GetComponent<RoomController>().RandomBreachSprite();
+
+        //CALL LEAK SOUND
+
+
         Rooms[num].GetComponent<RoomController>().m_Breached = true;
         
         //Stop Trying to CreateLeaks

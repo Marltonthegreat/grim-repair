@@ -26,6 +26,9 @@ public class RoomController : MonoBehaviour
     public Sprite[] RepairSprites;
     private SpriteRenderer BreachSR;
 
+    [Header("Events")]
+    public NeoDragonCP.GameEvent StartGameEvent;
+
 
     public void RandomBreachSprite()
     {
@@ -37,10 +40,12 @@ public class RoomController : MonoBehaviour
         int randomNum = Random.Range(0, RepairSprites.Length);
         BreachSR.sprite = RepairSprites[randomNum];
     }
+
     public void Repair()
     {
         if (m_introBreach)
         {
+            StartGameEvent.Raise();
             m_introBreach = false;
             m_timer = 0.8f;
         }
