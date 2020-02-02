@@ -15,7 +15,7 @@ MonoBehaviour:
   walkSpeed: 12
   climbSpeed: 10
   directionInputMinThreshold: 0.1
-  gravity: -30
+  gravity: 30
   buoyancy: -0.1
   descendTimeInSeconds: 300
   o2Seconds: 0.1
