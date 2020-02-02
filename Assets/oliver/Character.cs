@@ -146,7 +146,6 @@ public class Character : MonoBehaviour
     }
 
     void CS_PlayFootstep() {
-
     }
 
     void CS_PlayHammer() {

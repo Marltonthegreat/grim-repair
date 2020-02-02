@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLoop : MonoBehaviour
 {
@@ -25,8 +26,17 @@ public class GameLoop : MonoBehaviour
     public float skyHeight { get { return skyLocalTop - skyLocalBottom; } }
     public float skyWorldTop { get { return sky.position.y + skyLocalTop; } }
     public float oceanWorldBottom { get { return ocean.position.y + oceanLocalBottom; } }
+    public float normalizedDepth { get { 
+        if (state == GameState.AtTitle || state == GameState.PanningToShip) {
+            return (cameraTopBorder - Camera.main.transform.position.y) / (cameraTopBorder - cameraBottomBorder);
+        } else {
+            return (cameraTopBorder - ship.transform.position.y) / (cameraTopBorder - cameraBottomBorder);
+        }
+    } }
 
     public AnimationCurve panToShipCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    public Slider depthGauge;
 
     public float cameraTopBorder {
         get {
@@ -87,7 +97,7 @@ public class GameLoop : MonoBehaviour
         b.y = dest;
         Camera.main.transform.position = b;
         state = GameState.WaitingForFirstRepair;
-    }    
+    }
 
     // Update is called once per frame
     void Update()
@@ -96,5 +106,6 @@ public class GameLoop : MonoBehaviour
             state = GameState.PanningToShip;
             StartCoroutine("PanToShip");
         }
+        depthGauge.value = 1 - normalizedDepth;
     }
 }
