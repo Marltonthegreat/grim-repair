@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     Vector2 dirInput;
     Flasher flasher;
     float o2Seconds;
+    public bool isDead { get { return character.isDead; } }
 
     // Start is called before the first frame update
     void Start()
@@ -40,12 +41,28 @@ public class Player : MonoBehaviour
             dirInput = Vector2.zero;
     }
 
+    public void SetColor(Color color) {
+        transform.Find("graphics_shirt").GetComponent<SpriteRenderer>().color = color;
+    }
+
+    public void Die() {
+        if (isDead)
+            return;
+        flasher.flash = false;
+        character.SetDead();
+    }
+
     // Update is called once per frame
     void Update()
     {  
+        if (isDead)
+            return;
+
         if (character.headUnderWater) {
             o2Seconds -= Time.deltaTime;
             flasher.flash = true;
+            if (o2Seconds <= 0) 
+                Die();
         } else {
             o2Seconds = GameConfig.instance.o2Seconds;
             flasher.flash = false;
@@ -93,6 +110,8 @@ public class Player : MonoBehaviour
     }
 
     void FixedUpdate() {
+        if (isDead)
+            return;
         HandleMovement();
     }
 }
