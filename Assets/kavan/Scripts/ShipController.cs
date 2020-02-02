@@ -58,8 +58,8 @@ public class ShipController : MonoBehaviour
         Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
         Rooms[num].GetComponent<RoomController>().m_Breached = true;
 
-        //Start Flooding
-        Rooms[num].GetComponent<RoomController>().m_RoomFlooding = true;
+        //Start Flooding - not needed, breached does this already
+        //Rooms[num].GetComponent<RoomController>().m_RoomFlooding = true;
         
         //Stop Trying to CreateLeaks
         m_CreateLeak = false;
