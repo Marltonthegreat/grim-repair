@@ -5,9 +5,11 @@ using UnityEngine;
 public class SeagullFlapRoutine : MonoBehaviour
 {
     public Animator anim;
+    public Vector3 startPos;
 
     private IEnumerator Start()
     {
+        startPos = transform.localPosition;
         while (true)
         {
             yield return StartCoroutine(GlideRoutine());
@@ -27,11 +29,10 @@ public class SeagullFlapRoutine : MonoBehaviour
             var xPos = perturbance * -0.3f;
             var yPos = Mathf.Abs(perturbance) * 0.05f;
             var zPos = transform.localPosition.z;
-            transform.localPosition = new Vector3(xPos, yPos, zPos);
+            transform.localPosition = new Vector3(xPos, yPos, zPos) + startPos;
             transform.eulerAngles = Vector3.back * perturbance * 10;
             timer += Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(0.1f);
     }
 }
