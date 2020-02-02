@@ -11,6 +11,7 @@ public class GameConfig : ScriptableObject
     public float directionInputMinThreshold = 0.1f;
     // doing our own gravity so we can use Rigidbody2D.MovePosition()
     public float gravity = -20;
+    public float buoyancy = -0.1f; // floats characters when dead
     public float descendTimeInSeconds = 90;
     public float o2Seconds = 10;
     public float flashIntervalSeconds = 0.5f;

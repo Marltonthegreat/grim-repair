@@ -5,8 +5,16 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    public Color[] playerColors;
+    [System.NonSerialized]
+    public List<Player> players = new List<Player>();
+
     void OnPlayerJoined(PlayerInput playerInput) {
         Debug.Log($"Player joined: {playerInput.name}, {playerInput.devices.Count}");
+        var player = playerInput.GetComponent<Player>();
+        players.Add(player);
+        Debug.Log("Hmm");
+        player.SetColor(playerColors[players.Count - 1]);
     }
 
     void OnPlayerLeft(PlayerInput playerInput) {

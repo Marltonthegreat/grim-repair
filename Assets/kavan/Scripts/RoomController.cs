@@ -17,7 +17,7 @@ public class RoomController : MonoBehaviour
 
     [Header("Flood Settings")]
     public float m_TimeToFlood = 10f;
-    private float m_timer = 0;
+    private float m_timer;
     public Slider m_WaterSlider;
     [Range(0, 1)]
     public float m_PercentFlooded;
@@ -35,17 +35,11 @@ public class RoomController : MonoBehaviour
     private void Awake()
     {
         defaultColor = m_RoomOverlay.color;
+        m_timer = 0;
     }
 
     private void Update()
     {
-        //process draining
-        if (m_RoomDraining)
-        {
-            m_PercentFlooded = m_WaterSlider.value;
-
-        }
-
         if (m_introBreach)
         {
             m_BreachGO.SetActive(true);
@@ -53,18 +47,23 @@ public class RoomController : MonoBehaviour
             //don't go any further if this is an intro breach room
         }
 
+        //process draining
+        if (m_RoomDraining)
+        {
+            m_timer -= Time.deltaTime;
+            m_PercentFlooded = m_timer / m_TimeToFlood;
+            m_WaterSlider.value = m_PercentFlooded;
+        }
+
         if (m_Breached)
         {
             m_BreachGO.SetActive(true);
         }
 
-        if (!m_RoomDraining && m_RoomFlooding && !m_RoomFlooded)
+        if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
         {
             m_timer += Time.deltaTime;
-
             m_PercentFlooded = m_timer / m_TimeToFlood;
-
-            //Water Level
             m_WaterSlider.value = m_PercentFlooded;
             //Color Overlay for lack of Oxygen
             // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
@@ -128,6 +127,7 @@ public class RoomController : MonoBehaviour
         if (m_introBreach)
         {
             m_introBreach = false;
+            m_timer = 0.8f;
         }
 
         m_BreachGO.SetActive(false);

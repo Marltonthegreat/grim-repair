@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
     List<Image> waterAreas = new List<Image>();
     public bool feetUnderWater { get; private set; }
     public bool headUnderWater { get; private set; }
+    public bool isDead { get { return animator.GetBool("isDead"); } }
 
     public bool isClimbingLadder {
         get {
@@ -70,8 +71,11 @@ public class Character : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
+        if (isDead)
+            return;
         if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
-            coll.GetComponent<Animator>().SetBool("closed", false);
+            if (coll.GetComponent<Animator>() != null)
+                coll.GetComponent<Animator>().SetBool("closed", false);
             return;
         }
         var l = coll.GetComponent<Ladder>();
@@ -81,8 +85,11 @@ public class Character : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D coll) {
+        if (isDead)
+            return;
         if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
-            coll.GetComponent<Animator>().SetBool("closed", true);
+            if (coll.GetComponent<Animator>() != null)
+                coll.GetComponent<Animator>().SetBool("closed", true);
             return;
         }
         if (coll.gameObject == ladder.gameObject) {
@@ -113,6 +120,17 @@ public class Character : MonoBehaviour
     //     // todo - set falling
     //     animator.SetFloat("speed", 1);
     // }
+
+    public void SetDead() {
+        if (isDead)
+            return;
+        rb.constraints = RigidbodyConstraints2D.None;
+        rb.AddTorque(1); // make them rotate a bit
+        animator.SetFloat("speed", 0);
+        animator.SetBool("isDead", true);
+        if (isClimbingLadder)
+            StopClimbing();
+    }
 
     public void StartClimbing() {
         if (ladder == null)
@@ -151,7 +169,15 @@ public class Character : MonoBehaviour
     void Update()
     {
         CheckForWater();
-        var touchingGround = Physics2D.Raycast(feet.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
-        animator.SetBool("touchingGround", touchingGround);
+        if (isDead) {
+            if (headUnderWater) {
+                rb.gravityScale = GameConfig.instance.buoyancy;
+            } else {
+                rb.gravityScale = GameConfig.instance.gravity;
+            }
+        } else {
+            var touchingGround = Physics2D.Raycast(feet.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
+            animator.SetBool("touchingGround", touchingGround);
+        }
     }
 }
