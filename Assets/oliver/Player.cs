@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     }
 
     void OnInteract(InputValue value) {
+        if (!character) // first button press can get here before we've Start()ed
+            return;
         interactHold = value.isPressed;
         if (!interactHold) {
             if (character.isRepairing)
@@ -111,11 +113,16 @@ public class Player : MonoBehaviour
             } else {
                 character.IdleTo(transform.position);
             }
+        } else if (character.isRepairing) {
+            var desiredPosition = transform.position;
+            desiredPosition += new Vector3(0, -GameConfig.instance.gravity * Time.fixedDeltaTime, 0);
+            // send a position even if repairing (probably don't need to but it keeps us consistent)
+            character.IdleTo(desiredPosition);
         } else {
             var desiredPosition = transform.position 
                     + new Vector3(dirInput.x, 0, 0) * GameConfig.instance.walkSpeed * Time.fixedDeltaTime;
             desiredPosition += new Vector3(0, -GameConfig.instance.gravity * Time.fixedDeltaTime, 0);
-            if (!character.isRepairing && dirInput.x != 0) {
+            if (dirInput.x != 0) {
                 character.WalkTo(desiredPosition);
             } else {
                 // send a position even if idling in case the character is falling

@@ -5,35 +5,34 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     public GameObject[] Rooms;
-
-    //public float m_GameTime = 90f;
-    //public FloatVariable m_TimeRemaining;
-    //public FloatVariable m_AirRemaining;
     public bool m_CreateLeak = false;
-
-   // private void Awake()
-  //  {
-        //m_TimeRemaining.currentValue = m_GameTime;
-  //  }
+    public float m_LeakPercentage;
 
     private void Update()
     {
-        //Update Time Remaining
-        //m_TimeRemaining.currentValue -= Time.deltaTime;
-
-        //Update Air Remaining (if it should be a % of time remaining)
-        //m_AirRemaining.currentValue = m_TimeRemaining.currentValue / m_GameTime;
-
-       // if (m_TimeRemaining.currentValue <= 0)
-        //{
-         //   Debug.Log("GAME OVER, time ran out");
-        //}
+        ShipStatus();
 
         if (m_CreateLeak)
         {
             Leak();
         }
     }
+
+    private void ShipStatus()
+    {
+        float roomCount = Rooms.Length;
+        float roomsFlooding = 0;
+
+        for (int i = 0; i < Rooms.Length; i++)
+        {
+            if (Rooms[i].GetComponent<RoomController>().m_RoomFlooding)
+            {
+                roomsFlooding += 1;
+            }
+        }
+        m_LeakPercentage = roomsFlooding / roomCount;
+    }
+
 
     public void Leak()
     {
@@ -59,9 +58,7 @@ public class ShipController : MonoBehaviour
         
         Rooms[num].GetComponent<RoomController>().RandomBreachSprite();
         Rooms[num].GetComponent<RoomController>().m_Breached = true;
-        //Start Flooding - not needed, breached does this already
-        //Rooms[num].GetComponent<RoomController>().m_RoomFlooding = true;
-
+        
         //Stop Trying to CreateLeaks
         m_CreateLeak = false;
     }

@@ -20,6 +20,7 @@ public class GameConfig : ScriptableObject
     public float flashIntervalSeconds = 0.5f;
     // when the game starts, how long do we want to take to pan down to the ship?
     public float panToShipSeconds = 10;
+    public int repairHitsNeeded = 5; // how many hammer hits to repair a breach
 
     static GameConfig _instance;
     public static GameConfig instance { get {

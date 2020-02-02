@@ -24,6 +24,8 @@ public class Character : MonoBehaviour
     public bool feetUnderWater { get; private set; }
     public bool headUnderWater { get; private set; }
     public bool isDead { get { return animator.GetBool("isDead"); } }
+    // store the number of hammer hits the player has done
+    int currentRepairCount;
 
     public bool isClimbingLadder {
         get {
@@ -139,16 +141,28 @@ public class Character : MonoBehaviour
             return;
         if (isClimbingLadder)
             throw new System.Exception("Can't repair when climbing a ladder");
+        currentRepairCount = 0;
         animator.SetBool("isRepairing", true);
+    }
+
+    void CS_PlayFootstep() {
+
+    }
+
+    void CS_PlayHammer() {
+        currentRepairCount ++;
+        if (currentRepairCount >= GameConfig.instance.repairHitsNeeded)
+            RepairBreach();
     }
 
     void RepairBreach() {
         if (breach == null)
             throw new System.Exception("No breach for RepairBreach()");
         var room = breach.GetComponentInParent<RoomController>();
-        if (room != null)
+        if (room != null) {
+            StopRepairing();
             room.Repair();
-        else
+        } else
             Debug.LogWarning("Found breach with no room", breach.gameObject);
     }
 
