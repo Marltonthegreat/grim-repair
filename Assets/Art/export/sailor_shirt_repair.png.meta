@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 78f4906f877684610a02c832dcb18f2a
 TextureImporter:
   internalIDToNameTable:
@@ -8,6 +9,11 @@ TextureImporter:
   - first:
       213: -4463522537171619867
     second: sailor_shirt_repair_1
+=======
+guid: 8112ed3c9cc01420eabbe8820400a491
+TextureImporter:
+  internalIDToNameTable: []
+>>>>>>> 8ea9980a84b56676d9369fc73ff0ea06ff1d4431
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -90,6 +96,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
+<<<<<<< HEAD
     sprites:
     - serializedVersion: 2
       name: sailor_shirt_repair_0
@@ -133,6 +140,9 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+=======
+    sprites: []
+>>>>>>> 8ea9980a84b56676d9369fc73ff0ea06ff1d4431
     outline: []
     physicsShape: []
     bones: []

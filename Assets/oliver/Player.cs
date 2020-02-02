@@ -32,6 +32,14 @@ public class Player : MonoBehaviour
             dirInput.y = 0;
     }
 
+    void OnInteract(InputValue value) {
+        if (character.breach != null) {
+            character.RepairBreach();
+        } else if (character.door != null) {
+            character.ToggleDoor();
+        }
+    }
+
     // todo - multiplayer/rewired?
     void GetInput() {
         dirInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
