@@ -29,7 +29,7 @@ public class RoomController : MonoBehaviour
     private void Awake()
     {
         //defaultColor = m_RoomOverlay.color;
-        m_timer = 0;
+        m_timer = 0f;
     }
 
     private void CheckLockedStatus()
@@ -67,7 +67,6 @@ public class RoomController : MonoBehaviour
             m_RoomLocked = false;
         }
     }
-
     private void CheckRoomFloodedStatus()
     {
         if (m_PercentFlooded > 1)
@@ -79,7 +78,6 @@ public class RoomController : MonoBehaviour
             m_RoomFlooded = false;
         }
     }
-
     private void Overflow()
     {
         /// if (m_ConnectedDoors.Length != 0)
@@ -103,6 +101,7 @@ public class RoomController : MonoBehaviour
             m_timer = 0.8f;
         }
         m_Breached = false;
+        m_RoomDraining = true;
     }
 
     private void Update()
@@ -122,12 +121,13 @@ public class RoomController : MonoBehaviour
         else if (!m_introBreach)
         {
             m_BreachGO.SetActive(false);
-            m_RoomDraining = true;
+            m_RoomFlooding = false;
         }
 
         //process draining
         if (m_RoomDraining)
         {
+            Debug.Log("Room is draining");
             m_timer -= Time.deltaTime;
             m_PercentFlooded = m_timer / m_TimeToFlood;
             m_WaterSlider.value = m_PercentFlooded;
@@ -135,6 +135,7 @@ public class RoomController : MonoBehaviour
             if (m_PercentFlooded <= 0)
             {
                 m_RoomDraining = false;
+                m_timer = 0f;
             }
         }
 
