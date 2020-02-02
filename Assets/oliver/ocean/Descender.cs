@@ -7,7 +7,8 @@ public class Descender : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var speed = 75 / GameConfig.instance.descendTimeInSeconds; // 75 is the height of the ocean in units
+        // 750 is the height of the ocean in units
+        var speed = 750 / GameConfig.instance.descendTimeInSeconds; 
         transform.position += new Vector3(0, speed, 0) * Time.deltaTime;
     }
 }
