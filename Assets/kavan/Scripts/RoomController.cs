@@ -26,11 +26,28 @@ public class RoomController : MonoBehaviour
     public Sprite[] RepairSprites;
     private SpriteRenderer BreachSR;
 
-    [Header("Oxygen Overlay")]
-    public Image m_RoomOverlay;
-    //private Color defaultColor;
 
-
+    public void RandomBreachSprite()
+    {
+        int randomNum = Random.Range(0, BreachSprites.Length);
+        BreachSR.sprite = BreachSprites[randomNum];
+    }
+    public void RandomRepairSprite()
+    {
+        int randomNum = Random.Range(0, RepairSprites.Length);
+        BreachSR.sprite = RepairSprites[randomNum];
+    }
+    public void Repair()
+    {
+        if (m_introBreach)
+        {
+            m_introBreach = false;
+            m_timer = 0.8f;
+        }
+        RandomRepairSprite();
+        m_Breached = false;
+        m_RoomDraining = true;
+    }
 
     private void CheckLockedStatus()
     {
@@ -82,107 +99,80 @@ public class RoomController : MonoBehaviour
     }
     private void Overflow()
     {
-        /// if (m_ConnectedDoors.Length != 0)
-        // {
         for (int i = 0; i < m_ConnectedRooms.Length; i++)
         {
             if (m_ConnectedRooms[i].m_RoomLocked == false)
             {
                 m_ConnectedRooms[i].m_RoomFlooding = true;
             }
-
         }
-        //}
-    }
-
-    public void RandomBreachSprite()
-    {
-        int randomNum = Random.Range(0, BreachSprites.Length);
-        BreachSR.sprite = BreachSprites[randomNum];
-    }
-
-    public void RandomRepairSprite()
-    {
-        int randomNum = Random.Range(0, RepairSprites.Length);
-        BreachSR.sprite = RepairSprites[randomNum];
-    }
-
-    public void Repair()
-    {
-        if (m_introBreach)
-        {
-            m_introBreach = false;
-            m_timer = 0.8f;
-        }
-        RandomRepairSprite();
-        m_Breached = false;
-        m_RoomDraining = true;
     }
 
 
     private void Awake()
     {
         BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
-        //defaultColor = m_RoomOverlay.color;
         m_timer = 0f;
-        //RandomSprite
-        RandomBreachSprite();
     }
 
     private void Update()
     {
         if (m_introBreach)
         {
-            m_BreachGO.SetActive(true);
-            return;
-            //don't go any further if this is an intro breach room
+            return; //go no further if intro...
         }
 
+        //A LEAK() has been created in ShipController
         if (m_Breached)
         {
             m_BreachGO.SetActive(true);
             m_BreachOnElements.SetActive(true);
             m_RoomFlooding = true;
         }
-        else if (!m_introBreach)
+        else //Every frame make sure breach elements are off if you're !m_Breached
         {
             m_BreachOnElements.SetActive(false);
-            m_RoomFlooding = false;
         }
 
-        //process draining
+        //Status set by Repair() & below if locked up
         if (m_RoomDraining)
         {
-            //Debug.Log("Room is draining");
-            m_timer -= Time.deltaTime * 2;
-            m_PercentFlooded = m_timer / m_TimeToFlood;
-            m_WaterSlider.value = m_PercentFlooded;
-
             if (m_PercentFlooded <= 0)
             {
                 m_RoomDraining = false;
                 m_timer = 0f;
             }
+            else
+            {
+                m_timer -= Time.deltaTime * 2;
+                m_PercentFlooded = m_timer / m_TimeToFlood;
+                m_WaterSlider.value = m_PercentFlooded;
+            }           
         }
 
         CheckLockedStatus();
+
+        // if im locked in, and theres no breach here, stop flooding and drain.
+        if (m_RoomLocked && !m_Breached)
+        {
+            m_RoomFlooding = false;
+            m_RoomDraining = true;
+        }
+
         CheckRoomFloodedStatus();
 
-        //process flooding
+        //FLOOD
         if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
         {
             m_timer += Time.deltaTime;
             m_PercentFlooded = m_timer / m_TimeToFlood;
             m_WaterSlider.value = m_PercentFlooded;
-            //Color Overlay for lack of Oxygen
-            // m_RoomOverlay.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, m_PercentFlooded);
         }
 
         //Overflow if not locked down
-        if (m_RoomFlooded && !m_RoomLocked)
+        if (m_RoomFlooding && !m_RoomLocked)
         {
             Overflow();
-            //m_RoomLocked = true;
         }
     }
 }

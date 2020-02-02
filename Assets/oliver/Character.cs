@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     public Collider2D door { get; private set; }
     public Transform feet, head;
     public bool touchingGround { get { return animator.GetBool("touchingGround"); } }
+    public bool isRepairing { get { return animator.GetBool("isRepairing"); } }
     List<Image> waterAreas = new List<Image>();
     public bool feetUnderWater { get; private set; }
     public bool headUnderWater { get; private set; }
@@ -113,6 +114,8 @@ public class Character : MonoBehaviour
     public void WalkTo(Vector2 pos) {
         if (isClimbingLadder)
             Debug.LogError("Player can't walk when climbing");
+        if (isRepairing)
+            Debug.LogError("Player can't walk when repairing");
         foreach (var sr in spriteRenderers)
             sr.flipX = pos.x < transform.position.x;
         rb.MovePosition(pos);
@@ -131,6 +134,32 @@ public class Character : MonoBehaviour
     //     animator.SetFloat("speed", 1);
     // }
 
+    public void StartRepairing() {
+        if (isDead || isRepairing)
+            return;
+        if (isClimbingLadder)
+            throw new System.Exception("Can't repair when climbing a ladder");
+        animator.SetBool("isRepairing", true);
+    }
+
+    void RepairBreach() {
+        if (breach == null)
+            throw new System.Exception("No breach for RepairBreach()");
+        var room = breach.GetComponentInParent<RoomController>();
+        if (room != null)
+            room.Repair();
+        else
+            Debug.LogWarning("Found breach with no room", breach.gameObject);
+    }
+
+    public void StopRepairing() {
+        if (isDead)
+            return;
+        if (!isRepairing)
+            throw new System.Exception("Can't stop repairing when not repairing");
+        animator.SetBool("isRepairing", false);
+    }
+
     public void SetDead() {
         if (isDead)
             return;
@@ -144,6 +173,10 @@ public class Character : MonoBehaviour
     }
 
     public void StartClimbing() {
+        if (isDead)
+            return;
+        if (isRepairing)
+            throw new System.Exception("Player can't climb when repairing");
         if (ladder == null)
             throw new System.Exception("Can't start climbing when not overlapping a ladder");
         // make it so the player doesn't collide with the ladder's transition floor
@@ -163,7 +196,7 @@ public class Character : MonoBehaviour
     // the player is climbing.  call StartClimbing() first.
     public void ClimbTo(Vector2 pos) {
         if (!isClimbingLadder)
-            throw new System.Exception("Player can't walk when climbing");
+            throw new System.Exception("Player can't climb when not climbing");
         foreach (var sr in spriteRenderers)
             sr.flipX = pos.x < transform.position.x;
         rb.MovePosition(pos);
@@ -171,7 +204,7 @@ public class Character : MonoBehaviour
     }
 
     // should be called in a fixed update when the user has no directional input (but the character might
-    // be falling due to gravity)
+    // be falling due to gravity).  they could also be repairing here.
     public void IdleTo(Vector2 pos) {
         rb.MovePosition(pos);
         animator.SetFloat("speed", 0);
@@ -185,16 +218,6 @@ public class Character : MonoBehaviour
             animator.SetBool("closed", !animator.GetBool("closed"));
         else
             Debug.LogWarning("Found door with no animator", door.gameObject);
-    }
-
-    public void RepairBreach() {
-        if (breach == null)
-            throw new System.Exception("No breach for Togglebreach()");
-        var room = breach.GetComponentInParent<RoomController>();
-        if (room != null)
-            room.Repair();
-        else
-            Debug.LogWarning("Found breach with no room", breach.gameObject);
     }
 
     // Update is called once per frame

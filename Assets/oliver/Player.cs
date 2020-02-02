@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     Flasher flasher;
     float o2Seconds;
     public bool isDead { get { return character.isDead; } }
+    bool interactHold;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +34,14 @@ public class Player : MonoBehaviour
     }
 
     void OnInteract(InputValue value) {
+        interactHold = value.isPressed;
+        if (!interactHold) {
+            if (character.isRepairing)
+                character.StopRepairing();
+            return;
+        }
         if (character.breach != null) {
-            character.RepairBreach();
+            character.StartRepairing();
         } else if (character.door != null) {
             character.ToggleDoor();
         }
@@ -108,7 +115,7 @@ public class Player : MonoBehaviour
             var desiredPosition = transform.position 
                     + new Vector3(dirInput.x, 0, 0) * GameConfig.instance.walkSpeed * Time.fixedDeltaTime;
             desiredPosition += new Vector3(0, -GameConfig.instance.gravity * Time.fixedDeltaTime, 0);
-            if (dirInput.x != 0) {
+            if (!character.isRepairing && dirInput.x != 0) {
                 character.WalkTo(desiredPosition);
             } else {
                 // send a position even if idling in case the character is falling

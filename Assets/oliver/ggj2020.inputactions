@@ -19,7 +19,7 @@
                     "id": "1bf1f3a5-0ff1-4680-9efe-e558057ce97c",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press(behavior=2)"
                 }
             ],
             "bindings": [
