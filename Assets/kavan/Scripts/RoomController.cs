@@ -151,7 +151,7 @@ public class RoomController : MonoBehaviour
         if (m_RoomDraining)
         {
             Debug.Log("Room is draining");
-            m_timer -= Time.deltaTime;
+            m_timer -= Time.deltaTime * 2;
             m_PercentFlooded = m_timer / m_TimeToFlood;
             m_WaterSlider.value = m_PercentFlooded;
 
