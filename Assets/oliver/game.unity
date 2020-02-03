@@ -1308,6 +1308,7 @@ MonoBehaviour:
   sky: {fileID: 329765532}
   ship: {fileID: 1158474377}
   input: {fileID: 2098962882}
+  createLeak: {fileID: 11400000, guid: 71081c7785ffb435dbb1ea2dc3122efb, type: 2}
   panToShipCurve:
     serializedVersion: 2
     m_Curve:
