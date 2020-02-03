@@ -25,3 +25,9 @@ MonoBehaviour:
   repairHitsNeeded: 3
   percentageForSink: 0.1
   maxSinkPercentPerSecond: 0.01
+  minLeakEventSeconds: 25
+  maxLeakEventSeconds: 35
+  depthLeakEventMultiplier: 0.5
+  perPlayerPenaltySeconds: 5
+  secondsToWaitBeforeFinalScreen: 5
+  secondsToWaitOnFinalScreen: 10
