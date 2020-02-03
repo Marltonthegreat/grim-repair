@@ -193,5 +193,11 @@ public class RoomController : MonoBehaviour
         {
             Overflow();
         }
+
+        if(m_RoomFlooded && m_RoomFlooding && !m_Breached)
+        {
+            m_RoomFlooding = false;
+            m_RoomDraining = true;
+        }
     }
 }
