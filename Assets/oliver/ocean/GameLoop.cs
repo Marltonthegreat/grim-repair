@@ -79,6 +79,8 @@ public class GameLoop : MonoBehaviour
         return _instance;
     } }
 
+    bool hitBottom;
+
     void Start() {
         state = GameState.AtTitle;
         var p = Camera.main.transform.position;
@@ -121,6 +123,7 @@ public class GameLoop : MonoBehaviour
     }
 
     IEnumerator Win() {
+        GameSounds.instance.GameWin();
         state = GameState.Won;
         victoryScreen.SetActive(true);
         yield return new WaitForSeconds(GameConfig.instance.secondsToWaitOnFinalScreen);
@@ -129,6 +132,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator Lose() {
         yield return new WaitForSeconds(GameConfig.instance.secondsToWaitBeforeFinalScreen);
+        // GameSounds.instance.GameLose();
         state = GameState.Lost;
         gameOverScreen.SetActive(true);
         yield return new WaitForSeconds(GameConfig.instance.secondsToWaitOnFinalScreen);
@@ -163,6 +167,10 @@ public class GameLoop : MonoBehaviour
                 newY = Mathf.Min(oceanContainerMaxY, newY);
                 pos.y = newY;
                 oceanContainer.transform.position = pos;
+                if (pos.y == oceanContainerMaxY && !hitBottom) {
+                    hitBottom = true;
+                    GameSounds.instance.StartCrash();
+                }
             } else {
                 // moving the ocean down means rising
                 var pos = oceanContainer.transform.position;

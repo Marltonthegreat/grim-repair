@@ -23,10 +23,10 @@ MonoBehaviour:
   flashIntervalSeconds: 0.1
   panToShipSeconds: 5
   repairHitsNeeded: 3
-  percentageForSink: 0.1
+  percentageForSink: 0.08
   maxSinkPercentPerSecond: 0.01
-  minLeakEventSeconds: 25
-  maxLeakEventSeconds: 35
+  minLeakEventSeconds: 15
+  maxLeakEventSeconds: 25
   depthLeakEventMultiplier: 0.5
   perPlayerPenaltySeconds: 5
   secondsToWaitBeforeFinalScreen: 5

@@ -22,6 +22,8 @@ public class GameSounds : MonoBehaviour {
     [SerializeField]
     private AudioClip gameWin;
     [SerializeField]
+    private AudioClip gameLose;
+    [SerializeField]
     private AudioClip startCrash;
     [SerializeField]
     private List<AudioClip> doorBurst;
@@ -103,6 +105,11 @@ public class GameSounds : MonoBehaviour {
     public void GameWin()
     {
         PlayClip(gameWin);
+    }
+
+    public void GameLose()
+    {
+        PlayClip(gameLose);
     }
 
     public void StartCrash()

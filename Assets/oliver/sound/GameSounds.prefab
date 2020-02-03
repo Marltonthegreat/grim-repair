@@ -136,6 +136,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1671e614a92a2426a879e0868537fd30, type: 3}
   - {fileID: 8300000, guid: 617dd9d6d811e4675a92107152e288e2, type: 3}
   gameWin: {fileID: 8300000, guid: 4307f619f30d94c5ebac86fbdf07a442, type: 3}
+  gameLose: {fileID: 8300000, guid: fb5c7aad074694b2aa0631f57af5f7fd, type: 3}
   startCrash: {fileID: 8300000, guid: fb5c7aad074694b2aa0631f57af5f7fd, type: 3}
   doorBurst:
   - {fileID: 8300000, guid: 221efd09c4ae841a0988497ace1e61bb, type: 3}

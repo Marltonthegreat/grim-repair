@@ -1971,6 +1971,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7379767898183444210, guid: d06613b7584ae174f8a38f81ccfa75b7,
+        type: 3}
+      propertyPath: gameLose
+      value: 
+      objectReference: {fileID: 8300000, guid: fb5c7aad074694b2aa0631f57af5f7fd, type: 3}
     - target: {fileID: 7379767898183444212, guid: d06613b7584ae174f8a38f81ccfa75b7,
         type: 3}
       propertyPath: m_Name
