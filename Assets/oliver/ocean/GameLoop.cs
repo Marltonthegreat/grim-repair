@@ -36,6 +36,8 @@ public class GameLoop : MonoBehaviour
         }
     } }
 
+    public MusicManager musicManager;
+    
     public NeoDragonCP.GameEvent createLeak;
 
     public AnimationCurve panToShipCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -116,6 +118,7 @@ public class GameLoop : MonoBehaviour
         if (state == GameState.AtTitle && input.players.Count > 0) {
             state = GameState.PanningToShip;
             StartCoroutine("PanToShip");
+            musicManager.PlayAmbientMusic();
         }
         depthGauge.value = 1 - normalizedDepth;
         if (state == GameState.InGame) {

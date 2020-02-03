@@ -146,12 +146,18 @@ public class Character : MonoBehaviour
     }
 
     void CS_PlayFootstep() {
+        if (feetUnderWater)
+            GameSounds.instance.PlayerFootstepsDry();
+        else
+            GameSounds.instance.PlayerFootstepsWet();
     }
 
     void CS_PlayHammer() {
+        GameSounds.instance.LeverLatch();
         currentRepairCount ++;
-        if (currentRepairCount >= GameConfig.instance.repairHitsNeeded)
+        if (currentRepairCount >= GameConfig.instance.repairHitsNeeded) {
             RepairBreach();
+        }
     }
 
     void RepairBreach() {
@@ -183,6 +189,7 @@ public class Character : MonoBehaviour
         animator.SetBool("isDead", true);
         if (isClimbingLadder)
             StopClimbing();
+        GameSounds.instance.DeathDrown();
     }
 
     public void StartClimbing() {
@@ -227,9 +234,15 @@ public class Character : MonoBehaviour
         if (door == null)
             throw new System.Exception("No door for ToggleDoor()");
         var animator = door.GetComponent<Animator>();
-        if (animator != null)
-            animator.SetBool("closed", !animator.GetBool("closed"));
-        else
+        if (animator != null) {
+            if (animator.GetBool("closed")) {
+                animator.SetBool("closed", false);
+                GameSounds.instance.DoorBurst();
+            } else {
+                animator.SetBool("closed", true);
+                GameSounds.instance.DoorClose();
+            }
+        } else
             Debug.LogWarning("Found door with no animator", door.gameObject);
     }
 

@@ -137,6 +137,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8667771132495354781}
   - component: {fileID: 2797513822372227241}
+  - component: {fileID: 1449613318}
+  - component: {fileID: 1449613319}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
