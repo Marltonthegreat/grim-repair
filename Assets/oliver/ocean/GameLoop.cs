@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameLoop : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class GameLoop : MonoBehaviour
         AtTitle,
         PanningToShip,
         WaitingForFirstRepair,
-        InGame
+        InGame,
+        Won,
+        Lost
     }
     public GameState state { get; private set; }
 
@@ -46,6 +49,8 @@ public class GameLoop : MonoBehaviour
     public Slider depthGauge;
 
     public float nextLeakTimer;
+
+    public GameObject victoryScreen, gameOverScreen;
 
     public float cameraTopBorder {
         get {
@@ -115,6 +120,21 @@ public class GameLoop : MonoBehaviour
         createLeak.Raise();
     }
 
+    IEnumerator Win() {
+        state = GameState.Won;
+        victoryScreen.SetActive(true);
+        yield return new WaitForSeconds(GameConfig.instance.secondsToWaitOnFinalScreen);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator Lose() {
+        yield return new WaitForSeconds(GameConfig.instance.secondsToWaitBeforeFinalScreen);
+        state = GameState.Lost;
+        gameOverScreen.SetActive(true);
+        yield return new WaitForSeconds(GameConfig.instance.secondsToWaitOnFinalScreen);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -130,7 +150,10 @@ public class GameLoop : MonoBehaviour
                 createLeak.Raise();
                 nextLeakTimer = Random.Range(GameConfig.instance.minLeakEventSeconds, 
                         GameConfig.instance.maxLeakEventSeconds);
-                nextLeakTimer *= normalizedDepth * GameConfig.instance.depthLeakEventMultiplier;
+                nextLeakTimer *= (1 - normalizedDepth * GameConfig.instance.depthLeakEventMultiplier);
+                nextLeakTimer -= GameConfig.instance.perPlayerPenaltySeconds * (input.players.Count - 1);
+                nextLeakTimer = Mathf.Max(nextLeakTimer, 1);
+                Debug.Log($"Next leak in {nextLeakTimer}");
             }
             var depthPerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
             if (ship.m_LeakPercentage >= GameConfig.instance.percentageForSink) {
@@ -147,7 +170,18 @@ public class GameLoop : MonoBehaviour
                 newY = Mathf.Max(oceanContainerMinY, newY);
                 pos.y = newY;
                 oceanContainer.transform.position = pos;
+                if (pos.y == oceanContainerMinY)
+                    StartCoroutine("Win");
             }
+            bool alive = false;
+            foreach (var p in input.players) {
+                if (!p.isDead) {
+                    alive = true;
+                    break;
+                }
+            }
+            if (!alive)
+                StartCoroutine("Lose");
         }
     }
 }

@@ -23,10 +23,16 @@ public class GameConfig : ScriptableObject
     public int repairHitsNeeded = 5; // how many hammer hits to repair a breach
     public float percentageForSink = 0.1f; // percentage of rooms leaky for sinking
     public float maxSinkPercentPerSecond = 0.01f; // sink one percentage of the depth range per second at max
-    public float minLeakEventSeconds = 10;
-    public float maxLeakEventSeconds = 20;
+    public float minLeakEventSeconds = 25;
+    public float maxLeakEventSeconds = 35;
     [Range(0.1f, 1)]
     public float depthLeakEventMultiplier = 0.5f; // a lower value means more frequent leak events
+    // for each additional player beyond 1 we subtract this many seconds for leaks
+    public float perPlayerPenaltySeconds = 5f; 
+    // wait a few seconds before showing the win/loss card
+    public float secondsToWaitBeforeFinalScreen = 5;
+    // wait on the win/loss card
+    public float secondsToWaitOnFinalScreen = 10;
 
     static GameConfig _instance;
     public static GameConfig instance { get {
