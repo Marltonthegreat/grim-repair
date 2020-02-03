@@ -142,6 +142,9 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+
         if (state == GameState.AtTitle && input.players.Count > 0) {
             state = GameState.PanningToShip;
             StartCoroutine("PanToShip");
@@ -154,7 +157,7 @@ public class GameLoop : MonoBehaviour
                 createLeak.Raise();
                 nextLeakTimer = Random.Range(GameConfig.instance.minLeakEventSeconds, 
                         GameConfig.instance.maxLeakEventSeconds);
-                nextLeakTimer *= (1 - normalizedDepth * GameConfig.instance.depthLeakEventMultiplier);
+                // nextLeakTimer *= (1 - normalizedDepth * GameConfig.instance.depthLeakEventMultiplier);
                 nextLeakTimer -= GameConfig.instance.perPlayerPenaltySeconds * (input.players.Count - 1);
                 nextLeakTimer = Mathf.Max(nextLeakTimer, 1);
                 Debug.Log($"Next leak in {nextLeakTimer}");
