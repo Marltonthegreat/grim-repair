@@ -36,6 +36,8 @@ public class GameLoop : MonoBehaviour
         }
     } }
 
+    public NeoDragonCP.GameEvent createLeak;
+
     public AnimationCurve panToShipCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     public Slider depthGauge;
@@ -103,6 +105,9 @@ public class GameLoop : MonoBehaviour
 
     public void OnFirstRepair() {
         state = GameState.InGame;
+        createLeak.Raise();
+        createLeak.Raise();
+        createLeak.Raise();
     }
 
     // Update is called once per frame
