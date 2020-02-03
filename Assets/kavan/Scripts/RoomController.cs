@@ -177,8 +177,8 @@ public class RoomController : MonoBehaviour
             m_WaterSlider.value = m_PercentFlooded;
         }
 
-        //Overflow if not locked down
-        if (m_RoomFlooding && !m_RoomLocked)
+        //Overflow if breached and not locked down
+        if (m_Breached && !m_RoomLocked)
         {
             Overflow();
         }
