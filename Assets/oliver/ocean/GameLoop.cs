@@ -28,6 +28,7 @@ public class GameLoop : MonoBehaviour
     public float oceanWorldBottom { get { return ocean.position.y + oceanLocalBottom; } }
     public float oceanContainerMinY { get { return ship.transform.position.y + Camera.main.orthographicSize; } }
     public float oceanContainerMaxY { get { return ship.transform.position.y + Camera.main.orthographicSize + cameraPanHeight; } }
+    // 1 == bottom
     public float normalizedDepth { get { 
         if (state == GameState.AtTitle || state == GameState.PanningToShip) {
             return (cameraTopBorder - Camera.main.transform.position.y) / (cameraTopBorder - cameraBottomBorder);
@@ -43,6 +44,8 @@ public class GameLoop : MonoBehaviour
     public AnimationCurve panToShipCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     public Slider depthGauge;
+
+    public float nextLeakTimer;
 
     public float cameraTopBorder {
         get {
@@ -122,6 +125,13 @@ public class GameLoop : MonoBehaviour
         }
         depthGauge.value = 1 - normalizedDepth;
         if (state == GameState.InGame) {
+            nextLeakTimer -= Time.deltaTime;
+            if (nextLeakTimer <= 0) {
+                createLeak.Raise();
+                nextLeakTimer = Random.Range(GameConfig.instance.minLeakEventSeconds, 
+                        GameConfig.instance.maxLeakEventSeconds);
+                nextLeakTimer *= normalizedDepth * GameConfig.instance.depthLeakEventMultiplier;
+            }
             var depthPerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
             if (ship.m_LeakPercentage >= GameConfig.instance.percentageForSink) {
                 // moving the ocean up means sinking

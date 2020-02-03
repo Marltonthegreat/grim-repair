@@ -55,6 +55,17 @@ public class RoomController : MonoBehaviour
         RandomRepairSprite();
         m_Breached = false;
         m_RoomDraining = true;
+
+        //Overflow Drain
+        for (int i = 0; i < m_ConnectedRooms.Length; i++)
+        {
+            if (m_ConnectedRooms[i].m_Breached == false)
+            {
+                m_ConnectedRooms[i].m_RoomFlooding = false;
+                m_ConnectedRooms[i].m_RoomDraining = true;
+            }
+        }
+        
     }
 
     private void CheckLockedStatus()
