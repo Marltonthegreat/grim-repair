@@ -127,6 +127,32 @@ public class RoomController : MonoBehaviour
         }
     }
 
+    private bool AreNeighborsBreached()
+    {   
+        int numBreached = 0;
+
+        if (m_ConnectedRooms.Length != 0)
+        {
+            for (int i = 0; i < m_ConnectedRooms.Length; i++)
+            {
+                if (m_ConnectedRooms[i].m_Breached == true)
+                {
+                    numBreached += 1;
+                }
+            }
+        }
+
+        if (numBreached != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 
     private void Awake()
     {
@@ -195,6 +221,12 @@ public class RoomController : MonoBehaviour
         }
 
         if(m_RoomFlooded && m_RoomFlooding && !m_Breached)
+        {
+            m_RoomFlooding = false;
+            m_RoomDraining = true;
+        }
+
+        if (m_RoomFlooding && !m_Breached && !AreNeighborsBreached())
         {
             m_RoomFlooding = false;
             m_RoomDraining = true;
