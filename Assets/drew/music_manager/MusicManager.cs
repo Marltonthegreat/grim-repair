@@ -15,6 +15,15 @@ public class MusicManager : MonoBehaviour
     [SerializeField]
     private AudioSource sfxPlayer;
 
+    private MusicManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
