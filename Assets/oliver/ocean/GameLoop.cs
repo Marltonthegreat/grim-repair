@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameLoop : MonoBehaviour
 {
-    public Transform ocean, sky;
+    public Transform oceanContainer, ocean, sky;
     public ShipController ship;
     public InputManager input;
 
@@ -26,6 +26,8 @@ public class GameLoop : MonoBehaviour
     public float skyHeight { get { return skyLocalTop - skyLocalBottom; } }
     public float skyWorldTop { get { return sky.position.y + skyLocalTop; } }
     public float oceanWorldBottom { get { return ocean.position.y + oceanLocalBottom; } }
+    public float oceanContainerMinY { get { return ship.transform.position.y + Camera.main.orthographicSize; } }
+    public float oceanContainerMaxY { get { return ship.transform.position.y + Camera.main.orthographicSize + cameraPanHeight; } }
     public float normalizedDepth { get { 
         if (state == GameState.AtTitle || state == GameState.PanningToShip) {
             return (cameraTopBorder - Camera.main.transform.position.y) / (cameraTopBorder - cameraBottomBorder);
@@ -99,6 +101,10 @@ public class GameLoop : MonoBehaviour
         state = GameState.WaitingForFirstRepair;
     }
 
+    public void OnFirstRepair() {
+        state = GameState.InGame;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -107,5 +113,23 @@ public class GameLoop : MonoBehaviour
             StartCoroutine("PanToShip");
         }
         depthGauge.value = 1 - normalizedDepth;
+        if (state == GameState.InGame) {
+            var depthPerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
+            if (ship.m_LeakPercentage >= GameConfig.instance.percentageForSink) {
+                // moving the ocean up means sinking
+                var pos = oceanContainer.transform.position;
+                var newY = pos.y + depthPerSecond * Time.deltaTime;
+                newY = Mathf.Min(oceanContainerMaxY, newY);
+                pos.y = newY;
+                oceanContainer.transform.position = pos;
+            } else {
+                // moving the ocean down means rising
+                var pos = oceanContainer.transform.position;
+                var newY = pos.y - depthPerSecond * Time.deltaTime;
+                newY = Mathf.Max(oceanContainerMinY, newY);
+                pos.y = newY;
+                oceanContainer.transform.position = pos;
+            }
+        }
     }
 }

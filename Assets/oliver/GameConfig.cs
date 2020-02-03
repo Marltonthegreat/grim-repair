@@ -22,6 +22,7 @@ public class GameConfig : ScriptableObject
     public float panToShipSeconds = 10;
     public int repairHitsNeeded = 5; // how many hammer hits to repair a breach
     public float percentageForSink = 0.1f; // percentage of rooms leaky for sinking
+    public float maxSinkPercentPerSecond = 0.01f; // sink one percentage of the depth range per second at max
 
     static GameConfig _instance;
     public static GameConfig instance { get {

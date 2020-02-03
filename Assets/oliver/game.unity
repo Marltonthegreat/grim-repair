@@ -844,8 +844,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
-  m_SizeDelta: {x: 143.40002, y: 905.7}
+  m_AnchoredPosition: {x: -50, y: 0.0000076293945}
+  m_SizeDelta: {x: 103.07, y: 651}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &529432929
 MonoBehaviour:
@@ -980,6 +980,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &835776701 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7367281002397367307, guid: f3d1354945d367245a78175108e9184a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7367281002543019498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &995511920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,8 +1092,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -94.7}
-  m_SizeDelta: {x: 0, y: -271.7}
+  m_AnchoredPosition: {x: -0.000030517578, y: -67.53}
+  m_SizeDelta: {x: 0, y: -199.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1055525120
 GameObject:
@@ -1124,7 +1130,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.000030517578, y: 0}
-  m_SizeDelta: {x: 52.7, y: 105.4}
+  m_SizeDelta: {x: 28.9, y: 89.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1055525122
 MonoBehaviour:
@@ -1263,6 +1269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1431894427}
   - component: {fileID: 1431894428}
+  - component: {fileID: 1431894429}
   m_Layer: 0
   m_Name: GameLoop
   m_TagString: Untagged
@@ -1296,6 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5ae36d00917844ba82b2120efa6d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oceanContainer: {fileID: 835776701}
   ocean: {fileID: 1300731537}
   sky: {fileID: 329765532}
   ship: {fileID: 1158474377}
@@ -1334,6 +1342,47 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   depthGauge: {fileID: 529432929}
+--- !u!114 &1431894429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431894426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4f2a12c63f2e4e2293b292b32883232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: First Repair
+    gameEvent: {fileID: 11400000, guid: 71c49e66879014775a8f0113e3d12904, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1431894428}
+          m_MethodName: OnFirstRepair
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    responseForSentString:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentInt:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentFloat:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentBool:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1710868016
 GameObject:
   m_ObjectHideFlags: 0

@@ -220,7 +220,7 @@ MonoBehaviour:
   m_ConnectedDoors:
   - {fileID: 7373501926843981820}
   - {fileID: 4638211229890793420}
-  m_TimeToFlood: 10
+  m_TimeToFlood: 15
   m_WaterSlider: {fileID: 7588220084337136870}
   m_WaterHandle: {fileID: 1240459817556393818}
   m_PercentFlooded: 0

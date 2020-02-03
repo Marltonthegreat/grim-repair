@@ -5,6 +5,7 @@ public class RoomController : MonoBehaviour
 {
     [Header("Room Settings")]
     public bool m_introBreach = false;
+    public bool m_glassRoom = false;
     public bool m_Breached = false;
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;

@@ -1585,6 +1585,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
+      propertyPath: RepairSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
       propertyPath: m_ConnectedRooms.Array.data[0]
       value: 
       objectReference: {fileID: 7092533759140690740}
@@ -1603,6 +1608,12 @@ PrefabInstance:
       propertyPath: BreachSprites.Array.data[0]
       value: 
       objectReference: {fileID: 2612714828570261110, guid: d329037e0affa425087868767382aee7,
+        type: 3}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: RepairSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -3141871845415531257, guid: d329037e0affa425087868767382aee7,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 310d2ad1cbc274489b74aa43e43192b1, type: 3}
@@ -2815,6 +2826,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 314265440378930610, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 437539755796740426, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2904,6 +2920,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Room_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2596792918580111936, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2596792918580111936, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2725737331131117891, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
@@ -3008,6 +3034,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
+      propertyPath: RepairSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
       propertyPath: m_ConnectedRooms.Array.data[0]
       value: 
       objectReference: {fileID: 2042322436388451736}
@@ -3046,6 +3077,17 @@ PrefabInstance:
       propertyPath: BreachSprites.Array.data[0]
       value: 
       objectReference: {fileID: 2612714828570261110, guid: d329037e0affa425087868767382aee7,
+        type: 3}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: m_glassRoom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: RepairSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -3141871845415531257, guid: d329037e0affa425087868767382aee7,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 310d2ad1cbc274489b74aa43e43192b1, type: 3}
@@ -6203,6 +6245,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.23
       objectReference: {fileID: 0}
+    - target: {fileID: 314265440378930610, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 437539755796740426, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -6326,6 +6373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
         type: 3}
+      propertyPath: RepairSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
       propertyPath: m_ConnectedRooms.Array.data[0]
       value: 
       objectReference: {fileID: 7497337075475557298}
@@ -6354,6 +6406,12 @@ PrefabInstance:
       propertyPath: BreachSprites.Array.data[0]
       value: 
       objectReference: {fileID: 2612714828570261110, guid: d329037e0affa425087868767382aee7,
+        type: 3}
+    - target: {fileID: 8786201005198273181, guid: 310d2ad1cbc274489b74aa43e43192b1,
+        type: 3}
+      propertyPath: RepairSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -3141871845415531257, guid: d329037e0affa425087868767382aee7,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 310d2ad1cbc274489b74aa43e43192b1, type: 3}
