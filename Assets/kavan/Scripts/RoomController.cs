@@ -7,20 +7,15 @@ public class RoomController : MonoBehaviour
     public bool m_introBreach = false;
     public bool m_glassRoom = false;
     public bool m_Breached = false;
-    public bool m_RoomFlooding = false;
-    public bool m_RoomFlooded = false;
-    public bool m_RoomDraining = false;
-    public bool m_RoomLocked = false;
-    public RoomController[] m_ConnectedRooms;
-    public Animator[] m_ConnectedDoors;
+    public bool m_hallway = false;
+
+    public TileManager[] m_ConnectedTiles;
 
     [Header("Flood Settings")]
-    public float m_TimeToFlood = 10f;
-    private float m_timer;
-    public Slider m_WaterSlider;
-    public GameObject m_WaterHandle;
+    public bool m_RoomFlooding = false;
     [Range(0, 1)]
     public float m_PercentFlooded;
+    public TileManager m_BreachedTile;
     public GameObject m_BreachGO;
     public GameObject m_BreachOnElements;
     public Sprite[] BreachSprites;
@@ -42,7 +37,7 @@ public class RoomController : MonoBehaviour
         BreachSR.sprite = RepairSprites[randomNum];
     }
 
-    public void Repair()
+    public void RepairBreach()
     {
         GameSounds.instance.LeverLatch();
 
@@ -50,120 +45,76 @@ public class RoomController : MonoBehaviour
         {
             StartGameEvent.Raise();
             m_introBreach = false;
-            m_timer = 10f;
+
+            for (int i = 0; i < m_ConnectedTiles.Length; i++)
+            {
+                m_ConnectedTiles[i].m_timer = 0.8f;
+                m_ConnectedTiles[i].m_isDraining = true;
+            }
         }
-        RandomRepairSprite();
+
+        //for all repairs
         m_Breached = false;
-        m_RoomDraining = true;
-
-        //Overflow Drain
-        for (int i = 0; i < m_ConnectedRooms.Length; i++)
+        RandomRepairSprite();
+        for (int i = 0; i < m_ConnectedTiles.Length; i++)
         {
-            if (m_ConnectedRooms[i].m_Breached == false)
-            {
-                m_ConnectedRooms[i].m_RoomFlooding = false;
-                m_ConnectedRooms[i].m_RoomDraining = true;
-            }
+           // if (m_ConnectedTiles[i].m_isBreached)
+           // {
+                m_ConnectedTiles[i].m_isBreached = false;
+                m_ConnectedTiles[i].m_isFlooding = false;
+                m_ConnectedTiles[i].m_isDraining = true; //should cascade through them all from that point
+           // }
         }
+
         
+       
     }
 
-    private void CheckLockedStatus()
-    {
-        //Are all connected doors closed?
-        int doorCount = 0;
-        int numClosed = 0;
 
-        if (m_ConnectedDoors.Length != 0)
-        {
-            doorCount = m_ConnectedDoors.Length;
-            for (int i = 0; i < m_ConnectedDoors.Length; i++)
-            {
-                var isclosed = m_ConnectedDoors[i].GetBool("closed");
-                if (isclosed)
-                {
-                    numClosed += 1;
-                }
-            }
-        }
-
-        if (doorCount != 0)
-        {
-            if (numClosed == doorCount)
-            {
-                m_RoomLocked = true;
-            }
-            else
-            {
-                m_RoomLocked = false;
-            }
-        }
-        else
-        {
-            m_RoomLocked = false;
-        }
-    }
     private void CheckRoomFloodedStatus()
     {
-        if (m_PercentFlooded > 1)
+        int numFloodedTiles = 0;
+        for (int i = 0; i < m_ConnectedTiles.Length; i++)
         {
-            m_RoomFlooded = true;
-            m_WaterHandle.SetActive(false);
+            if (m_ConnectedTiles[i].m_isFlooding)
+            {
+                numFloodedTiles += 1;
+            }
+        }
+        m_PercentFlooded = numFloodedTiles / m_ConnectedTiles.Length;
+
+        if (m_PercentFlooded > .5f)
+        {
+            m_RoomFlooding = true;
         }
         else
         {
-            m_RoomFlooded = false;
-            m_WaterHandle.SetActive(true);
+            m_RoomFlooding = false;
         }
     }
-    private void Overflow()
-    {
-        for (int i = 0; i < m_ConnectedRooms.Length; i++)
-        {
-            if (m_ConnectedRooms[i].m_RoomLocked == false)
-            {
-                m_ConnectedRooms[i].m_RoomFlooding = true;
-            }
-        }
-    }
-
-    private bool AreNeighborsBreached()
-    {   
-        int numBreached = 0;
-
-        if (m_ConnectedRooms.Length != 0)
-        {
-            for (int i = 0; i < m_ConnectedRooms.Length; i++)
-            {
-                if (m_ConnectedRooms[i].m_Breached == true)
-                {
-                    numBreached += 1;
-                }
-            }
-        }
-
-        if (numBreached != 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-
 
     private void Awake()
     {
         BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
-        m_timer = 0f;
+        
+        if (m_hallway)
+        {
+            for (int i = 0; i < m_ConnectedTiles.Length; i++)
+            {
+                m_ConnectedTiles[i].m_isHallway = true;
+            }
+        }
+
     }
 
     private void Update()
     {
         if (m_introBreach)
         {
+            for (int i = 0; i < m_ConnectedTiles.Length; i++)
+            {
+                m_ConnectedTiles[i].m_WaterSlider.value = 5f;
+            }
             return; //go no further if intro...
         }
 
@@ -172,64 +123,13 @@ public class RoomController : MonoBehaviour
         {
             m_BreachGO.SetActive(true);
             m_BreachOnElements.SetActive(true);
-            m_RoomFlooding = true;
+            m_BreachedTile.m_isBreached = true;
         }
         else //Every frame make sure breach elements are off if you're !m_Breached
         {
             m_BreachOnElements.SetActive(false);
         }
 
-        //Status set by Repair() & below if locked up
-        if (m_RoomDraining)
-        {
-            if (m_timer <= 0)
-            {
-                m_RoomDraining = false;
-                m_PercentFlooded = 0;
-            }
-            else
-            {
-                m_timer -= Time.deltaTime * 2;
-                m_PercentFlooded = m_timer / m_TimeToFlood;
-                m_WaterSlider.value = m_PercentFlooded;
-            }           
-        }
-
-        CheckLockedStatus();
-
-        // if im locked in, and theres no breach here, stop flooding and drain.
-        if (m_RoomLocked && !m_Breached)
-        {
-            m_RoomFlooding = false;
-            m_RoomDraining = true;
-        }
-
         CheckRoomFloodedStatus();
-
-        //FLOOD
-        if (!m_RoomDraining && !m_RoomFlooded && m_RoomFlooding)
-        {
-            m_timer += Time.deltaTime;
-            m_PercentFlooded = m_timer / m_TimeToFlood;
-            m_WaterSlider.value = m_PercentFlooded;
-        }
-
-        //Overflow if breached and not locked down
-        if (m_Breached && !m_RoomLocked)
-        {
-            Overflow();
-        }
-
-        if(m_RoomFlooded && m_RoomFlooding && !m_Breached)
-        {
-            m_RoomFlooding = false;
-            m_RoomDraining = true;
-        }
-
-        if (m_RoomFlooding && !m_Breached && !AreNeighborsBreached())
-        {
-            m_RoomFlooding = false;
-            m_RoomDraining = true;
-        }
     }
 }
