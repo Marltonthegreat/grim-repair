@@ -50,7 +50,7 @@ public class RoomController : MonoBehaviour
         {
             StartGameEvent.Raise();
             m_introBreach = false;
-            m_timer = 0.8f;
+            m_timer = 10f;
         }
         RandomRepairSprite();
         m_Breached = false;
