@@ -163,7 +163,7 @@ public class Character : MonoBehaviour
     void RepairBreach() {
         if (breach == null)
             throw new System.Exception("No breach for RepairBreach()");
-        var room = breach.GetComponentInParent<RoomController>();
+        var room = breach.GetComponentInParent<FloodController>();
         if (room != null) {
             StopRepairing();
             room.RepairBreach();

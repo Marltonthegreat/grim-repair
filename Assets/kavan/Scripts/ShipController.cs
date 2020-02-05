@@ -25,7 +25,7 @@ public class ShipController : MonoBehaviour
 
         for (int i = 0; i < Rooms.Length; i++)
         {
-            if (Rooms[i].GetComponent<RoomController>().m_RoomFlooding)
+            if (Rooms[i].GetComponent<FloodController>().m_RoomFlooding)
             {
                 roomsFlooding += 1;
             }
@@ -37,8 +37,8 @@ public class ShipController : MonoBehaviour
     public void Leak()
     {
         var num = Random.Range(0, Rooms.Length);
-        var isCurRoomFlooding = Rooms[num].GetComponent<RoomController>().m_RoomFlooding;
-        var isCurRoomIntro = Rooms[num].GetComponent<RoomController>().m_introBreach;
+        var isCurRoomFlooding = Rooms[num].GetComponent<FloodController>().m_RoomFlooding;
+        var isCurRoomIntro = Rooms[num].GetComponent<FloodController>().m_introBreach;
 
         if (isCurRoomFlooding == true || isCurRoomIntro == true)
         {
@@ -49,24 +49,24 @@ public class ShipController : MonoBehaviour
 
         //Breach
         //RandomRotation
-        Vector3 euler = Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.eulerAngles;
+        Vector3 euler = Rooms[num].GetComponent<FloodController>().m_BreachGO.transform.eulerAngles;
         euler.z = Random.Range(0f, 360f);
-        Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.transform.eulerAngles = euler;
+        Rooms[num].GetComponent<FloodController>().m_BreachGO.transform.transform.eulerAngles = euler;
         //RandomScale
         var randomScale = Random.Range(.5f, 1f);
-        Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+        Rooms[num].GetComponent<FloodController>().m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
-        if (Rooms[num].GetComponent<RoomController>().m_glassRoom)
+        if (Rooms[num].GetComponent<FloodController>().m_glassRoom)
         {
-            Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            Rooms[num].GetComponent<FloodController>().m_BreachGO.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
 
-        Rooms[num].GetComponent<RoomController>().RandomBreachSprite();
+        Rooms[num].GetComponent<FloodController>().RandomBreachSprite();
 
         //CALL LEAK SOUND
         GameSounds.instance.PipeBurst();
 
-        Rooms[num].GetComponent<RoomController>().m_Breached = true;
+        Rooms[num].GetComponent<FloodController>().m_Breached = true;
         
         //Stop Trying to CreateLeaks
         m_CreateLeak = false;
