@@ -15,8 +15,8 @@ public class TileManager : MonoBehaviour
 
     public TileManager leftTile;
     public TileManager rightTile;
-    public TileManager m_FloodSourceDirection; //opposite side of where the flood call was passed from
-    public TileManager m_DrainSourceDirection;
+    public TileManager m_FloodPushDirection; //opposite side of where the flood call was passed from
+    public TileManager m_DrainPushDirection;
 
     [Header("Flood Settings")]
     public float m_DrainSpeed = 2f;
@@ -27,163 +27,126 @@ public class TileManager : MonoBehaviour
     [Range(0, 100)]
     public int m_PercentFlooded;
 
-    private void Update()
+    //RECEIVE
+    public void Flood(TileManager floodSource)
     {
-        if (m_isBreached)
+        if (floodSource == leftTile)
         {
-            m_isFlooding = true;
+            //Debug.Log(this + "was triggered from LEFT side");
+            m_FloodPushDirection = rightTile;
         }
-
-        //if door gets closed:
-        if (m_isUnderDoor)
+        else if (floodSource == rightTile)
         {
-            if (m_ConnectedDoor == null)
-            {
-                Debug.LogError(this + "isUnderDoor not assigned, returning");
-                return;
-            }
-            else
-            {
-                if (!m_ConnectedDoor.GetBool("closed")) //if the door is open, set status closed status to false (every frame)
-                {
-                    m_doorClosed = false;
-                }
-                if (m_ConnectedDoor.GetBool("closed") && !m_doorClosed) //if door is set to close but I just now find out:
-                {
-                    m_doorClosed = true;
-
-                    m_isFlooding = false;
-                    m_isDraining = true; //will cascade through isDraining function below
-
-                    if (m_FloodSourceDirection == null)
-                    {
-                        if (leftTile != null)
-                        {
-                            SendDrain(leftTile);
-                        }
-                        if (rightTile != null)
-                        {
-                            SendDrain(rightTile);
-                        }
-                    }
-                    else
-                    {
-                        SendDrain(m_FloodSourceDirection);
-                    }
-                }
-            }
-        }
-
-        //ACT ON STATUS
-        if (m_isFlooding)
-        {
-            //if done:
-            if (m_PercentFlooded >= 100)
-            {
-                //m_tileFlooded = true;
-                m_WaterHandle.SetActive(false);
-                PassAlongFlood();
-            }
-            else
-            {
-                m_timer += Time.deltaTime;
-                m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
-                m_WaterSlider.value = m_PercentFlooded;
-                //m_tileFlooded = false;
-                m_WaterHandle.SetActive(true);
-                
-                //pass flood along...
-                if (m_WaterSlider.value % 10 == 5)
-                {
-                    //Debug.Log(this + " is sending out the flooding call: " + m_WaterSlider.value + " : " + m_WaterSlider.value % 20);
-                    PassAlongFlood();
-                }
-            }
-        }
-
-        if (m_isDraining)
-        {
-            //if done:
-            if (m_timer <= 0)
-            {
-                m_isDraining = false;
-                m_PercentFlooded = 0;
-                m_WaterSlider.value = m_PercentFlooded;
-                m_WaterHandle.SetActive(false);
-            }
-            else
-            {
-                m_timer -= Time.deltaTime * m_DrainSpeed;
-                m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
-                m_WaterSlider.value = m_PercentFlooded;
-                m_WaterHandle.SetActive(true);
-
-                //Send drain to neighbors
-                if (m_WaterSlider.value % 10 == 5)
-                {
-                    if (leftTile != null)
-                    {
-                        SendDrain(leftTile);
-                    }
-                    if (rightTile != null)
-                    {
-                        SendDrain(rightTile);
-                    }
-                }
-            }
-        }
-    }
-    
-
-
-    void PassAlongFlood()
-    {
-        if (m_isBreached)
-        {
-            if (leftTile != null)
-            {
-                //Debug.Log("breach passing flood left");
-                SendFlood(leftTile);
-            }
-            if (rightTile != null)
-            {
-                //Debug.Log("breach passing flood right");
-                SendFlood(rightTile);
-            }
+            //Debug.Log(this + "was triggered from Right side");
+            m_FloodPushDirection = leftTile;
         }
         else
         {
-            if (m_isHallway) //if hallway check self before sending:
+            //Debug.Log(this + "'s [room1] flood source:" + floodSource + ", doesn't match left or right, defaulting to flood left");
+            m_FloodPushDirection = leftTile;
+        }
+
+        m_isDraining = false;
+        m_isFlooding = true;
+    }
+    public void Drain(TileManager drainSource)
+    {
+        if (drainSource == leftTile)
+        {
+            //Debug.Log(this + "was triggered from LEFT side");
+            m_DrainPushDirection = rightTile;
+        }
+        else if (drainSource == rightTile)
+        {
+           // Debug.Log(this + "was triggered from Right side");
+            m_DrainPushDirection = leftTile;
+        }
+        else
+        {
+            //Debug.Log(this + "'s [room1] drain source:" + drainSource + ", doesn't match left or right, defaulting to drain left");
+            m_DrainPushDirection = leftTile;
+        }
+
+        m_isFlooding = false;
+        m_isDraining = true;
+    }
+
+    private void Awake()
+    {
+        if (m_isUnderDoor && m_ConnectedDoor == null)
+        {
+            Debug.LogError(this + "isUnderDoor not assigned, returning");
+        }
+    }
+
+
+    void PassFlood()
+    {
+        if (m_isBreached)
+        {
+            //Breach sends flood (with self as source)
+            m_FloodPushDirection = this;
+            leftTile.Flood(this);
+            rightTile.Flood(this);
+            return;
+        }
+
+        if (m_isHallway) //if hallway check self before sending:
+        {
+            bool isPathClear = CheckDoor(this);
+            if (isPathClear)
             {
-                bool isPathClear = CheckDoor(this);
-                if (isPathClear)
-                {
-                    if (m_FloodSourceDirection != null)
-                    {
-                        SendFlood(m_FloodSourceDirection);
-                    } 
-                }
+                m_FloodPushDirection.Flood(this);
             }
-            else //if room, check next space (hallway):
+        }
+        else //if room, check next space (hallway):
+        {
+            if (m_FloodPushDirection == null)
             {
-                if (m_FloodSourceDirection != null)
-                {
-                    bool isPathClear = CheckDoor(m_FloodSourceDirection);
-                    if (isPathClear)
-                    {
-                        //SendFlood(m_FloodSourceDirection);
-                        if (leftTile != null)
-                        {
-                            //Debug.Log("breach passing flood left");
-                            SendFlood(leftTile);
-                        }
-                        if (rightTile != null)
-                        {
-                            //Debug.Log("breach passing flood right");
-                            SendFlood(rightTile);
-                        }
-                    }
-                }               
+                //Debug.LogError(this.transform.parent.parent + "is trying to pass the flood and has null m_FloodPushDirection, Flood is up against a wall");
+                return;
+            }
+
+            bool isPathClear = CheckDoor(m_FloodPushDirection);
+            if (isPathClear)
+            {
+                m_FloodPushDirection.Flood(this);
+            }
+        }
+    }
+
+    void PassDrain()
+    {
+        if (m_isBreached)
+        {
+            //Breach sends Drain (with self as source)
+            m_DrainPushDirection = this;
+            leftTile.Drain(this);
+            rightTile.Drain(this);
+            m_isBreached = false;
+            return;
+        }
+
+        if (m_isHallway) //if hallway check self before sending:
+        {
+            bool isPathClear = CheckDoor(this);
+            if (isPathClear)
+            {
+                m_DrainPushDirection.Drain(this);
+            }
+        }
+        else //if room, check next space (hallway):
+        {
+            if (m_DrainPushDirection == null)
+            {
+                //Debug.LogError(this.transform.parent.parent + "is trying to pass the drain and has null m_DrainSourceDirection, Drain is up against a wall");
+                return;
+            }
+
+            bool isPathClear = CheckDoor(m_DrainPushDirection);
+            if (isPathClear)
+            {
+                m_DrainPushDirection.Drain(this);
             }
         }
     }
@@ -213,60 +176,88 @@ public class TileManager : MonoBehaviour
         //Debug.Log(this + " " + NextTile + "is not under a door, returning true");
         return true;
     }
-    void SendFlood(TileManager NextTile)
+
+
+
+
+    private void Update()
     {
-        if (NextTile != null)
+        if (m_isBreached)
         {
-            //Debug.Log(this + " " + NextTile + "is not null");
-            //bool isPathClear = CheckDoor(NextTile);
-           // if (isPathClear)
-           // {
-                //Debug.Log(this + " " + NextTile + "is being flooded");
-                NextTile.Flood(this);
-           // }
+            m_isFlooding = true;
         }
-    }
-    void SendDrain(TileManager NextTile)
-    {
-        if (NextTile != null)
+
+        if (m_isDraining)
         {
-            //Debug.Log(this + " " + NextTile + "is not null");
-            bool isPathClear = CheckDoor(NextTile);
-            if (isPathClear)
+            m_isFlooding = false;
+            if (m_timer <= 0)
             {
-                //Debug.Log(this + " " + NextTile + "is being flooded");
-                NextTile.Drain(this);
+                m_WaterHandle.SetActive(false);
+                m_isDraining = false;
+                m_timer = 0;
+                m_PercentFlooded = 0;
+                m_WaterSlider.value = m_PercentFlooded;
+
+                PassDrain();
+            }
+            else
+            {
+                m_timer -= Time.deltaTime * m_DrainSpeed;
+                m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
+                m_WaterSlider.value = m_PercentFlooded;
+                m_WaterHandle.SetActive(true);
+
+                //Send drain to neighbors
+                if (m_WaterSlider.value % 10 == 5)
+                {
+                    PassDrain();
+                }
             }
         }
-    }
 
+        if (m_isFlooding)
+        {
+            //if done:
+            if (m_PercentFlooded >= 100)
+            {
+                //m_tileFlooded = true;
+                m_WaterHandle.SetActive(false);
+                PassFlood();
+            }
+            else
+            {
+                m_timer += Time.deltaTime;
+                m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
+                m_WaterSlider.value = m_PercentFlooded;
+                //m_tileFlooded = false;
+                m_WaterHandle.SetActive(true);
 
-    //RECEIVE
-    public void Flood(TileManager floodSource)
-    {
-        if (floodSource == leftTile)
-        {
-            //Debug.Log(this + "was triggered from LEFT side");
-            m_FloodSourceDirection = rightTile;
-        }
-        else if (floodSource == rightTile)
-        {
-            //Debug.Log(this + "was triggered from Right side");
-            m_FloodSourceDirection = leftTile;
-        }
-        else
-        {
-            Debug.Log("source doesn't match left or right, defaulting to flood left");
-            m_FloodSourceDirection = leftTile;
+                //pass flood along...
+                if (m_WaterSlider.value % 10 == 5)
+                {
+                    //Debug.Log(this + " is sending out the flooding call: " + m_WaterSlider.value + " : " + m_WaterSlider.value % 20);
+                    PassFlood();
+                }
+            }
         }
 
-        m_isDraining = false;
-        m_isFlooding = true;
-    }
-    public void Drain(TileManager drainSource)
-    {
-        m_DrainSourceDirection = drainSource;
-        m_isFlooding = false;
-        m_isDraining = true;
+        //if door gets closed:
+        if (m_isUnderDoor)
+        {
+            if (!m_ConnectedDoor.GetBool("closed")) //if the door is open, set status closed status to false (every frame)
+            {
+                m_doorClosed = false;
+            }
+            if (m_ConnectedDoor.GetBool("closed") && !m_doorClosed) //if door is set to close but I just now find out:
+            {
+                m_doorClosed = true;
+
+                if (m_isFlooding)
+                {
+                    PassDrain();
+                    //SendDrain(m_FloodPushDirection);
+                }
+            }
+        }
     }
 }

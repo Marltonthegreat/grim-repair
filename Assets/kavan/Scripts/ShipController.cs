@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
     public GameObject[] Rooms;
     public bool m_CreateLeak = false;
+    public float m_FloodedPercentage;
     public float m_LeakPercentage;
 
     private void Update()
@@ -21,53 +20,45 @@ public class ShipController : MonoBehaviour
     private void ShipStatus()
     {
         float roomCount = Rooms.Length;
-        float roomsFlooding = 0;
-
-        for (int i = 0; i < Rooms.Length; i++)
+        float roomsFlooded = 0;
+        float roomsLeakPercentage = 0;
+        for (int i = 0; i < roomCount; i++)
         {
-            if (Rooms[i].GetComponent<RoomController>().m_RoomFlooding)
+            var currentRoom = Rooms[i].GetComponent<RoomController>();
+            if (currentRoom.m_RoomFlooded)
             {
-                roomsFlooding += 1;
+                roomsFlooded += 1;
+            }
+            if (currentRoom.m_RoomFlooding)
+            {
+                roomsLeakPercentage += currentRoom.m_AveragePercentFlooded;
             }
         }
-        m_LeakPercentage = roomsFlooding / roomCount;
+        m_FloodedPercentage = roomsFlooded / roomCount;
+        m_LeakPercentage = roomsLeakPercentage / roomCount;
     }
-
 
     public void Leak()
     {
-        var num = Random.Range(0, Rooms.Length);
-        var isCurRoomFlooding = Rooms[num].GetComponent<RoomController>().m_RoomFlooding;
-        var isCurRoomIntro = Rooms[num].GetComponent<RoomController>().m_introBreach;
 
-        if (isCurRoomFlooding == true || isCurRoomIntro == true)
+        var num = Random.Range(0, Rooms.Length);
+        var randomRoom = Rooms[num].GetComponent<RoomController>();
+        //where NOT to flood?
+        var isRoomFlooding = randomRoom.m_RoomFlooding;
+        var isRoomIntro = randomRoom.m_introRoom;
+
+        if (isRoomFlooding == true || isRoomIntro == true)
         {
-            Debug.Log("the current room should be flooding already : " + isCurRoomFlooding);
+            //Debug.Log("The random room chosen is already flooding, status : " + isRoomFlooding + ", trying again...");
             return;
-            //jump out and auto try again since CreateLeak is still true
         }
 
         //Breach
-        //RandomRotation
-        Vector3 euler = Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.eulerAngles;
-        euler.z = Random.Range(0f, 360f);
-        Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.transform.eulerAngles = euler;
-        //RandomScale
-        var randomScale = Random.Range(.5f, 1f);
-        Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
-
-        if (Rooms[num].GetComponent<RoomController>().m_glassRoom)
-        {
-            Rooms[num].GetComponent<RoomController>().m_BreachGO.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-        }
-
-        Rooms[num].GetComponent<RoomController>().RandomBreachSprite();
+        randomRoom.BreachRoom();
 
         //CALL LEAK SOUND
         GameSounds.instance.PipeBurst();
 
-        Rooms[num].GetComponent<RoomController>().m_Breached = true;
-        
         //Stop Trying to CreateLeaks
         m_CreateLeak = false;
     }
