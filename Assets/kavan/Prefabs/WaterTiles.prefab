@@ -47,11 +47,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 958194399765541950}
   rightTile: {fileID: 958194398526707967}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0
@@ -105,11 +110,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 958194398420741574}
   rightTile: {fileID: 958194399500467074}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0
@@ -200,11 +210,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 958194398526707967}
   rightTile: {fileID: 958194399506132773}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0
@@ -258,11 +273,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 958194399500467074}
   rightTile: {fileID: 958194399807263354}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0
@@ -316,11 +336,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 958194400408646326}
   rightTile: {fileID: 958194398420741574}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0
@@ -374,11 +399,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 958194399506132773}
   rightTile: {fileID: 0}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0
@@ -432,11 +462,16 @@ MonoBehaviour:
   m_isBreached: 0
   m_isFlooding: 0
   m_isDraining: 0
+  m_isHallway: 0
   m_isUnderDoor: 0
   m_ConnectedDoor: {fileID: 0}
   m_doorClosed: 0
   leftTile: {fileID: 0}
   rightTile: {fileID: 958194399765541950}
+  m_TileThatPassedFlood: {fileID: 0}
+  m_NextTileToPushFloodTo: {fileID: 0}
+  m_TileThatPassedDrain: {fileID: 0}
+  m_NextTileToPushDrainTo: {fileID: 0}
   m_DrainSpeed: 2
   m_TimeToFlood: 10
   m_timer: 0

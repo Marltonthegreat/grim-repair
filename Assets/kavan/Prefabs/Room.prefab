@@ -210,10 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a067ef0d8d4610447ae111fcab7dee5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_introBreach: 0
-  m_glassRoom: 0
-  m_Breached: 0
   m_hallway: 0
+  m_introRoom: 0
+  m_glassRoom: 0
+  m_glassRoomBScale: 1.5
   m_ConnectedTiles:
   - {fileID: 5915563431226498045}
   - {fileID: 5915563431911546229}
@@ -222,8 +222,12 @@ MonoBehaviour:
   - {fileID: 5915563432179241673}
   - {fileID: 5915563432005797486}
   - {fileID: 5915563431702575921}
-  m_RoomFlooding: 0
-  m_PercentFlooded: 0
+  m_ConnectedDoors:
+  - {fileID: 5915563431226498045}
+  - {fileID: 5915563431005516212}
+  m_RoomBreached: 0
+  minBScale: 0.5
+  maxBScale: 1
   m_BreachedTile: {fileID: 0}
   m_BreachGO: {fileID: 314265440378930610}
   m_BreachOnElements: {fileID: 4772351148233704888}
@@ -234,6 +238,11 @@ MonoBehaviour:
   - {fileID: 8469249902407197682, guid: d329037e0affa425087868767382aee7, type: 3}
   - {fileID: -7229448561747601992, guid: d329037e0affa425087868767382aee7, type: 3}
   - {fileID: -3141871845415531257, guid: d329037e0affa425087868767382aee7, type: 3}
+  m_TimeToFloodRoom: 10
+  m_RoomFlooding: 0
+  m_RoomFlooded: 0
+  m_PercentTilesFlooding: 0
+  m_AveragePercentFlooded: 0
   StartGameEvent: {fileID: 11400000, guid: 71c49e66879014775a8f0113e3d12904, type: 2}
 --- !u!1 &3378301165231778955
 GameObject:

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class RoomController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class RoomController : MonoBehaviour
     public float m_glassRoomBScale = 1.5f;
 
     public TileManager[] m_ConnectedTiles;
+    public TileManager[] m_ConnectedDoors;
 
     [Header("Breach Variables")]
     public bool m_RoomBreached = false;
@@ -24,6 +26,7 @@ public class RoomController : MonoBehaviour
 
 
     [Header("Flood Settings")]
+    public float m_TimeToFloodRoom = 10;
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
     [Range(0, 1)]
@@ -145,11 +148,47 @@ public class RoomController : MonoBehaviour
         }
     }
 
+    private IEnumerator CheckRoomDrainStatus()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+
+            float totalClosedDoors = 0;
+            int numDoors = m_ConnectedDoors.Length;
+
+            for (int i = 0; i < m_ConnectedDoors.Length; i++)
+            {
+                if (m_ConnectedDoors[i].m_doorClosed == true)
+                {
+                    totalClosedDoors += 1;
+                }
+            }
+            if (totalClosedDoors == numDoors && !m_RoomBreached)
+            {
+                //Drain Room
+                for (int i = 0; i < m_ConnectedTiles.Length; i++)
+                {
+                    m_ConnectedTiles[i].m_isDraining = true;
+                }
+            }
+        }
+    }
 
     private void Awake()
     {
+        if (m_ConnectedDoors.Length < 0)
+        {
+            StartCoroutine("CheckRoomDrainStatus");
+        }
+       
         BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
-        
+
+        for (int i = 0; i < m_ConnectedTiles.Length; i++)
+        {
+            m_ConnectedTiles[i].m_TimeToFlood = m_TimeToFloodRoom;
+        }
+
         if (m_hallway)
         {
             for (int i = 0; i < m_ConnectedTiles.Length; i++)
@@ -158,10 +197,6 @@ public class RoomController : MonoBehaviour
             }
         }
 
-    }
-
-    private void Update()
-    {
         if (m_introRoom)
         {
             for (int i = 0; i < m_ConnectedTiles.Length; i++)
@@ -171,6 +206,10 @@ public class RoomController : MonoBehaviour
             return; //go no further if intro...
         }
 
-        CheckRoomFloodedStatus();
+    }
+
+    private void Update()
+    {
+        CheckRoomFloodedStatus();    
     }
 }

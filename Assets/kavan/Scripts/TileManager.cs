@@ -15,8 +15,10 @@ public class TileManager : MonoBehaviour
 
     public TileManager leftTile;
     public TileManager rightTile;
-    public TileManager m_FloodPushDirection; //opposite side of where the flood call was passed from
-    public TileManager m_DrainPushDirection;
+    public TileManager m_TileThatPassedFlood;
+    public TileManager m_NextTileToPushFloodTo; //opposite side of where the flood call was passed from
+    public TileManager m_TileThatPassedDrain;
+    public TileManager m_NextTileToPushDrainTo;
 
     [Header("Flood Settings")]
     public float m_DrainSpeed = 2f;
@@ -30,20 +32,22 @@ public class TileManager : MonoBehaviour
     //RECEIVE
     public void Flood(TileManager floodSource)
     {
+        m_TileThatPassedFlood = floodSource;
+
         if (floodSource == leftTile)
         {
             //Debug.Log(this + "was triggered from LEFT side");
-            m_FloodPushDirection = rightTile;
+            m_NextTileToPushFloodTo = rightTile;
         }
         else if (floodSource == rightTile)
         {
             //Debug.Log(this + "was triggered from Right side");
-            m_FloodPushDirection = leftTile;
+            m_NextTileToPushFloodTo = leftTile;
         }
         else
         {
             //Debug.Log(this + "'s [room1] flood source:" + floodSource + ", doesn't match left or right, defaulting to flood left");
-            m_FloodPushDirection = leftTile;
+            m_NextTileToPushFloodTo = leftTile; //I think just room one is hit by this
         }
 
         m_isDraining = false;
@@ -51,20 +55,22 @@ public class TileManager : MonoBehaviour
     }
     public void Drain(TileManager drainSource)
     {
+        m_TileThatPassedDrain = drainSource;
+
         if (drainSource == leftTile)
         {
             //Debug.Log(this + "was triggered from LEFT side");
-            m_DrainPushDirection = rightTile;
+            m_NextTileToPushDrainTo = rightTile;
         }
         else if (drainSource == rightTile)
         {
            // Debug.Log(this + "was triggered from Right side");
-            m_DrainPushDirection = leftTile;
+            m_NextTileToPushDrainTo = leftTile;
         }
         else
         {
             //Debug.Log(this + "'s [room1] drain source:" + drainSource + ", doesn't match left or right, defaulting to drain left");
-            m_DrainPushDirection = leftTile;
+            m_NextTileToPushDrainTo = leftTile; //I think just room one is hit by this
         }
 
         m_isFlooding = false;
@@ -85,7 +91,7 @@ public class TileManager : MonoBehaviour
         if (m_isBreached)
         {
             //Breach sends flood (with self as source)
-            m_FloodPushDirection = this;
+            m_NextTileToPushFloodTo = this;
             leftTile.Flood(this);
             rightTile.Flood(this);
             return;
@@ -96,21 +102,21 @@ public class TileManager : MonoBehaviour
             bool isPathClear = CheckDoor(this);
             if (isPathClear)
             {
-                m_FloodPushDirection.Flood(this);
+                m_NextTileToPushFloodTo.Flood(this);
             }
         }
         else //if room, check next space (hallway):
         {
-            if (m_FloodPushDirection == null)
+            if (m_NextTileToPushFloodTo == null)
             {
                 //Debug.LogError(this.transform.parent.parent + "is trying to pass the flood and has null m_FloodPushDirection, Flood is up against a wall");
                 return;
             }
 
-            bool isPathClear = CheckDoor(m_FloodPushDirection);
+            bool isPathClear = CheckDoor(m_NextTileToPushFloodTo);
             if (isPathClear)
             {
-                m_FloodPushDirection.Flood(this);
+                m_NextTileToPushFloodTo.Flood(this);
             }
         }
     }
@@ -120,7 +126,7 @@ public class TileManager : MonoBehaviour
         if (m_isBreached)
         {
             //Breach sends Drain (with self as source)
-            m_DrainPushDirection = this;
+            m_NextTileToPushDrainTo = this;
             leftTile.Drain(this);
             rightTile.Drain(this);
             m_isBreached = false;
@@ -132,21 +138,21 @@ public class TileManager : MonoBehaviour
             bool isPathClear = CheckDoor(this);
             if (isPathClear)
             {
-                m_DrainPushDirection.Drain(this);
+                m_NextTileToPushDrainTo.Drain(this);
             }
         }
         else //if room, check next space (hallway):
         {
-            if (m_DrainPushDirection == null)
+            if (m_NextTileToPushDrainTo == null)
             {
                 //Debug.LogError(this.transform.parent.parent + "is trying to pass the drain and has null m_DrainSourceDirection, Drain is up against a wall");
                 return;
             }
 
-            bool isPathClear = CheckDoor(m_DrainPushDirection);
+            bool isPathClear = CheckDoor(m_NextTileToPushDrainTo);
             if (isPathClear)
             {
-                m_DrainPushDirection.Drain(this);
+                m_NextTileToPushDrainTo.Drain(this);
             }
         }
     }
@@ -198,7 +204,7 @@ public class TileManager : MonoBehaviour
                 m_PercentFlooded = 0;
                 m_WaterSlider.value = m_PercentFlooded;
 
-                PassDrain();
+                //PassDrain();
             }
             else
             {
@@ -254,7 +260,9 @@ public class TileManager : MonoBehaviour
 
                 if (m_isFlooding)
                 {
-                    PassDrain();
+                    m_isDraining = true;
+                    m_NextTileToPushFloodTo.Drain(this);
+                    //PassDrain();
                     //SendDrain(m_FloodPushDirection);
                 }
             }
