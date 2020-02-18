@@ -153,7 +153,7 @@ public class RoomController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(2f);
-
+            //Debug.Log(this.name + " is running Drain Check");
             float totalClosedDoors = 0;
             int numDoors = m_ConnectedDoors.Length;
 
@@ -173,13 +173,18 @@ public class RoomController : MonoBehaviour
                 }
             }
         }
+        Debug.Log(this.name + " is Ending DrainStatus Enum");
     }
 
     private void Awake()
     {
-        if (m_ConnectedDoors.Length < 0)
+        if (m_ConnectedDoors.Length > 0)
         {
             StartCoroutine("CheckRoomDrainStatus");
+        }
+        else
+        {
+            Debug.Log(this.name + " is skipping Enum");
         }
        
         BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
