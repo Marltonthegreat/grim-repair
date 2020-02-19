@@ -163,7 +163,7 @@ public class GameLoop : MonoBehaviour
                 Debug.Log($"Next leak in {nextLeakTimer}");
             }
             var maxDepthChangePerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
-            var risePerSecond = maxDepthChangePerSecond - (ship.m_FloodedPercentage * maxDepthChangePerSecond * 20);
+            var risePerSecond = maxDepthChangePerSecond - (ship.m_FloodedPercentage * 40 * maxDepthChangePerSecond);
             risePerSecond = Mathf.Clamp(risePerSecond, -maxDepthChangePerSecond, maxDepthChangePerSecond);
             // moving the ocean up means sinking
             // moving the ocean down means rising

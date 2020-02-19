@@ -21,12 +21,13 @@ MonoBehaviour:
   descendTimeInSeconds: 300
   o2Seconds: 5
   flashIntervalSeconds: 0.1
+  secondsToShowPopupTips: 30
   panToShipSeconds: 10
   repairHitsNeeded: 3
   percentageForSink: 0.1
   maxSinkPercentPerSecond: 0.01
-  minLeakEventSeconds: 10
-  maxLeakEventSeconds: 20
+  minLeakEventSeconds: 8
+  maxLeakEventSeconds: 18
   depthLeakEventMultiplier: 1
   perPlayerPenaltySeconds: 4.5
   secondsToWaitBeforeFinalScreen: 5
