@@ -21,6 +21,12 @@ public class Character : MonoBehaviour
         Collider2D closest = null;
         float closestDot = -9999;
         foreach (var i in interactables) {
+            if (!i.name.ToLower().StartsWith("door")) {
+                // it's a breach, so do this hack
+                // if we're right on top of a breach, use that even if we're not looking at it
+                if (Mathf.Abs(i.transform.position.x - transform.position.x) <= 1)
+                    return i;
+            }
             var dot = Vector2.Dot(right, ((Vector2) transform.position) - ((Vector2) i.transform.position));
             if (dot > closestDot) {
                 closest = i;
