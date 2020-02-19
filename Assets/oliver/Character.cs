@@ -13,10 +13,36 @@ public class Character : MonoBehaviour
     SpriteRenderer[] spriteRenderers;
     // if we're overlapping a ladder, it will be here (regardless of whether or not we're climbing it)
     public Ladder ladder { get; private set; }
-    // if we're overlapping a breach, it will be here (regardless of whether or not we're repairing it)
-    public Collider2D breach { get; private set; }
-    // if we're overlapping a door, it will be here
-    public Collider2D door { get; private set; }
+    // any non-ladder interactable colliders we're overlapping will show up here
+    List<Collider2D> interactables = new List<Collider2D>();
+    // the closest/most appropriate non-ladder interactable we are overlapping
+    public Collider2D currentInteractable { get {
+        var right = spriteRenderers[0].flipX ? transform.right : -transform.right;
+        Collider2D closest = null;
+        float closestDot = -9999;
+        foreach (var i in interactables) {
+            var dot = Vector2.Dot(right, ((Vector2) transform.position) - ((Vector2) i.transform.position));
+            if (dot > closestDot) {
+                closest = i;
+                closestDot = dot;
+            }
+        }
+        return closest;
+    }}
+    // if currentInteractable is a breach, it will be here (regardless of whether or not we're repairing it)
+    public Collider2D breach { get {
+        var i = currentInteractable;
+        if (i != null && !i.name.ToLower().StartsWith("door"))
+            return i;
+        return null;
+    } }
+    // if currentInteractable is a door, it will be here
+    public Collider2D door { get {
+        var i = currentInteractable;
+        if (i != null && i.name.ToLower().StartsWith("door"))
+            return i;
+        return null;
+    } }
     public Transform feet, head;
     public bool touchingGround { get { return animator.GetBool("touchingGround"); } }
     public bool isRepairing { get { return animator.GetBool("isRepairing"); } }
@@ -26,6 +52,7 @@ public class Character : MonoBehaviour
     public bool isDead { get { return animator.GetBool("isDead"); } }
     // store the number of hammer hits the player has done
     int currentRepairCount;
+    public GameObject instructionsHold, instructionsTap;
 
     public bool isClimbingLadder {
         get {
@@ -77,37 +104,53 @@ public class Character : MonoBehaviour
         }
     }
 
+    void RefreshInstructions() {
+        instructionsHold.SetActive(breach != null);
+        instructionsTap.SetActive(door != null);
+    }
+
     void OnTriggerEnter2D(Collider2D coll) {
         if (isDead)
             return;
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
-            if (coll.name.ToLower().StartsWith("door")) {
-                door = coll;
-            } else {
-                // must be a breach
-                Debug.Log($"Found breach: {coll.name}");
-                breach = coll;
-            }
-        } else {
-            var l = coll.GetComponent<Ladder>();
-            if (l == null)
-                return;
+        // store ladders separately from other interactables
+        var l = coll.GetComponent<Ladder>();
+        if (l) {
             ladder = l;
+            return;
+        }
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+            Debug.Log($"Adding {coll.name}");
+            interactables.Add(coll);
+            // if (coll.name.ToLower().StartsWith("door")) {
+            //     door = coll;
+            //     Debug.Log("Got door", door);
+            // } else {
+            //     // must be a breach
+            //     Debug.Log($"Found breach: {coll.name}");
+            //     breach = coll;
+            // }
+            RefreshInstructions();
         }
     }
 
     void OnTriggerExit2D(Collider2D coll) {
         if (isDead)
             return;
-        if (coll == door) {
-            door = null;
-        } else if (coll == breach) {
-            Debug.Log($"Left breach: {breach.name}");
-            breach = null;
-        } else if (ladder != null && coll.gameObject == ladder.gameObject) {
+        // if (coll == door) {
+        //     door = null;
+        //     Debug.Log("Left door", door);
+        // } else if (coll == breach) {
+        //     Debug.Log($"Left breach: {breach.name}");
+        //     breach = null;
+        // } else if (ladder != null && coll.gameObject == ladder.gameObject) {
+        if (ladder != null && coll.gameObject == ladder.gameObject) {
             if (isClimbingLadder)
                 StopClimbing();
             ladder = null;
+        } else {
+            Debug.Log($"Removing {coll.name}");
+            interactables.Remove(coll);
+            RefreshInstructions();
         }
     }
 
@@ -166,6 +209,9 @@ public class Character : MonoBehaviour
         var room = breach.GetComponentInParent<RoomController>();
         if (room != null) {
             StopRepairing();
+            // after the player does a repair, assume they don't need instructions anymore
+            if (GameLoop.instance.state == GameLoop.GameState.InGame)
+                instructionsHold.transform.parent.gameObject.SetActive(false);
             room.RepairBreach();
         } else
             Debug.LogWarning("Found breach with no room", breach.gameObject);
@@ -180,6 +226,8 @@ public class Character : MonoBehaviour
     }
 
     public void SetDead() {
+        // hack to turn off the parent canvas of the instructions popups
+        instructionsHold.transform.parent.gameObject.SetActive(false);
         if (isDead)
             return;
         gameObject.layer = LayerMask.NameToLayer("DeadPlayer");

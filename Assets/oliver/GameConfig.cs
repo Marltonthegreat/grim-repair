@@ -18,6 +18,7 @@ public class GameConfig : ScriptableObject
     public float descendTimeInSeconds = 90;
     public float o2Seconds = 10;
     public float flashIntervalSeconds = 0.5f;
+    public float secondsToShowPopupTips = 30;
     // when the game starts, how long do we want to take to pan down to the ship?
     public float panToShipSeconds = 10;
     public int repairHitsNeeded = 5; // how many hammer hits to repair a breach

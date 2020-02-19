@@ -75,6 +75,10 @@ public class Player : MonoBehaviour
         if (isDead)
             return;
 
+        // this handles players holding the repair button down before they walk into the breach trigger
+        if (interactHold && !character.isRepairing && character.breach)
+            character.StartRepairing();
+
         if (character.headUnderWater) {
             o2Seconds -= Time.deltaTime;
             flasher.flash = true;
@@ -117,7 +121,8 @@ public class Player : MonoBehaviour
             var desiredPosition = transform.position;
             desiredPosition += new Vector3(0, -GameConfig.instance.gravity * Time.fixedDeltaTime, 0);
             // send a position even if repairing (probably don't need to but it keeps us consistent)
-            character.IdleTo(desiredPosition);
+            // actually don't because it makes things janky
+            // character.IdleTo(desiredPosition);
         } else {
             var desiredPosition = transform.position 
                     + new Vector3(dirInput.x, 0, 0) * GameConfig.instance.walkSpeed * Time.fixedDeltaTime;
