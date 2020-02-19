@@ -162,29 +162,23 @@ public class GameLoop : MonoBehaviour
                 nextLeakTimer = Mathf.Max(nextLeakTimer, 1);
                 Debug.Log($"Next leak in {nextLeakTimer}");
             }
-            var depthPerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
-            if (ship.m_FloodedPercentage >= GameConfig.instance.percentageForSink) {
-                // moving the ocean up means sinking
-                var pos = oceanContainer.transform.position;
-                var newY = pos.y + depthPerSecond * Time.deltaTime;
-                newY = Mathf.Min(oceanContainerMaxY, newY);
-                pos.y = newY;
-                oceanContainer.transform.position = pos;
-                if (pos.y == oceanContainerMaxY && !hitBottom) {
-                    hitBottom = true;
-                    GameSounds.instance.StartCrash();
-                    StartCoroutine("Lose");
-                }
-            } else {
-                // moving the ocean down means rising
-                var pos = oceanContainer.transform.position;
-                var newY = pos.y - depthPerSecond * Time.deltaTime;
-                newY = Mathf.Max(oceanContainerMinY, newY);
-                pos.y = newY;
-                oceanContainer.transform.position = pos;
-                if (pos.y == oceanContainerMinY)
-                    StartCoroutine("Win");
+            var maxDepthChangePerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
+            var risePerSecond = maxDepthChangePerSecond - (ship.m_FloodedPercentage * maxDepthChangePerSecond * 20);
+            risePerSecond = Mathf.Clamp(risePerSecond, -maxDepthChangePerSecond, maxDepthChangePerSecond);
+            // moving the ocean up means sinking
+            // moving the ocean down means rising
+            var pos = oceanContainer.transform.position;
+            var newY = pos.y - risePerSecond * Time.deltaTime;
+            newY = Mathf.Clamp(newY, oceanContainerMinY, oceanContainerMaxY);
+            pos.y = newY;
+            oceanContainer.transform.position = pos;
+            if (pos.y == oceanContainerMaxY && !hitBottom) {
+                hitBottom = true;
+                GameSounds.instance.StartCrash();
+                StartCoroutine("Lose");
             }
+            if (pos.y == oceanContainerMinY)
+                StartCoroutine("Win");
             bool alive = false;
             foreach (var p in input.players) {
                 if (!p.isDead) {
