@@ -163,7 +163,7 @@ public class GameLoop : MonoBehaviour
                 Debug.Log($"Next leak in {nextLeakTimer}");
             }
             var depthPerSecond = GameConfig.instance.maxSinkPercentPerSecond * cameraPanHeight;
-            if (ship.m_LeakPercentage >= GameConfig.instance.percentageForSink) {
+            if (ship.m_FloodedPercentage >= GameConfig.instance.percentageForSink) {
                 // moving the ocean up means sinking
                 var pos = oceanContainer.transform.position;
                 var newY = pos.y + depthPerSecond * Time.deltaTime;
@@ -173,6 +173,7 @@ public class GameLoop : MonoBehaviour
                 if (pos.y == oceanContainerMaxY && !hitBottom) {
                     hitBottom = true;
                     GameSounds.instance.StartCrash();
+                    StartCoroutine("Lose");
                 }
             } else {
                 // moving the ocean down means rising
