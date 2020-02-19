@@ -86,6 +86,7 @@ public class RoomController : MonoBehaviour
             StartGameEvent.Raise();
             m_introRoom = false;
 
+            //Drain ALL TILES (intro only)
             for (int i = 0; i < m_ConnectedTiles.Length; i++)
             {
                 m_ConnectedTiles[i].m_timer = 0.8f;
@@ -93,18 +94,20 @@ public class RoomController : MonoBehaviour
             }
         }
 
+
         //for all repairs
         m_RoomBreached = false;
         m_BreachOnElements.SetActive(false);
        // m_RoomFlooding = false;
 
         SetRandomRepairSprite();
+
+        //Call on breached tile to InitiateDrain();
         for (int i = 0; i < m_ConnectedTiles.Length; i++)
         {
             if (m_ConnectedTiles[i].m_isBreached)
             {
-                m_ConnectedTiles[i].m_isFlooding = false;
-                m_ConnectedTiles[i].m_isDraining = true; //should cascade through them all from that point
+                m_ConnectedTiles[i].InitiateDrain();
             }
         }
     }
@@ -148,11 +151,11 @@ public class RoomController : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckRoomDrainStatus()
+    public IEnumerator CheckRoomDrainStatus()
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             //Debug.Log(this.name + " is running Drain Check");
             float totalClosedDoors = 0;
             int numDoors = m_ConnectedDoors.Length;
@@ -173,18 +176,13 @@ public class RoomController : MonoBehaviour
                 }
             }
         }
-        Debug.Log(this.name + " is Ending DrainStatus Enum");
     }
 
     private void Awake()
     {
-        if (m_ConnectedDoors.Length > 0)
+        if (m_ConnectedDoors.Length > 0) // all rooms EXCEPT intro
         {
             StartCoroutine("CheckRoomDrainStatus");
-        }
-        else
-        {
-            Debug.Log(this.name + " is skipping Enum");
         }
        
         BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
@@ -208,7 +206,6 @@ public class RoomController : MonoBehaviour
             {
                 m_ConnectedTiles[i].m_WaterSlider.value = 5f;
             }
-            return; //go no further if intro...
         }
 
     }

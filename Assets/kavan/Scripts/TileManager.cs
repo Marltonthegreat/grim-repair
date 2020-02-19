@@ -55,6 +55,7 @@ public class TileManager : MonoBehaviour
     }
     public void Drain(TileManager drainSource)
     {
+        m_isFlooding = false;
         m_TileThatPassedDrain = drainSource;
 
         if (drainSource == leftTile)
@@ -64,7 +65,7 @@ public class TileManager : MonoBehaviour
         }
         else if (drainSource == rightTile)
         {
-           // Debug.Log(this + "was triggered from Right side");
+            // Debug.Log(this + "was triggered from Right side");
             m_NextTileToPushDrainTo = leftTile;
         }
         else
@@ -73,25 +74,15 @@ public class TileManager : MonoBehaviour
             m_NextTileToPushDrainTo = leftTile; //I think just room one is hit by this
         }
 
-        m_isFlooding = false;
         m_isDraining = true;
     }
-
-    private void Awake()
-    {
-        if (m_isUnderDoor && m_ConnectedDoor == null)
-        {
-            Debug.LogError(this + "isUnderDoor not assigned, returning");
-        }
-    }
-
 
     void PassFlood()
     {
         if (m_isBreached)
         {
             //Breach sends flood (with self as source)
-            m_NextTileToPushFloodTo = this;
+            //m_NextTileToPushFloodTo = this;
             leftTile.Flood(this);
             rightTile.Flood(this);
             return;
@@ -123,16 +114,6 @@ public class TileManager : MonoBehaviour
 
     void PassDrain()
     {
-        if (m_isBreached)
-        {
-            //Breach sends Drain (with self as source)
-            m_NextTileToPushDrainTo = this;
-            leftTile.Drain(this);
-            rightTile.Drain(this);
-            m_isBreached = false;
-            return;
-        }
-
         if (m_isHallway) //if hallway check self before sending:
         {
             bool isPathClear = CheckDoor(this);
@@ -183,42 +164,34 @@ public class TileManager : MonoBehaviour
         return true;
     }
 
+    public void InitiateDrain()
+    {
+        m_isBreached = false;
+        m_isFlooding = false;
+        m_isDraining = true;
+
+        m_NextTileToPushDrainTo = this;
+
+        //Breach sends Drain (with self as source)
+        leftTile.Drain(this);
+        rightTile.Drain(this);
+    }
 
 
+
+    private void Awake()
+    {
+        if (m_isUnderDoor && m_ConnectedDoor == null)
+        {
+            Debug.LogError(this + "isUnderDoor not assigned, returning");
+        }
+    }
 
     private void Update()
     {
         if (m_isBreached)
         {
             m_isFlooding = true;
-        }
-
-        if (m_isDraining)
-        {
-            m_isFlooding = false;
-            if (m_timer <= 0)
-            {
-                m_WaterHandle.SetActive(false);
-                m_isDraining = false;
-                m_timer = 0;
-                m_PercentFlooded = 0;
-                m_WaterSlider.value = m_PercentFlooded;
-
-                //PassDrain();
-            }
-            else
-            {
-                m_timer -= Time.deltaTime * m_DrainSpeed;
-                m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
-                m_WaterSlider.value = m_PercentFlooded;
-                m_WaterHandle.SetActive(true);
-
-                //Send drain to neighbors
-                if (m_WaterSlider.value % 10 == 5)
-                {
-                    PassDrain();
-                }
-            }
         }
 
         if (m_isFlooding)
@@ -247,6 +220,36 @@ public class TileManager : MonoBehaviour
             }
         }
 
+        if (m_isDraining)
+        {
+            m_isFlooding = false;
+
+            if (m_timer <= 0)
+            {
+                m_WaterHandle.SetActive(false);
+                m_isDraining = false;
+                m_timer = 0;
+                m_PercentFlooded = 0;
+                m_WaterSlider.value = m_PercentFlooded;
+
+                //PassDrain();
+            }
+            else
+            {
+                m_timer -= Time.deltaTime * m_DrainSpeed;
+                m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
+                m_WaterSlider.value = m_PercentFlooded;
+                m_WaterHandle.SetActive(true);
+
+                //Send drain to neighbors
+                if (m_WaterSlider.value % 10 == 5)
+                {
+                    PassDrain();
+                }
+            }
+        }
+
+
         //if door gets closed:
         if (m_isUnderDoor)
         {
@@ -260,11 +263,13 @@ public class TileManager : MonoBehaviour
 
                 if (m_isFlooding)
                 {
+                    m_isFlooding = false;
                     m_isDraining = true;
                     m_NextTileToPushFloodTo.Drain(this);
-                    //PassDrain();
-                    //SendDrain(m_FloodPushDirection);
                 }
+                //    //PassDrain();
+                //    //SendDrain(m_FloodPushDirection);
+                //}
             }
         }
     }
