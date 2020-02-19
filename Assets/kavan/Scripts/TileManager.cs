@@ -227,19 +227,25 @@ public class TileManager : MonoBehaviour
             if (m_timer <= 0)
             {
                 m_WaterHandle.SetActive(false);
-                m_isDraining = false;
+            }
+
+            if (m_timer <= -.5)
+            {
                 m_timer = 0;
                 m_PercentFlooded = 0;
                 m_WaterSlider.value = m_PercentFlooded;
-
-                //PassDrain();
+                if(m_NextTileToPushDrainTo != null)
+                {
+                    PassDrain();
+                }
+                m_isDraining = false;
             }
             else
             {
                 m_timer -= Time.deltaTime * m_DrainSpeed;
                 m_PercentFlooded = (int)(m_timer / m_TimeToFlood * 100);
                 m_WaterSlider.value = m_PercentFlooded;
-                m_WaterHandle.SetActive(true);
+                //m_WaterHandle.SetActive(true);
 
                 //Send drain to neighbors
                 if (m_WaterSlider.value % 10 == 5)
