@@ -14,10 +14,12 @@ public class InputManager : MonoBehaviour
         var player = playerInput.GetComponent<Player>();
         players.Add(player);
         player.SetColor(playerColors[players.Count - 1]);
+        CameraManager.AddCameraTarget(player.transform);
     }
 
     void OnPlayerLeft(PlayerInput playerInput) {
         Debug.Log($"Player left: {playerInput.name}");
+        CameraManager.RemoveCameraTarget(playerInput.GetComponent<Player>().transform);
         playerInput.GetComponent<Player>().Die();
     }
 }

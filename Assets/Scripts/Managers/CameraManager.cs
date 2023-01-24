@@ -5,31 +5,28 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private GameObject cameraLookAtPoint;
-    List<Player> playerComponents = new List<Player>();
+    [SerializeField] private CinemachineVirtualCamera startCam;
+    [SerializeField] private CinemachineVirtualCamera characterCams;
+    private static CinemachineTargetGroup cameraTargets;
 
-    private void Update()
+    private void Start()
     {
-        if (playerComponents.Count <= GetComponents<Player>().Length + 1)
-        {
-            playerComponents.Clear();
-            playerComponents.AddRange(FindObjectsOfType<Player>());
-        }
-
-        cameraLookAtPoint.transform.position = AveragePositions(playerComponents);
+        cameraTargets = GetComponent<CinemachineTargetGroup>();
     }
 
-    private Vector3 AveragePositions(List<Player> players)
+    public void SwapCameraPriority()
     {
-        Vector3 position = Vector3.zero;
+        startCam.Priority = 9;
+        characterCams.Priority = 10;
+    }
 
-        foreach (Player player in players)
-        {
-            position.x += player.gameObject.transform.position.x;
-            position.y += player.gameObject.transform.position.y;
-            position.z += player.gameObject.transform.position.z;
-        }
+    public static void AddCameraTarget(Transform transform)
+    {
+        cameraTargets.AddMember(transform, 1, 0);
+    }
 
-        return position / players.Count;
+    public static void RemoveCameraTarget(Transform transform)
+    {
+        cameraTargets.RemoveMember(transform);
     }
 }
