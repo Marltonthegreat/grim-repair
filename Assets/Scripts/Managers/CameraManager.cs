@@ -14,18 +14,23 @@ public class CameraManager : MonoBehaviour
         cameraTargets = GetComponent<CinemachineTargetGroup>();
     }
 
+    private void Update()
+    {
+        if (!cameraTargets.IsEmpty) SwapCameraPriority();
+    }
+
     public void SwapCameraPriority()
     {
         startCam.Priority = 9;
         characterCams.Priority = 10;
     }
 
-    public static void AddCameraTarget(Transform transform)
+    public void AddCameraTarget(Transform transform)
     {
         cameraTargets.AddMember(transform, 1, 0);
     }
 
-    public static void RemoveCameraTarget(Transform transform)
+    public void RemoveCameraTarget(Transform transform)
     {
         cameraTargets.RemoveMember(transform);
     }

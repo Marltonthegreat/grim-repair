@@ -3443,6 +3443,36 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
+    - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_UpdateMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_Targets.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_Targets.Array.data[0].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_Targets.Array.data[1].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_Targets.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_Targets.Array.data[3].weight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ef3e5f715ba424fb9598dfe3ac06cb, type: 3}
 --- !u!1001 &7367281002543019498
