@@ -11,7 +11,7 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        cameraTargets = GetComponent<CinemachineTargetGroup>();
+        cameraTargets = GetComponentInChildren<CinemachineTargetGroup>();
     }
 
     private void Update()
