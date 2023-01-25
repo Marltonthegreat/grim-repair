@@ -89,7 +89,7 @@ public class RoomController : MonoBehaviour
             //Drain ALL TILES (intro only)
             for (int i = 0; i < m_ConnectedTiles.Length; i++)
             {
-                m_ConnectedTiles[i].m_timer = 0.8f;
+                //m_ConnectedTiles[i].m_timer = 0.8f;
                 m_ConnectedTiles[i].m_isDraining = true;
             }
         }
@@ -189,7 +189,7 @@ public class RoomController : MonoBehaviour
 
         for (int i = 0; i < m_ConnectedTiles.Length; i++)
         {
-            m_ConnectedTiles[i].m_TimeToFlood = m_TimeToFloodRoom;
+            //m_ConnectedTiles[i].m_TimeToFlood = m_TimeToFloodRoom;
         }
 
         if (m_hallway)
