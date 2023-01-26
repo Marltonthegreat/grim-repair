@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour
 
     public void AddCameraTarget(Transform transform)
     {
-        cameraTargets.AddMember(transform, 1, 0);
+        cameraTargets.AddMember(transform, 1, 3);
     }
 
     public void RemoveCameraTarget(Transform transform)
