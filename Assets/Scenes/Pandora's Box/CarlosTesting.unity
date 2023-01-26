@@ -2170,6 +2170,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5392527664245377375, guid: 51da3ae82188a47f8a3abd6b260ba945,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51da3ae82188a47f8a3abd6b260ba945, type: 3}
 --- !u!4 &835776701 stripped
@@ -2366,10 +2371,10 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -2378,7 +2383,7 @@ MonoBehaviour:
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -3190,47 +3195,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bcd9f5e9c8515f4d8e58ba830d9bbea, type: 3}
---- !u!1 &2048289974 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4950684501758558182, guid: 4bcd9f5e9c8515f4d8e58ba830d9bbea,
-    type: 3}
-  m_PrefabInstance: {fileID: 2048289973}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2098962882 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4950684501758558181, guid: 4bcd9f5e9c8515f4d8e58ba830d9bbea,
     type: 3}
   m_PrefabInstance: {fileID: 2048289973}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048289974}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9072fdcc2147a459d0f5159e8fd084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2098962883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048289974}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7a75ea7b842a34e873a35613ead7df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerColors:
-  - {r: 0.69411767, g: 0.24313726, b: 0.3254902, a: 1}
-  - {r: 0.654902, g: 0.9411765, b: 0.4392157, a: 1}
-  - {r: 0.4509804, g: 0.9372549, b: 0.96862745, a: 1}
-  - {r: 0.9372549, g: 0.49019608, b: 0.34117648, a: 1}
-  arrowPlayerInputs: {fileID: -944628639613478452, guid: 0c0a694a18258f64ca0343cad6a0d5d4,
-    type: 3}
-  wasdPlayerInputs: {fileID: -944628639613478452, guid: 023bc52617f93fe47a343a75cfa90a4c,
-    type: 3}
-  playerPrefab: {fileID: 6407055486582216442, guid: fcb3dabfa2755d3409dc66bab77c9ba7,
-    type: 3}
 --- !u!1001 &7367281002543019498
 PrefabInstance:
   m_ObjectHideFlags: 0
