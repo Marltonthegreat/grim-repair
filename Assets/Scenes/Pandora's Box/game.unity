@@ -2117,15 +2117,33 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
+    m_Style: 7
+    m_Time: 10
     m_CustomCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
+  m_CustomBlends: {fileID: 11400000, guid: 96accef92de870244bd587074d7a7306, type: 2}
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -3443,6 +3461,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
+    - target: {fileID: 6014446203103862272, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_MinimumOrthoSize
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6058514747567095206, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
         type: 3}
       propertyPath: m_UpdateMethod
@@ -3472,6 +3495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Targets.Array.data[3].weight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145894346063613105, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87ef3e5f715ba424fb9598dfe3ac06cb, type: 3}
