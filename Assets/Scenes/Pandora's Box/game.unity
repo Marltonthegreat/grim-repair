@@ -3351,6 +3351,21 @@ PrefabInstance:
       propertyPath: m_Priority
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4784552731026548337, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_XDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784552731026548337, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_YDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784552731026548337, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
+        type: 3}
+      propertyPath: m_ZDamping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4924208131074892745, guid: 87ef3e5f715ba424fb9598dfe3ac06cb,
         type: 3}
       propertyPath: m_RootOrder
