@@ -8,6 +8,12 @@ public class InputManager : MonoBehaviour
     public Color[] playerColors;
     [System.NonSerialized]
     public List<Player> players = new List<Player>();
+    private CameraManager cameraManager;
+
+    private void Start()
+    {
+        cameraManager = FindObjectOfType<CameraManager>();
+    }
 
     PlayerInput wasdPlayer = null;
     PlayerInput arrowPlayer = null;
@@ -76,10 +82,12 @@ public class InputManager : MonoBehaviour
         //Debug.Log(playerInput.currentControlScheme);
 
         player.SetColor(playerColors[players.Count - 1]);
+        cameraManager.AddCameraTarget(player.gameObject.transform);
     }
 
     void OnPlayerLeft(PlayerInput playerInput) {
         Debug.Log($"Player left: {playerInput.name}");
+        cameraManager.RemoveCameraTarget(playerInput.GetComponent<Player>().transform);
         playerInput.GetComponent<Player>().Die();
     }
 }
