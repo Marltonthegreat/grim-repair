@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
 
     
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!arrowPlayerJoined && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) )
         {
@@ -41,8 +41,7 @@ public class InputManager : MonoBehaviour
     }
 
     void OnPlayerJoined(PlayerInput playerInput) {
-        Debug.Log($"Player joined: {playerInput.name}, {playerInput.devices.Count}");
-        Debug.Log(playerInput.currentControlScheme);
+        Debug.Log($"Player joined: {playerInput.name}, {playerInput.devices.Count}, {playerInput.currentControlScheme}");
         var player = playerInput.GetComponent<Player>();
         players.Add(player);
 
@@ -64,7 +63,17 @@ public class InputManager : MonoBehaviour
                 wasdPlayer?.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
 
             }
+            else
+            {
+                wasdPlayerJoined = true;
+                wasdPlayer = playerInput;
+                playerInput.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
+
+                arrowPlayer?.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
+            }
         }
+
+        //Debug.Log(playerInput.currentControlScheme);
 
         player.SetColor(playerColors[players.Count - 1]);
     }
