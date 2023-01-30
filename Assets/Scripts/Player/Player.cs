@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Player : MonoBehaviour
     Vector2 dirInput;
     Flasher flasher;
     float o2Seconds;
+    int maxHealth = 3;
+    int health;
+    int damage = 1;
     public bool isDead { get { return character.isDead; } }
     bool interactHold;
 
@@ -19,6 +23,7 @@ public class Player : MonoBehaviour
         character = GetComponent<Character>();
         flasher = GetComponent<Flasher>();
         name = $"Character {Random.Range(0, 20)}";
+        health = maxHealth;
     }
 
     void OnMove(InputValue value) {
@@ -87,6 +92,16 @@ public class Player : MonoBehaviour
         } else {
             o2Seconds = GameConfig.instance.o2Seconds;
             flasher.flash = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            health--;
+        }
+
+        if(health < 1)
+        {
+            Die();
         }
 
         // GetInput();
