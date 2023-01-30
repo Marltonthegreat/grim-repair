@@ -27,7 +27,14 @@ public class Player : MonoBehaviour
     }
 
     void OnMove(InputValue value) {
-        dirInput = (Vector2) value.Get();
+        if (value.Get() == null)
+        {
+            dirInput = Vector2.zero;
+            return;
+        }
+
+        dirInput = (Vector2) value?.Get();
+
         if (dirInput.x > 0 && dirInput.x < GameConfig.instance.directionInputMinThreshold)
             dirInput.x = 0;
         if (dirInput.x < 0 && dirInput.x > -GameConfig.instance.directionInputMinThreshold)
@@ -36,6 +43,8 @@ public class Player : MonoBehaviour
             dirInput.y = 0;
         if (dirInput.y < 0 && dirInput.y > -GameConfig.instance.directionInputMinThreshold)
             dirInput.y = 0;
+
+
     }
 
     void OnInteract(InputValue value) {
