@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEditor;
 
 public class RoomController : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class RoomController : MonoBehaviour
 
     [Header("Breach Variables")]
     public bool m_RoomBreached = false;
+    public GameObject enemySpawn;
+    public GameObject EnemyPrefab;
     public float minBScale = .5f;
     public float maxBScale = 1f;
     public TileManager m_BreachedTile;
@@ -66,7 +69,7 @@ public class RoomController : MonoBehaviour
             var randomScale = Random.Range(minBScale, maxBScale);
             m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
         }
-
+        Instantiate(EnemyPrefab, enemySpawn.transform);
         SetRandomBreachSprite();
         m_RoomBreached = true;
         m_BreachGO.SetActive(true);
