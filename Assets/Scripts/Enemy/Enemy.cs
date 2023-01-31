@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 3;
     bool walkingLeft;
     bool walkingRight;
+    float localX;
 
     void Start()
     {
@@ -19,38 +20,33 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Walk();
-        //Shoot a raycast a distance of 1 to the left and right and check if it hits a wall.
-        //If it does hit a wall, turn around.
-        RaycastHit2D wallDetectionRight = Physics2D.Raycast(transform.position, Vector2.up, 1.5f);
-        RaycastHit2D wallDetectionLeft = Physics2D.Raycast(transform.position, -Vector2.right, 1.5f);
 
-        Debug.Log("Right detection: " + wallDetectionRight.collider.tag);
-        Debug.Log("Left detection: " + wallDetectionLeft.collider.tag);
-
-        if(wallDetectionRight.collider.tag == "Wall")
-        {
-            walkingRight = false;
-            walkingLeft = true;
-        }
-        if (wallDetectionLeft.collider.tag == "Wall")
+        if(localX < 0)
         {
             walkingRight = true;
             walkingLeft = false;
+            transform.localScale = new Vector3(0.7f, 0.84f, 0.7f);
         }
-
-        Debug.DrawLine(transform.position, transform.position + new Vector3(-1.5f, 0f, 0f));
-        Debug.DrawLine(transform.position, transform.position + new Vector3(1.5f, 0f, 0f));
+        else if(localX > 3)
+        {
+            walkingRight = false;
+            walkingLeft = true;
+            transform.localScale = new Vector3(-0.7f, 0.84f, 0.7f);
+        }
+        
     }
 
     void Walk()
     {
         if (walkingRight)
         {
-            gameObject.transform.Translate(0.1f, 0, 0);
+            gameObject.transform.Translate(0.025f, 0, 0);
+            localX = localX + 0.025f;
         }
         else if (walkingLeft)
         {
-            gameObject.transform.Translate(-0.1f, 0, 0);
+            gameObject.transform.Translate(-0.025f, 0, 0);
+            localX = localX - 0.025f;
         }
     }
 }
