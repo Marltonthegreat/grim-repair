@@ -63,7 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6259974770317315229}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2080295137934670850
 SpriteRenderer:
@@ -4970,8 +4970,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6725652701697289102}
   - {fileID: 3805920964584285496}
+  - {fileID: 6725652701697289102}
   - {fileID: 154090267984966613}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5046,7 +5046,7 @@ GameObject:
   - component: {fileID: 6119650880602947137}
   m_Layer: 8
   m_Name: MinimapIndicator
-  m_TagString: Untagged
+  m_TagString: MinimapIndicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5060,11 +5060,11 @@ Transform:
   m_GameObject: {fileID: 8914061146066174539}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6259974770317315229}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6119650880602947137
 SpriteRenderer:
@@ -5106,7 +5106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
     type: 3}
   m_Color: {r: 0.6792453, g: 0, b: 0, a: 1}
