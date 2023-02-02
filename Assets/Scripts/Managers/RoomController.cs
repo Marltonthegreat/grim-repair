@@ -82,6 +82,7 @@ public class RoomController : MonoBehaviour
 
         foreach (TileManager tile in m_ConnectedTiles)
         {
+            tile.m_isFlooding = true;
             tile.m_isDraining = false;
         }
     }
