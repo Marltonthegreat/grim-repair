@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RoomController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class RoomController : MonoBehaviour
     public GameObject m_BreachOnElements;
     public Sprite[] BreachSprites;
     public Sprite[] RepairSprites;
+    public GameObject minimapIndicator;
     private SpriteRenderer BreachSR;
 
 
@@ -67,6 +69,7 @@ public class RoomController : MonoBehaviour
             m_BreachGO.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
         }
 
+        minimapIndicator?.SetActive(true);
         SetRandomBreachSprite();
         m_RoomBreached = true;
         m_BreachGO.SetActive(true);
@@ -100,7 +103,9 @@ public class RoomController : MonoBehaviour
         m_BreachOnElements.SetActive(false);
        // m_RoomFlooding = false;
 
+        minimapIndicator?.SetActive(false);
         SetRandomRepairSprite();
+        
 
         //Call on breached tile to InitiateDrain();
         for (int i = 0; i < m_ConnectedTiles.Length; i++)
