@@ -9,6 +9,7 @@ public class RoomController : MonoBehaviour
     public bool m_hallway = false;
     public bool m_introRoom = false;
     public bool m_glassRoom = false;
+    public bool m_ladderRoom = false;
     public float m_glassRoomBScale = 1.5f;
 
     public TileManager[] m_ConnectedTiles;
@@ -28,7 +29,7 @@ public class RoomController : MonoBehaviour
 
 
     [Header("Flood Settings")]
-    public float m_TimeToFloodRoom = 10;
+    public float m_RoomVolume = 10;
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
     [Range(0, 1)]
@@ -75,12 +76,16 @@ public class RoomController : MonoBehaviour
         m_BreachGO.SetActive(true);
         m_BreachOnElements.SetActive(true);
         m_BreachedTile.m_isBreached = true;
-        
+
         //m_RoomFlooding = true;
         // m_BreachedTile.StartCoroutine("Flooding");
 
-        m_BreachedTile.m_isDraining = false;
-    }  
+        foreach (TileManager tile in m_ConnectedTiles)
+        {
+            tile.m_isFlooding = true;
+            tile.m_isDraining = false;
+        }
+    }
 
     public void RepairBreach()
     {
@@ -92,7 +97,7 @@ public class RoomController : MonoBehaviour
             //Drain ALL TILES (intro only)
             for (int i = 0; i < m_ConnectedTiles.Length; i++)
             {
-                m_ConnectedTiles[i].m_timer = 0.8f;
+                //m_ConnectedTiles[i].m_timer = 0.8f;
                 m_ConnectedTiles[i].m_isDraining = true;
             }
         }
@@ -100,21 +105,12 @@ public class RoomController : MonoBehaviour
 
         //for all repairs
         m_RoomBreached = false;
+        m_BreachedTile.m_isBreached = false;
         m_BreachOnElements.SetActive(false);
-       // m_RoomFlooding = false;
+        // m_RoomFlooding = false;
 
         minimapIndicator?.SetActive(false);
         SetRandomRepairSprite();
-        
-
-        //Call on breached tile to InitiateDrain();
-        for (int i = 0; i < m_ConnectedTiles.Length; i++)
-        {
-            if (m_ConnectedTiles[i].m_isBreached)
-            {
-                m_ConnectedTiles[i].InitiateDrain();
-            }
-        }
     }
 
 
@@ -169,17 +165,25 @@ public class RoomController : MonoBehaviour
             {
                 if (m_ConnectedDoors[i].m_doorClosed == true)
                 {
-                    totalClosedDoors += 1;
+                    totalClosedDoors++;
                 }
             }
-            if (totalClosedDoors == numDoors && !m_RoomBreached)
+
+            for (int i = 0; i < m_ConnectedTiles.Length; i++)
             {
-                //Drain Room
-                for (int i = 0; i < m_ConnectedTiles.Length; i++)
-                {
-                    m_ConnectedTiles[i].m_isDraining = true;
-                }
+                m_ConnectedTiles[i].m_isDraining = totalClosedDoors == numDoors && !m_RoomBreached;
             }
+            #region Old Code
+            /*
+                        if (totalClosedDoors == numDoors && !m_RoomBreached)
+                        {
+                            //Drain Room
+                            for (int i = 0; i < m_ConnectedTiles.Length; i++)
+                            {
+                                m_ConnectedTiles[i].m_isDraining = true;
+                            }
+                        }*/
+            #endregion
         }
     }
 
@@ -189,13 +193,13 @@ public class RoomController : MonoBehaviour
         {
             StartCoroutine("CheckRoomDrainStatus");
         }
-       
-        BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
 
-        for (int i = 0; i < m_ConnectedTiles.Length; i++)
-        {
-            m_ConnectedTiles[i].m_TimeToFlood = m_TimeToFloodRoom;
-        }
+        BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
+        if (!m_ladderRoom)
+            for (int i = 0; i < m_ConnectedTiles.Length; i++)
+            {
+                m_ConnectedTiles[i].m_MaxFloodVolume = m_RoomVolume / m_ConnectedTiles.Length;
+            }
 
         if (m_hallway)
         {
@@ -217,6 +221,6 @@ public class RoomController : MonoBehaviour
 
     private void Update()
     {
-        CheckRoomFloodedStatus();    
+        CheckRoomFloodedStatus();
     }
 }
