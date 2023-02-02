@@ -57,3 +57,6 @@ TagManager:
   - name: ShipCovers
     uniqueID: 3743327255
     locked: 0
+  - name: Alert
+    uniqueID: 435632129
+    locked: 0

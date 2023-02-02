@@ -72,6 +72,8 @@ public class RoomController : MonoBehaviour
         m_BreachGO.SetActive(true);
         m_BreachOnElements.SetActive(true);
         m_BreachedTile.m_isBreached = true;
+
+        GetComponentInParent<AlertManager>().breachAlerts.Add(m_BreachGO.transform,null);
         
         //m_RoomFlooding = true;
         // m_BreachedTile.StartCoroutine("Flooding");
