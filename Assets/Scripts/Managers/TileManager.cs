@@ -7,6 +7,8 @@ public class TileManager : MonoBehaviour
     public bool m_isFlooding = false;
     public bool m_isDraining = false;
     public bool m_isHallway = false;
+    public bool DisplayDebug = false;
+    private bool m_CheckedEqualize = false;
 
     [Header("Door Settings")]
     public bool m_isUnderDoor = false;
@@ -17,46 +19,35 @@ public class TileManager : MonoBehaviour
     public TileManager rightTile;
 
     [Header("Flood Settings")]
-    public float m_DrainSpeed = 2f;
+    public float m_DrainSpeed = .5f;
     public float m_FloodRate = 0;
     public float m_MaxFloodVolume = 10f;
     public Slider m_WaterSlider;
     public GameObject m_WaterHandle;
 
-    [Range(0, 100)]
-    [HideInInspector]public int m_PercentFlooded;
+    public float m_PercentFlooded { get { return Mathf.Clamp(m_CurrFloodVolume / m_MaxFloodVolume * 100, 0, 100); } }
     private float m_CurrFloodVolume;
 
     public void Flood()
     {
-
-        //if done:
-        if (m_PercentFlooded >= 100)
-        {
-            //        //m_tileFlooded = true;
-            //        m_WaterHandle.SetActive(false);
-            //        PassFlood();
-        }
+        if (m_PercentFlooded >= 100) return;
         else
         {
-
             m_CurrFloodVolume += m_FloodRate * Time.deltaTime;
-            m_PercentFlooded = (int)(m_CurrFloodVolume / m_MaxFloodVolume * 100);
-            m_WaterSlider.value = m_PercentFlooded;
-            //m_tileFlooded = false;
-            m_WaterHandle.SetActive(true);
-
-            //pass flood along...
-            if (m_CurrFloodVolume > 0)
-            {
-                PassFlood();
-            }
         }
 
     }
 
-    public void Drain(TileManager drainSource)
+    public void Drain()
     {
+        if (m_PercentFlooded <= 0) return;
+        else
+        {
+            m_isFlooding = false;
+            m_CurrFloodVolume -= m_DrainSpeed * Time.deltaTime;
+        }
+
+        #region Old Code
         //m_isFlooding = false;
         //m_TileThatPassedDrain = drainSource;
 
@@ -77,10 +68,40 @@ public class TileManager : MonoBehaviour
         //}
 
         //m_isDraining = true;
+        #endregion
     }
 
-    void PassFlood()
+    void EqualizeWater()
     {
+        if (!CheckDoor(this)) return;
+        //if (m_CheckedEqualize) return; else m_CheckedEqualize = true;
+
+        bool leftValid = leftTile && CheckDoor(leftTile);
+        bool rightValid = rightTile && CheckDoor(rightTile);
+        float leftDiff = 0;
+        float rightDiff = 0;
+
+        if (leftValid)
+        {
+            leftDiff = m_CurrFloodVolume - leftTile.m_CurrFloodVolume;
+            leftDiff = (leftDiff) * Time.fixedDeltaTime;
+            leftTile.m_CurrFloodVolume += leftDiff;
+            if (m_isFlooding) leftTile.m_isFlooding = true;
+        }
+        if (rightValid)
+        {
+            rightDiff = m_CurrFloodVolume - rightTile.m_CurrFloodVolume;
+            rightDiff = (rightDiff) * Time.fixedDeltaTime;
+            rightTile.m_CurrFloodVolume += rightDiff;
+            if (m_isFlooding) rightTile.m_isFlooding = true;
+        }
+
+        m_CurrFloodVolume -= leftDiff + rightDiff;
+
+        //if (leftValid) leftTile.EqualizeWater();
+        //if (rightValid) rightTile.EqualizeWater();
+        #region Old Code
+
         //if (m_isBreached)
         //{
         //    //Breach sends flood (with self as source)
@@ -111,80 +132,58 @@ public class TileManager : MonoBehaviour
         //        m_NextTileToPushFloodTo.Flood(this);
         //    }
         //}
+        #endregion
     }
 
-    void PassDrain()
+    bool CheckDoor(TileManager nextTile)
     {
-        //if (m_isHallway) //if hallway check self before sending:
-        //{
-        //    bool isPathClear = CheckDoor(this);
-        //    if (isPathClear)
-        //    {
-        //        m_NextTileToPushDrainTo.Drain(this);
-        //    }
-        //}
-        //else //if room, check next space (hallway):
-        //{
-        //    if (m_NextTileToPushDrainTo == null)
-        //    {
-        //        //Debug.LogError(this.transform.parent.parent + "is trying to pass the drain and has null m_DrainSourceDirection, Drain is up against a wall");
-        //        return;
-        //    }
-
-        //    bool isPathClear = CheckDoor(m_NextTileToPushDrainTo);
-        //    if (isPathClear)
-        //    {
-        //        m_NextTileToPushDrainTo.Drain(this);
-        //    }
-        //}
-    }
-
-    bool CheckDoor(TileManager NextTile)
-    {
-        //if (NextTile.m_isUnderDoor)
-        //{
-        //    //Debug.Log(this + " " + NextTile + " isUnderDoor");
-        //    if (NextTile.m_ConnectedDoor == null)
-        //    {
-        //        //Debug.LogError(this + " " + NextTile + "isUnderDoor not assigned, returning false");
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        // Debug.Log(this + " " + NextTile + "door assigned");
-        //        if (NextTile.m_ConnectedDoor.GetBool("closed"))
-        //        {
-        //            //Debug.Log(this + " " + NextTile + "door is closed, returning false");
-        //            return false;
-        //        }
-        //        //Debug.Log(this + " " + NextTile + "door is open, returning true");
-        //        return true;
-        //    }
-        //}
-        ////Debug.Log(this + " " + NextTile + "is not under a door, returning true");
+        if (nextTile.m_isUnderDoor)
+        {
+            if (nextTile.m_ConnectedDoor == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (nextTile.m_ConnectedDoor.GetBool("closed"))
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
         return true;
     }
 
-    public void InitiateDrain()
+    private void DisplayWater()
     {
-        //m_isBreached = false;
-        //m_isFlooding = false;
-        //m_isDraining = true;
-
-        //m_NextTileToPushDrainTo = this;
-
-        ////Breach sends Drain (with self as source)
-        //leftTile.Drain(this);
-        //rightTile.Drain(this);
+        m_WaterSlider.value = m_PercentFlooded;
+        if (m_PercentFlooded > 0 && m_PercentFlooded <= 100) m_WaterHandle.SetActive(true); else m_WaterHandle.SetActive(false);
+        if (DisplayDebug) Debug.Log($"Water Percentage: {m_PercentFlooded}");
     }
 
     private void Update()
     {
+        //m_CheckedEqualize = false;
+
+
         if (m_isBreached)
         {
             Flood();
         }
 
+        if (m_PercentFlooded > 0)
+            EqualizeWater();
+
+        if (m_isDraining)
+        {
+            Drain();
+        }
+
+
+        DisplayWater();
+
+        #region Old Code
         //if (m_isDraining)
         //{
         //    m_isFlooding = false;
@@ -243,5 +242,6 @@ public class TileManager : MonoBehaviour
         //        //}
         //    }
         //}
+        #endregion
     }
 }
