@@ -8,6 +8,7 @@ public class RoomController : MonoBehaviour
     public bool m_hallway = false;
     public bool m_introRoom = false;
     public bool m_glassRoom = false;
+    public bool m_ladderRoom = false;
     public float m_glassRoomBScale = 1.5f;
 
     public TileManager[] m_ConnectedTiles;
@@ -26,7 +27,7 @@ public class RoomController : MonoBehaviour
 
 
     [Header("Flood Settings")]
-    public float m_TimeToFloodRoom = 10;
+    public float m_RoomVolume = 10;
     public bool m_RoomFlooding = false;
     public bool m_RoomFlooded = false;
     [Range(0, 1)]
@@ -76,7 +77,7 @@ public class RoomController : MonoBehaviour
         //m_RoomFlooding = true;
         // m_BreachedTile.StartCoroutine("Flooding");
 
-        foreach(TileManager tile in m_ConnectedTiles)
+        foreach (TileManager tile in m_ConnectedTiles)
         {
             tile.m_isDraining = false;
         }
@@ -189,11 +190,11 @@ public class RoomController : MonoBehaviour
         }
 
         BreachSR = m_BreachGO.GetComponentInChildren<SpriteRenderer>();
-
-        for (int i = 0; i < m_ConnectedTiles.Length; i++)
-        {
-            //m_ConnectedTiles[i].m_TimeToFlood = m_TimeToFloodRoom;
-        }
+        if (!m_ladderRoom)
+            for (int i = 0; i < m_ConnectedTiles.Length; i++)
+            {
+                m_ConnectedTiles[i].m_MaxFloodVolume = m_RoomVolume / m_ConnectedTiles.Length;
+            }
 
         if (m_hallway)
         {

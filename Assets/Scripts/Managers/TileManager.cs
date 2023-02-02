@@ -7,8 +7,6 @@ public class TileManager : MonoBehaviour
     public bool m_isFlooding = false;
     public bool m_isDraining = false;
     public bool m_isHallway = false;
-    public bool DisplayDebug = false;
-    private bool m_CheckedEqualize = false;
 
     [Header("Door Settings")]
     public bool m_isUnderDoor = false;
@@ -74,10 +72,9 @@ public class TileManager : MonoBehaviour
     void EqualizeWater()
     {
         if (!CheckDoor(this)) return;
-        //if (m_CheckedEqualize) return; else m_CheckedEqualize = true;
 
-        bool leftValid = leftTile && CheckDoor(leftTile);
-        bool rightValid = rightTile && CheckDoor(rightTile);
+        bool leftValid = leftTile && CheckDoor(leftTile) && leftTile.m_CurrFloodVolume < leftTile.m_MaxFloodVolume;
+        bool rightValid = rightTile && CheckDoor(rightTile) && rightTile.m_CurrFloodVolume < rightTile.m_MaxFloodVolume;
         float leftDiff = 0;
         float rightDiff = 0;
 
@@ -159,12 +156,10 @@ public class TileManager : MonoBehaviour
     {
         m_WaterSlider.value = m_PercentFlooded;
         if (m_PercentFlooded > 0 && m_PercentFlooded <= 100) m_WaterHandle.SetActive(true); else m_WaterHandle.SetActive(false);
-        if (DisplayDebug) Debug.Log($"Water Percentage: {m_PercentFlooded}");
     }
 
     private void Update()
     {
-        //m_CheckedEqualize = false;
 
 
         if (m_isBreached)
